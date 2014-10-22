@@ -3,3 +3,7 @@
 *.7z
 *~
 
+CMakeCache.txt
+*.cmake
+Makefile
+CMakeFiles/
