@@ -2,10 +2,13 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 
+#include "core/Problem.h"
+#include "SIBusAdapter.h"
+
 #include <string>
 #include <vector>
 
-
+using namespace core;
 
 /**
   * class Manager
@@ -84,7 +87,8 @@ private:
 
   // Private attributes
   //  
-
+  Problem* problem;
+  SIBusAdapter* adapter;
 public:
 
 

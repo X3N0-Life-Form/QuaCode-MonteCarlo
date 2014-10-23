@@ -2,6 +2,10 @@
 #ifndef PROBLEM_H
 #define PROBLEM_H
 
+#include "Variable.h"
+#include "Constraint.h"
+#include "Domain.h"
+
 #include <string>
 #include <vector>
 
@@ -80,7 +84,9 @@ private:
 
   // Private attributes
   //  
-
+  std::vector<Variable*> variables;
+  std::vector<Constraint*> constraints;
+  std::vector<Domain*> domains;
 public:
 
 

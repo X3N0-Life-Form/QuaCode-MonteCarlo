@@ -3,6 +3,7 @@
 #define VARIABLE_H
 
 #include "../Type.h"
+#include "Domain.h"
 
 #include <string>
 #include <vector>
@@ -88,7 +89,8 @@ private:
 
   // Private attributes
   //  
-
+  Domain* domain;
+  
 public:
 
 

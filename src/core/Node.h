@@ -88,6 +88,8 @@ private:
 
   // Private attributes
   //  
+  Node* parent;
+  std::vector<Node*> subNodes;
 
 public:
 

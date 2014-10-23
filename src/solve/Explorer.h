@@ -2,10 +2,14 @@
 #ifndef EXPLORER_H
 #define EXPLORER_H
 
+#include "Validator.h"
+#include "../core/Problem.h"
+#include "../core/ResearchSpace.h"
+
 #include <string>
 #include <vector>
 
-
+using namespace core;
 
 namespace solve {
 
@@ -87,7 +91,9 @@ private:
 
   // Private attributes
   //  
-
+  std::vector<Validator*> validators;
+  Problem* problem;
+  ResearchSpace* spaceTree;
 public:
 
 

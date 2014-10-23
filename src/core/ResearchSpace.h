@@ -2,6 +2,8 @@
 #ifndef RESEARCHSPACE_H
 #define RESEARCHSPACE_H
 
+#include "Node.h"
+
 #include <string>
 #include <vector>
 
@@ -80,6 +82,7 @@ private:
 
   // Private attributes
   //  
+  Node* root;
 
 public:
 
