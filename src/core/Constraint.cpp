@@ -30,7 +30,7 @@ Constraint::~Constraint ( ) { }
   // adds variable into var
 
   void Constraint::addVar(Variable * var) {
-  	//vars.push_back(var);
+  	vars.push_back(var);
   }
 
 

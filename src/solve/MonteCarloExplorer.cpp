@@ -41,6 +41,9 @@ void MonteCarloExplorer::heuristic() {
 	//metropolis(5);
 }
 
+// RANDOM VALUE => random initialisation for each variables
+
+
 
 
 // METROPOLIS ACCEPTANCE RULE - SA //

@@ -4,6 +4,8 @@ project("QuaCode-MonteCarlo")
 
 set(CMAKE_VERBOSE_MAKEFILE true)
 
+set(CMAKE_CXX_FLAGS "-std=c++0x")
+
 add_definitions(
   -Wall
   -O2
