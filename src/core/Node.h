@@ -4,8 +4,8 @@
 
 #include <string>
 #include <vector>
-
-
+#include <cstddef>
+#include "Domain.h"
 
 namespace core {
 
@@ -14,102 +14,42 @@ namespace core {
   * class Node
   * 
   */
+    template<class T>
+    class Node
+    {
+      //friend class Domain;
+      public:
 
-class Node
-{
-public:
+        // Constructors/Destructors
+        Node ();
+        Node(int id);
+        //Node(Node<T>* parent, int id, Domain d,T data);
+        virtual ~Node ();
 
-  // Constructors/Destructors
-  //  
+        T& getData() const;
+        int getId() const;
+        //Domain getDomain() const;
+        void setData(const T& data);
+        void addChild(const int id, const T& data);
+        void removeChild(const size_t& indx);
+        Node<T>* findChild(const int id) const;
+        Node<T>* getChild(const size_t& indx) const;
+        Node<T>* getParent() const;
+        int getNumChildren() const;
+        bool isLeaf ();
+        void setLeaf();
 
+      protected:
+        bool leaf; // Flag to know if box is a leaf or not
 
-  /**
-   * Empty Constructor
-   */
-  Node ( );
+      private:
+        T* data; //value
+        int id; //index of the current node
+        //Domain d;
+        Node<T>* parent;
+        std::vector<Node<T>*> children;
 
-  /**
-   * Empty Destructor
-   */
-  virtual ~Node ( );
-
-  // Static Public attributes
-  //  
-
-  // Public attributes
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-
-  /**
-   * @return bool
-   */
-  bool isLeaf ( )
-  {
-  }
-
-protected:
-
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-
-private:
-
-  // Static Private attributes
-  //  
-
-  // Private attributes
-  //  
-  Node* parent;
-  std::vector<Node*> subNodes;
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-
-
-};
-}; // end of package namespace
+    };
+}; 
 
 #endif // NODE_H
