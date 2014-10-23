@@ -8,6 +8,10 @@ using namespace core;
 Variable::Variable ( ) {
 }
 
+Variable::Variable(Quantifier quant, Type type, std::string name, Domain* domain) 
+  : quantifier(quant), type(type), name(name), domain(domain) {
+}
+
 Variable::~Variable ( ) { }
 
 //  

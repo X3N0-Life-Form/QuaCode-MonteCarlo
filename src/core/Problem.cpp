@@ -18,6 +18,9 @@ Problem::~Problem ( ) { }
 // Accessor methods
 //  
 
+void Problem::addVariable(Variable* var) {
+  variables.push_back(var);
+}
 
 // Other methods
 //  

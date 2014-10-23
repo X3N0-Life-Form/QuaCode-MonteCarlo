@@ -27,49 +27,19 @@ public:
   BooleanVariable ( );
 
   /**
+   * Regular Constructor
+   */
+  BooleanVariable(Quantifier quant, Type type, std::string name, Domain* domain);
+
+  /**
    * Empty Destructor
    */
   virtual ~BooleanVariable ( );
 
-  // Static Public attributes
-  //  
+  // Public Methods
+  //
 
-  // Public attributes
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-protected:
-
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
+  virtual Type getType();
 
 private:
 

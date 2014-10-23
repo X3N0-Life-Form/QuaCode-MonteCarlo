@@ -4,6 +4,7 @@
 
 #include "../Type.h"
 #include "Domain.h"
+#include "Quantifier.h"
 
 #include <string>
 #include <vector>
@@ -32,54 +33,22 @@ public:
   Variable ( );
 
   /**
+   * Regular Constructor
+   */
+  Variable(Quantifier quant, Type type, std::string name, Domain* domain);
+  
+  /**
    * Empty Destructor
    */
   virtual ~Variable ( );
 
-  // Static Public attributes
-  //  
-
-  // Public attributes
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
+  // Public Methods
+  //
 
   /**
    * @return Type
    */
   virtual Type getType ( ) = 0;
-
-protected:
-
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
 
 
 private:
@@ -89,23 +58,16 @@ private:
 
   // Private attributes
   //  
+  std::string name;
   Domain* domain;
+  Quantifier quantifier;
+  Type type;
   
 public:
 
 
   // Private attribute accessor methods
   //  
-
-private:
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
 
 
 

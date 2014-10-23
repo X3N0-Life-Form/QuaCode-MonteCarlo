@@ -17,6 +17,7 @@ set(CORE_SRCS
   src/core/Variable.cpp
   src/core/IntegerVariable.cpp
   src/core/BooleanVariable.cpp
+  src/core/factory/VariableFactory.cpp
   src/core/Domain.cpp
   src/core/Value.cpp
   src/core/ResearchSpace.cpp

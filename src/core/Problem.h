@@ -93,6 +93,8 @@ public:
   // Private attribute accessor methods
   //  
 
+  void addVariable(Variable* var);
+
 private:
 
 public:

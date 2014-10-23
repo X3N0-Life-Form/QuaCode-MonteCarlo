@@ -27,49 +27,20 @@ public:
   IntegerVariable ( );
 
   /**
+   * Regular Constructor
+   */
+  IntegerVariable(Quantifier quant, Type type, std::string name, Domain* domain);
+
+  /**
    * Empty Destructor
    */
   virtual ~IntegerVariable ( );
 
-  // Static Public attributes
-  //  
 
-  // Public attributes
-  //  
+  // Public Methods
+  //
 
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-protected:
-
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
+  virtual Type getType();
 
 private:
 
