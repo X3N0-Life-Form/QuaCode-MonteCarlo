@@ -10,7 +10,7 @@
 #include <vector>
 
 
-
+using namespace std;
 namespace core {
 
 
@@ -26,48 +26,25 @@ public:
   // Constructors/Destructors
   //  
 
-
-  /**
-   * Empty Constructor
-   */
   Variable ( );
 
-  /**
-   * Regular Constructor
-   */
   Variable(Quantifier quant, Type type, std::string name, Domain* domain);
   
-  /**
-   * Empty Destructor
-   */
   virtual ~Variable ( );
 
-  // Public Methods
-  //
-
-  /**
-   * @return Type
-   */
   virtual Type getType ( ) = 0;
+  string getName();
+  Domain* getDomain();
+  Quantifier getQuantifier();
 
 
 private:
-
-  // Static Private attributes
-  //  
-
-  // Private attributes
-  //  
+ 
   std::string name;
   Domain* domain;
   Quantifier quantifier;
   Type type;
   
-public:
-
-
-  // Private attribute accessor methods
-  //  
 
 
 

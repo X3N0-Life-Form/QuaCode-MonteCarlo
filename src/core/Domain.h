@@ -49,7 +49,7 @@ public:
   // add a value into alreadyChecked
   bool addValue(int value);
 
-  bool alreadyInto(int value)
+  bool alreadyInto(int value);
 
 
 

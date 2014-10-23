@@ -12,18 +12,23 @@ Variable::Variable(Quantifier quant, Type type, std::string name, Domain* domain
   : quantifier(quant), type(type), name(name), domain(domain) {
 }
 
-Variable::~Variable ( ) { }
+  string Variable::getName() {
+  	return name;
+  }
 
-//  
-// Methods
-//  
+  Domain* Variable::getDomain() {
+  	return domain;
+  }
+
+  Quantifier Variable::getQuantifier() {
+  	return quantifier;
+  }
+
+Variable::~Variable ( ) { }
 
 
 // Accessor methods
 //  
 
-
-// Other methods
-//  
 
 
