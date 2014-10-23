@@ -29,19 +29,23 @@ int MonteCarloExplorer::getFrequence() {
 
 
 
-//  
-// Methods
-//  
+///////////////////
+// Methods/////////
+///////////////////
+
+// MONTE-CARLO ALGORITHM //
 
 void MonteCarloExplorer::heuristic() {
 	srand(time(NULL));
 
-	metropolis(5);
+	//metropolis(5);
 }
 
 
-// true => acceptance else false
-// delta will be the current state - the new state => if the new one has more conflicts then it becomes the current state
+
+// METROPOLIS ACCEPTANCE RULE - SA //
+	/*	true => acceptance else false
+	 	delta will be (the current state - the new state) => if the new one has more conflicts then it becomes the current state */
 bool MonteCarloExplorer::metropolis(int delta){
 	double value = exp(delta / temperature);
 	double randValue = rand() % 10;
@@ -55,15 +59,9 @@ bool MonteCarloExplorer::metropolis(int delta){
 	}
 }
 
+// used to decrease temperature into metropolis
 void MonteCarloExplorer::decreaseTemperature() {
 	temperature = temperature * 0.98;
 }
-
-// Accessor methods
-//  
-
-
-// Other methods
-//  
 
 

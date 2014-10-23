@@ -6,23 +6,23 @@ using namespace core;
 //  
 
 Value::Value ( ) {
-initAttributes();
 }
 
 Value::~Value ( ) { }
 
-//  
-// Methods
-//  
-
-
 // Accessor methods
 //  
 
+    Type Value::getVarType() {
+    	return varType;
+    }
 
-// Other methods
-//  
+    bool Value::getBValue(){
+    	return bValue;
+    }
 
-void Value::initAttributes ( ) {
-}
+    int Value::getiValue(){
+    	return iValue;
+    }
+
 
