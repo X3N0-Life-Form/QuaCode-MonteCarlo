@@ -2,10 +2,21 @@
 #ifndef SIBUSADAPTER_H
 #define SIBUSADAPTER_H
 
+#include "core/Problem.h"
+#include "core/Quantifier.h"
+#include "Type.h"
+#include "core/factory/VariableFactory.h"
+#include "core/Constraint.h"
+
 #include <string>
 #include <vector>
+#include <iostream>
 
 
+enum AdapterMode {
+  DATA,
+  SEARCH
+};
 
 /**
   * class SIBusAdapter
@@ -30,46 +41,18 @@ public:
    */
   virtual ~SIBusAdapter ( );
 
-  // Static Public attributes
-  //  
+  // Public Methods
+  //
+  void dealWithInput();
+  void dealWithInputData(std::string line);
+  void dealWithInputSearch(std::string line);
+  
+  Quantifier identifyQuantifier(std::string s_quant);
+  Type identifyType(std::string s_type);
+  core::Domain* identifyDomain(std::string s_domain);
 
-  // Public attributes
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-protected:
-
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-
+  core::constraint_type identifyConstraintType(std::string type);
+  core::comparison_type identifyComparisonType(std::string type);
 private:
 
   // Static Private attributes
@@ -77,25 +60,13 @@ private:
 
   // Private attributes
   //  
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-
+  std::istream& input;
+  std::ostream& output;
+  core::Problem* problem;
+  AdapterMode mode;
 
 };
+
+std::vector<std::string> tokenize(std::string toSplit, std::string token);
 
 #endif // SIBUSADAPTER_H
