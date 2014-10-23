@@ -6,11 +6,38 @@
 
 #include <string>
 #include <vector>
+#include "Variable.h"
 
 
 
 namespace core {
 
+enum comparison_type {
+  NQ,
+  EQ,
+  LQ,
+  LE,
+  GQ,
+  GR
+};
+
+enum constraint_type {
+  AND,
+  OR,
+  XOR,
+  IMP,
+  C_EQ, //same as EQ, just to avoid conflicts with previous declaration
+  TIMES,
+  LINEAR,
+  RE_AND,
+  RE_OR,
+  RE_IMP,
+  RE_XOR,
+  RE_EQ,
+  RE_TIMES,
+  RE_LINEAR,
+  ELEMENT
+};
 
 /**
   * class Constraint
@@ -19,93 +46,34 @@ namespace core {
 
 class Constraint
 {
+
+private:
+  std::vector<Variable *> vars;
+  constraint_type constraintType;
+  comparison_type comparisonType;
+
 public:
 
   // Constructors/Destructors
   //  
 
+  Constraint (constraint_type cstT, comparison_type cmpT);
 
-  /**
-   * Empty Constructor
-   */
-  Constraint ( );
-
-  /**
-   * Empty Destructor
-   */
   virtual ~Constraint ( );
 
-  // Static Public attributes
-  //  
+  //getters
 
-  // Public attributes
-  //  
+  constraint_type getConstraintType ();
+  comparison_type getComparisonType();
+  std::vector<Variable * > getVars();
 
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
+  void addVar(Variable * var);
 
 
   /**
    * @return Type
    */
   virtual Type getType ( ) = 0;
-
-protected:
-
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-
-private:
-
-  // Static Private attributes
-  //  
-
-  // Private attributes
-  //  
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-
 
 };
 }; // end of package namespace
