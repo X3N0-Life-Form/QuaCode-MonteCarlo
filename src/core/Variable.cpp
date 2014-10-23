@@ -8,18 +8,27 @@ using namespace core;
 Variable::Variable ( ) {
 }
 
-Variable::~Variable ( ) { }
+Variable::Variable(Quantifier quant, Type type, std::string name, Domain* domain) 
+  : quantifier(quant), type(type), name(name), domain(domain) {
+}
 
-//  
-// Methods
-//  
+  string Variable::getName() {
+  	return name;
+  }
+
+  Domain* Variable::getDomain() {
+  	return domain;
+  }
+
+  Quantifier Variable::getQuantifier() {
+  	return quantifier;
+  }
+
+Variable::~Variable ( ) { }
 
 
 // Accessor methods
 //  
 
-
-// Other methods
-//  
 
 

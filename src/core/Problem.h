@@ -5,6 +5,7 @@
 #include "Variable.h"
 #include "Constraint.h"
 #include "Domain.h"
+#include "Value.h"
 
 #include <string>
 #include <vector>
@@ -25,83 +26,27 @@ public:
 
   // Constructors/Destructors
   //  
-
-
-  /**
-   * Empty Constructor
-   */
   Problem ( );
-
-  /**
-   * Empty Destructor
-   */
   virtual ~Problem ( );
 
-  // Static Public attributes
-  //  
-
-  // Public attributes
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-protected:
-
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-
 private:
-
-  // Static Private attributes
-  //  
-
-  // Private attributes
-  //  
   std::vector<Variable*> variables;
   std::vector<Constraint*> constraints;
-  std::vector<Domain*> domains;
-public:
 
-
-  // Private attribute accessor methods
-  //  
-
-private:
+  std::vector<std::pair<Variable *, Value *> > values;
 
 public:
 
 
-  // Private attribute accessor methods
-  //  
+  void addVariable(Variable* var);
+  void addConstraint(Constraint* cst);
+  void addValue(Variable* var, Value* val);
 
-private:
+  std::vector<Variable *> getVariables();
+  std::vector<Constraint *> getConstraints();
+  std::vector<std::pair<Variable *, Value *> > getValues();
+
+  void generateValueVector();
 
 
 

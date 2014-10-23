@@ -8,12 +8,20 @@ using namespace core;
 BooleanVariable::BooleanVariable ( ) {
 }
 
+BooleanVariable::BooleanVariable(Quantifier quant, Type type, std::string name, Domain* domain)
+  : Variable(quant, type, name, domain) {
+
+}
+
 BooleanVariable::~BooleanVariable ( ) { }
 
 //  
 // Methods
 //  
 
+Type BooleanVariable::getType() {
+  return BOOLEAN;
+}
 
 // Accessor methods
 //  

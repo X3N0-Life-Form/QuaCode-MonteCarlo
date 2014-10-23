@@ -5,6 +5,10 @@
 
 #include <string>
 #include <vector>
+#include <math.h>
+#include <time.h>
+#include <cstdlib> // rand()
+#include <iostream>
 
 
 
@@ -18,6 +22,12 @@ namespace solve {
 
 class MonteCarloExplorer : public Explorer
 {
+
+private:
+  double temperature;
+  int frequence;
+  Problem * problem; // contains nbVar, variables, domains, constraints
+
 public:
 
   // Constructors/Destructors
@@ -27,12 +37,32 @@ public:
   /**
    * Empty Constructor
    */
-  MonteCarloExplorer ( );
+  MonteCarloExplorer();
+
+  /////////// getters & setters ///////////
+  ///////////////////////////////////////
+
+double getTemperature();
+
+int getFrequence();
+
+
+  ///////////////////////////////////////////
+  //////// Methods///////////////////////////
+  ///////////////////////////////////////////
+
+  void heuristic();
+
+  bool metropolis(int delta);
+
+  void decreaseTemperature();
 
   /**
    * Empty Destructor
    */
   virtual ~MonteCarloExplorer ( );
+
+
 
   // Static Public attributes
   //  

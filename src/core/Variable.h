@@ -4,12 +4,13 @@
 
 #include "../Type.h"
 #include "Domain.h"
+#include "Quantifier.h"
 
 #include <string>
 #include <vector>
 
 
-
+using namespace std;
 namespace core {
 
 
@@ -25,87 +26,25 @@ public:
   // Constructors/Destructors
   //  
 
-
-  /**
-   * Empty Constructor
-   */
   Variable ( );
 
-  /**
-   * Empty Destructor
-   */
+  Variable(Quantifier quant, Type type, std::string name, Domain* domain);
+  
   virtual ~Variable ( );
 
-  // Static Public attributes
-  //  
-
-  // Public attributes
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-
-  /**
-   * @return Type
-   */
   virtual Type getType ( ) = 0;
-
-protected:
-
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
+  string getName();
+  Domain* getDomain();
+  Quantifier getQuantifier();
 
 
 private:
-
-  // Static Private attributes
-  //  
-
-  // Private attributes
-  //  
+ 
+  std::string name;
   Domain* domain;
+  Quantifier quantifier;
+  Type type;
   
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
 
 
 
