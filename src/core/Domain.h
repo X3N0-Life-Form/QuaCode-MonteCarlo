@@ -19,91 +19,37 @@ namespace core {
 
 class Domain
 {
+
+
+private:
+
+  Type type;
+  // [firstValue; lastValue]
+  int firstValue;
+  int lastValue;
+
+  int* alreadyChecked;
+  int sizeAlreadyChecked;
+
 public:
 
   // Constructors/Destructors
-  //  
 
+  Domain(int val1, int val2);
 
-  /**
-   * Empty Constructor
-   */
-  Domain ( );
-
-  /**
-   * Empty Destructor
-   */
   virtual ~Domain ( );
 
-  // Static Public attributes
-  //  
-
-  // Public attributes
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-
-  /**
-   * @return Type
-   */
+  //getters and setters
   Type getType ( );
+  int getFirstValue();
+  int getLastValue();
+  int * getAlreadyChecked();
+  int getSizeAlreadyChecked();
 
-protected:
+  // add a value into alreadyChecked
+  bool addValue(int value);
 
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-
-private:
-
-  // Static Private attributes
-  //  
-
-  // Private attributes
-  //  
-  Type type;
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
+  bool alreadyInto(int value)
 
 
 
