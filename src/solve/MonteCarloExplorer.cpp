@@ -37,12 +37,29 @@ int MonteCarloExplorer::getFrequence() {
 
 void MonteCarloExplorer::heuristic() {
 	srand(time(NULL));
+	for (unsigned int i = 1; i <= problem->getVariables().size();i++) {
+		cout << " call randDom" << endl;
+		// problem with randDom type
+		//problem->addValue(problem->getVariables()[i], randDom(problem->getVariables()[i].getDomain()) );
+
+		// for(unsigned int k = 1; k <= )
+	}
 
 	//metropolis(5);
 }
 
 // RANDOM VALUE => random initialisation for each variables
-
+	// NOTE : this is very basic => next step : find how to exclude some values (the ones already tested)
+	// SECOND NOTE : test if it works
+	// must be of type Value (I guess)
+int MonteCarloExplorer::randDom(Domain dom) {
+	while(true) {
+		int value = rand() % (dom.getLastValue() - dom.getFirstValue() + 1) + dom.getFirstValue();
+		if (!dom.alreadyInto(value)){
+			return value;
+		}
+	}
+}
 
 
 

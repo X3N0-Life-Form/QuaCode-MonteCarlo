@@ -14,7 +14,6 @@
 
 namespace solve {
 
-
 /**
   * class MonteCarloExplorer
   * 
@@ -31,12 +30,7 @@ private:
 public:
 
   // Constructors/Destructors
-  //  
-
-
-  /**
-   * Empty Constructor
-   */
+  // 
   MonteCarloExplorer();
 
   /////////// getters & setters ///////////
@@ -50,9 +44,14 @@ int getFrequence();
   ///////////////////////////////////////////
   //////// Methods///////////////////////////
   ///////////////////////////////////////////
-
+  // Monte Carlo
   void heuristic();
 
+  // rand(Di)
+
+  int randDom(Domain dom);
+
+  // Metropolis acceptance rule
   bool metropolis(int delta);
 
   void decreaseTemperature();
