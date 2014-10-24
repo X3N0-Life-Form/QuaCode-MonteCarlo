@@ -50,6 +50,7 @@ public:
    * @return NULL if the variable could not be found.
    */
   Variable* getVariable(std::string varName);
+  Domain* getDomain(int lowerBoundary, int upperBoundary);
 
   void generateValueVector();
 

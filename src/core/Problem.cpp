@@ -49,6 +49,17 @@ Variable* Problem::getVariable(std::string varName) {
   return NULL;
 }
 
+Domain* Problem::getDomain(int lowerBoundary, int upperBoundary) {
+  // it would be cool if we had a domain vector ...
+  for (Variable* var : variables) {
+    Domain* dom = var->getDomain();
+    if (dom->getFirstValue() == lowerBoundary && dom->getLastValue() == upperBoundary) {
+      return dom;
+    }
+  }
+  return NULL;
+}
+
   void Problem::generateValueVector(){
   	for (unsigned int i = 0; i < variables.size(); i++) {
   		values.push_back(std::pair<Variable*, Value*>(variables[i], NULL));
