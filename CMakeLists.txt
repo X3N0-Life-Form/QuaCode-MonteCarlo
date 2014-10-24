@@ -16,10 +16,12 @@ set(CORE_SRCS
   src/core/Constraint.cpp
   src/core/IntegerConstraint.cpp
   src/core/BooleanConstraint.cpp
+  src/core/ConstraintArgument.cpp
   src/core/Variable.cpp
   src/core/IntegerVariable.cpp
   src/core/BooleanVariable.cpp
   src/core/factory/VariableFactory.cpp
+  src/core/Constant.cpp
   src/core/Domain.cpp
   src/core/Value.cpp
   src/core/ResearchSpace.cpp

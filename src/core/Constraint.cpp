@@ -23,14 +23,14 @@ Constraint::~Constraint ( ) { }
   comparison_type Constraint::getComparisonType() {
   	return comparisonType;
   }
-  std::vector<Variable *> Constraint::getVars() {
-  	return vars;
+  std::vector<ConstraintArgument *> Constraint::getArguments() {
+  	return arguments;
   }
 
   // adds variable into var
 
-  void Constraint::addVar(Variable * var) {
-  	vars.push_back(var);
+  void Constraint::addArgument(ConstraintArgument * var) {
+  	arguments.push_back(var);
   }
 
 

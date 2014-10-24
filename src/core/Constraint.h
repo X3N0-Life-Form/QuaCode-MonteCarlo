@@ -2,12 +2,12 @@
 #ifndef CONSTRAINT_H
 #define CONSTRAINT_H
 
-#include "../Type.h"
-
 #include <string>
 #include <vector>
-#include "Variable.h"
 
+#include "../Type.h"
+#include "Variable.h"
+#include "ConstraintArgument.h"
 
 
 namespace core {
@@ -48,7 +48,7 @@ class Constraint
 {
 
 private:
-  std::vector<Variable *> vars;
+  std::vector<ConstraintArgument *> arguments;
   constraint_type constraintType;
   comparison_type comparisonType;
 
@@ -65,9 +65,9 @@ public:
 
   constraint_type getConstraintType ();
   comparison_type getComparisonType();
-  std::vector<Variable * > getVars();
+  std::vector<ConstraintArgument * > getArguments();
 
-  void addVar(Variable * var);
+  void addArgument(ConstraintArgument * var);
 
 
   /**
