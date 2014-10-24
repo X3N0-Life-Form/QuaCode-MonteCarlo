@@ -5,6 +5,7 @@
 #include "../Type.h"
 #include "Domain.h"
 #include "Quantifier.h"
+#include "ConstraintArgument.h"
 
 #include <string>
 #include <vector>
@@ -19,7 +20,7 @@ namespace core {
   * 
   */
 
-class Variable
+class Variable : ConstraintArgument
 {
 public:
 
