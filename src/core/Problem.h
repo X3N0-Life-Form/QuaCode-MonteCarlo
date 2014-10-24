@@ -46,6 +46,11 @@ public:
   std::vector<Constraint *> getConstraints();
   std::vector<std::pair<Variable *, Value *> > getValues();
 
+  /**
+   * @return NULL if the variable could not be found.
+   */
+  Variable* getVariable(std::string varName);
+
   void generateValueVector();
 
 

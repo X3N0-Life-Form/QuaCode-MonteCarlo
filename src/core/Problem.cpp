@@ -12,13 +12,13 @@ Problem::~Problem ( ) { }
 
  
 
-	void Problem::addVariable(Variable* var) {
-	  variables.push_back(var);
-	}
+void Problem::addVariable(Variable* var) {
+  variables.push_back(var);
+}
 
-  void Problem::addConstraint(Constraint* cst) {
-  	constraints.push_back(cst);
-  }
+void Problem::addConstraint(Constraint* cst) {
+  constraints.push_back(cst);
+}
 
 
   void Problem::addValue(Variable* var, Value* val) {
@@ -39,6 +39,15 @@ Problem::~Problem ( ) { }
   std::vector<std::pair<Variable *, Value *> > Problem::getValues(){
   	return values;
   }
+
+Variable* Problem::getVariable(std::string varName) {
+  for (Variable* var : variables) {
+    if (var->getName() == varName) {
+      return var;
+    }
+  }
+  return NULL;
+}
 
   void Problem::generateValueVector(){
   	for (unsigned int i = 0; i < variables.size(); i++) {
