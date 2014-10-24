@@ -5,7 +5,10 @@ using namespace core;
 // Constructors/Destructors
 //  
 
-Value::Value ( ) {
+Value::Value(int value) : iValue(value), varType(INTEGER) {
+}
+
+Value::Value(bool value) : bValue(value), varType(BOOLEAN) {
 }
 
 Value::~Value ( ) { }

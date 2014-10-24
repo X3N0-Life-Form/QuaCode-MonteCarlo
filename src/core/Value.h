@@ -25,7 +25,8 @@ namespace core {
 
     // Constructors/Destructors
 
-    Value ( );
+    Value(int value);
+    Value(bool value);
     virtual ~Value ( );
 
     // Public attribute accessor methods

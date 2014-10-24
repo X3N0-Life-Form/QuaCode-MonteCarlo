@@ -19,35 +19,29 @@ namespace core {
   * class Variable
   * 
   */
-
-class Variable : ConstraintArgument
+class Variable : public ConstraintArgument
 {
 public:
 
   // Constructors/Destructors
   //  
-
   Variable ( );
-
   Variable(Quantifier quant, Type type, std::string name, Domain* domain);
-  
   virtual ~Variable ( );
 
+  // Getters
+  //
   virtual Type getType ( ) = 0;
   string getName();
   Domain* getDomain();
   Quantifier getQuantifier();
 
-
 private:
  
-  std::string name;
-  Domain* domain;
   Quantifier quantifier;
   Type type;
-  
-
-
+  std::string name;
+  Domain* domain;
 
 };
 }; // end of package namespace

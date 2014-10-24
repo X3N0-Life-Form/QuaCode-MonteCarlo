@@ -3,6 +3,7 @@
 #define DOMAIN_H
 
 #include "../Type.h"
+#include "ConstraintArgument.h"
 
 #include <string>
 #include <vector>
@@ -17,7 +18,7 @@ namespace core {
   * 
   */
 
-class Domain
+  class Domain : public ConstraintArgument
 {
 
 

@@ -31,7 +31,7 @@ public:
 
   virtual ~IntegerConstraint ( );
 
-
+  virtual Type getType();
 
 };
 }; // end of package namespace

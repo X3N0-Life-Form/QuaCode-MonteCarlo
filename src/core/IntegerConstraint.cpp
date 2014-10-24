@@ -18,6 +18,9 @@ IntegerConstraint::~IntegerConstraint ( ) { }
 // Accessor methods
 //  
 
+Type IntegerConstraint::getType() {
+  return INTEGER;
+}
 
 // Other methods
 //  

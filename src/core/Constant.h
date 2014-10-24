@@ -6,7 +6,7 @@
 #include "ConstraintArgument.h"
 
 namespace core {
-  class Constant : ConstraintArgument {
+  class Constant : public ConstraintArgument {
   private:
     Value value;
 
