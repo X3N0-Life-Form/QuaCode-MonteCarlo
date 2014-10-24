@@ -3,10 +3,10 @@
 #define RESEARCHSPACE_H
 
 #include "Node.h"
+#include "Variable.h"
 
 #include <string>
 #include <vector>
-
 
 
 namespace core {
@@ -23,56 +23,10 @@ public:
 
   // Constructors/Destructors
   //  
-
-
-  /**
-   * Empty Constructor
-   */
   ResearchSpace ( );
 
-  /**
-   * Empty Destructor
-   */
   virtual ~ResearchSpace ( );
 
-  // Static Public attributes
-  //  
-
-  // Public attributes
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-protected:
-
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
 
 
 private:
@@ -82,23 +36,7 @@ private:
 
   // Private attributes
   //  
-  Node* root;
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
+  Node<Variable>* root;
 
 
 

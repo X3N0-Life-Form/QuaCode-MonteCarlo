@@ -21,7 +21,7 @@ namespace core {
       public:
 
         // Constructors/Destructors
-        Node ();
+        //Node ();
         Node(int id);
         //Node(Node<T>* parent, int id, Domain d,T data);
         virtual ~Node ();
@@ -36,8 +36,8 @@ namespace core {
         Node<T>* getChild(const size_t& indx) const;
         Node<T>* getParent() const;
         int getNumChildren() const;
-        bool isLeaf ();
-        void setLeaf();
+        bool isLeaf () const;
+        void setLeaf(bool b);
 
       protected:
         bool leaf; // Flag to know if box is a leaf or not

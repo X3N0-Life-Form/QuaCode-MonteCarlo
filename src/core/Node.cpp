@@ -5,28 +5,29 @@ using namespace core;
 // Constructors/Destructors
 //  
 
-Node::Node ( ) {
-}
+//Node::Node ( ) {
+//}
 
 template<class T>
-
-Node<T>::Node(int id) :  {
-    this->id = id;   
+Node<T>::Node(int id) :  id(id) {
+  
 }
-/*
-Node<T>::Node(Node<T>* parent, int id, Domain d,T data) : parent(parent) {
+
+/*Node<T>::Node(Node<T>* parent, int id, Domain d,T data) : parent(parent) {
     this->data = new T(data);
     this->id = id;
     this->Domain = d;
-}
-*/
-Node::~Node ( ) { }
+}*/
+
+template<class T>
+Node<T>::~Node ( ) { }
 
 template<class T>
 T& Node<T>::getData() const {
     return *this->data;
 }
 
+template<class T>
 int Node<T>::getId() const {
     return *this->id;
 }
@@ -41,7 +42,7 @@ void Node<T>::setData(const T& data) {
 }
 
 template<class T>
-void Node<T>::addChild(const int id,, const T& data) {
+void Node<T>::addChild(const int id, const T& data) {
     children.push_back(new Node<T>(this, id, data));
 }
 
