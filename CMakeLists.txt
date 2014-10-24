@@ -16,6 +16,7 @@ set(CORE_SRCS
   src/core/Constraint.cpp
   src/core/IntegerConstraint.cpp
   src/core/BooleanConstraint.cpp
+  src/core/factory/ConstraintFactory.cpp
   src/core/ConstraintArgument.cpp
   src/core/Variable.cpp
   src/core/IntegerVariable.cpp
