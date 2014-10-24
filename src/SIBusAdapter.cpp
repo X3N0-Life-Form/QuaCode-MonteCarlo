@@ -59,25 +59,59 @@ void SIBusAdapter::dealWithInputData(string line) {
     throw "not implemented";
   } else if (line == "CONSTRAINT") {
     vector<string> tokens = tokenize(line, " ");
-    int i = 2;
+    unsigned int i = 2;
     constraint_type constraintType = identifyConstraintType(tokens[0]);
     comparison_type comparisonType = identifyComparisonType(tokens[1]);
+    Constraint* constraint = ConstraintFactory::createConstraint(constraintType, comparisonType);
     for ( ;i < tokens.size(); i++) {
-      
+      ConstraintArgument* argument = identifyConstraintArgument(tokens[i]);
+      constraint->addArgument(argument);
     }
+    problem->addConstraint(constraint);
   } else if (line == "VAR_ARRAY_BINDER") {
     throw "not implemented";
-  } else if (line == "VAR_ARRAY_AUX") {    
+  } else if (line == "VAR_ARRAY_AUX") {
     throw "not implemented";
   } else {
     cerr << "Unrecognized data input: " << line << endl;
   }
 }
 
-void SIBusAdapter::dealWithInputSearch(string line) {
-  string word;
-  input >> word;
-  
+ConstraintArgument* SIBusAdapter::identifyConstraintArgument(string argument) {
+  int leftBracketPos = argument.find("(");
+  int rightBracketPos = argument.find(")");
+  string s_value = argument.substr(leftBracketPos + 1, rightBracketPos - 1);
+  if (argument.find("var") != string::npos) {
+    Variable* variable = problem->getVariable(s_value);
+    if (variable != NULL) {
+      return variable;
+    } else {
+      cerr << "Constraint argument error: unknown variable " << s_value << endl;
+      return NULL;
+    }
+  } else if (argument.find("int") != string::npos) {
+    Value value(stoi(s_value));
+    return new Constant(value);
+  } else if (argument.find("bool") != string::npos) {
+    if (s_value == "true") {
+      return new Constant(true);
+    } else {
+      return new Constant(false);
+    }
+  } else if (argument.find("interval") != string::npos) {
+    vector<string> bound = tokenize(s_value, ",");
+    int lowerBoundary = stoi(bound[0]);
+    int upperBoundary = stoi(bound[1]);
+    Domain* domain = problem->getDomain(lowerBoundary, upperBoundary);
+    if (domain != NULL) {
+      return domain;
+    } else {
+      cerr << "Constraint argument error: unknown domain " << s_value << endl;
+      return NULL;
+    }
+  } else {
+    return NULL; // could not identify argument
+  }
 }
 
 Quantifier SIBusAdapter::identifyQuantifier(string s_quant) {
@@ -86,7 +120,7 @@ Quantifier SIBusAdapter::identifyQuantifier(string s_quant) {
   } else if (s_quant == "F") {
     return FORALL;
   } else {
-    throw "Unrecognised quantifier";
+    throw string("Unrecognised quantifier: ").append(s_quant);
   }
 }
 
@@ -96,7 +130,7 @@ Type SIBusAdapter::identifyType(string s_type) {
   } else if (s_type == "B") {
     return BOOLEAN;
   } else {
-    throw "Unrecognized type";
+    throw string("Unrecognized type: ").append(s_type);
   }
 }
 
@@ -110,6 +144,13 @@ constraint_type SIBusAdapter::identifyConstraintType(std::string type) {
 comparison_type SIBusAdapter::identifyComparisonType(std::string type) {
   return NQ;
 }
+
+void SIBusAdapter::dealWithInputSearch(string line) {
+  string word;
+  input >> word;
+  //TODO
+}
+
 //
 // Other Functions
 //

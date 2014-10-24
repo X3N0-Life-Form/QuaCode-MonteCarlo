@@ -7,6 +7,8 @@
 #include "Type.h"
 #include "core/factory/VariableFactory.h"
 #include "core/Constraint.h"
+#include "core/factory/ConstraintFactory.h"
+#include "core/Constant.h"
 
 #include <string>
 #include <vector>
@@ -46,13 +48,14 @@ public:
   void dealWithInput();
   void dealWithInputData(std::string line);
   void dealWithInputSearch(std::string line);
-  
+  // Variable
   Quantifier identifyQuantifier(std::string s_quant);
   Type identifyType(std::string s_type);
   core::Domain* identifyDomain(std::string s_domain);
-
+  // Constraint
   core::constraint_type identifyConstraintType(std::string type);
   core::comparison_type identifyComparisonType(std::string type);
+  core::ConstraintArgument* identifyConstraintArgument(std::string argument);
 private:
 
   // Static Private attributes
