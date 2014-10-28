@@ -5,21 +5,18 @@ using namespace core;
 // Constructors/Destructors
 //  
 
-ResearchSpace::ResearchSpace ( ) {
+
+template<class T>
+ResearchSpace<T>::ResearchSpace (Node<T>* r) {
+	this->root = r;
 }
 
-ResearchSpace::~ResearchSpace ( ) { }
+template<class T>
+ResearchSpace<T>::ResearchSpace (Node<T>* r,std::vector<T> variables){
+	this->root = r;
+}
 
-//  
-// Methods
-//  
-
-
-// Accessor methods
-//  
-
-
-// Other methods
-//  
+template<class T>
+ResearchSpace<T>::~ResearchSpace () {}
 
 

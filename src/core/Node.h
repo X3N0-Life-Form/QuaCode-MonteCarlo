@@ -4,8 +4,11 @@
 
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <iostream>
 #include <cstddef>
-#include "Domain.h"
+//#include "Variable.h"
+//#include "ResearchSpace.h"
 
 namespace core {
 
@@ -17,34 +20,38 @@ namespace core {
     template<class T>
     class Node
     {
-      //friend class Domain;
+      
       public:
 
         // Constructors/Destructors
-        //Node ();
-        Node(int id);
-        //Node(Node<T>* parent, int id, Domain d,T data);
+        Node ();
+        //for test
+        Node(int id, T data);
+        Node(Node<T>* parent, int id, T data);
         virtual ~Node ();
-
-        T& getData() const;
+        T getData() const;
         int getId() const;
-        //Domain getDomain() const;
-        void setData(const T& data);
-        void addChild(const int id, const T& data);
+        void setData(const T data);
+        void setParent(Node<T>* p);
+        
+        void addChild(const int id, const T data);
+        
         void removeChild(const size_t& indx);
-        Node<T>* findChild(const int id) const;
+        void removeChild(const int id,const T data);
+        Node<T>* findChild(const int id,const T data) const;
         Node<T>* getChild(const size_t& indx) const;
         Node<T>* getParent() const;
         int getNumChildren() const;
-        bool isLeaf () const;
+
+        bool isLeaf ();
         void setLeaf(bool b);
 
       protected:
         bool leaf; // Flag to know if box is a leaf or not
 
       private:
-        T* data; //value
-        int id; //index of the current node
+        T data; //value
+        int id; //index of the current variable
         //Domain d;
         Node<T>* parent;
         std::vector<Node<T>*> children;
