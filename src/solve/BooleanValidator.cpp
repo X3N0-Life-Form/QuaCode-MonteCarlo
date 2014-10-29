@@ -54,16 +54,26 @@ BooleanValidator::~BooleanValidator ( ) { }
 				}
 			}
 
- 	/*	case IMP : 	
- 			value = value && Validator::getArgumentBValue(cst->getArguments()[0], values)	
+ 		case IMP : 	
+ 			value = value && Validator::getArgumentBValue(cst->getArguments()[0], values);	
  			for(unsigned int i = 1; i < cst->getArguments().size(); i++) {
 				if (!i == cst->getArguments().size() - 1) {
+					if (!value) {
+						value = true;
+					}
+					else if (Validator::getArgumentBValue(cst->getArguments()[i], values) == true) {
+						value = true;
+					}
+					else {
+						value = false;
+					}
 				}
 				else {
-					
+					bool lastValue = Validator::getArgumentBValue(cst->getArguments()[i], values);
+					return Validator::checkComparison(value, CT, lastValue);
 				}
 			}
-*/
+
  		default : 		
 			cerr << "not implemented yet" << endl;
 			return false;
