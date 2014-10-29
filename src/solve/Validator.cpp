@@ -24,7 +24,13 @@ int Validator::getArgumentIValue(ConstraintArgument* argument, std::vector<std::
 }
 
 bool Validator::getArgumentBValue(ConstraintArgument* argument, std::vector<std::pair<Variable *, Value *> > values) {
-	return false;
+	Variable* var = dynamic_cast<Variable*>(argument);
+	if (var != NULL) {
+		return getVariableValue(var, values)->getBValue();
+	} else {
+		Constant* constant = dynamic_cast<Constant*>(argument);
+		return constant->getValue()->getBValue();
+	}
 }
 
 Value* Validator::getVariableValue(Variable* var, std::vector<std::pair<Variable *, Value *> > values) {
@@ -38,6 +44,25 @@ Value* Validator::getVariableValue(Variable* var, std::vector<std::pair<Variable
 }
 
 bool Validator::checkComparison(int value, comparison_type CT, int lastValue) {
+	switch(CT) {
+		case NQ :
+			return (value != lastValue);	
+		case EQ :
+		  	return (value == lastValue);
+		case LQ :
+			return (value <= lastValue);
+		case LE :
+			return (value < lastValue);
+		case GQ :
+			return (value >= lastValue);
+		case GR :
+			return (value > lastValue);
+	        default:
+		  return false;
+		}
+}
+
+bool Validator::checkComparison(bool value, comparison_type CT, bool lastValue) {
 	switch(CT) {
 		case NQ :
 			return (value != lastValue);	

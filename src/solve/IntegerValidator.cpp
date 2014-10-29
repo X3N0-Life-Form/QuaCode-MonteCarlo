@@ -29,7 +29,7 @@ bool IntegerValidator::validateConstraint(Constraint * cst, std::vector<std::pai
 				}
 			}
 		case LINEAR:
-			for(unsigned int i = 0; i < cst->getArguments().size(); i+2) {
+			for(unsigned int i = 0; i < cst->getArguments().size(); i+=2) {
 				if (i < cst->getArguments().size() - 1) {
 					value += Validator::getArgumentIValue(cst->getArguments()[i], values)* Validator::getArgumentIValue(cst->getArguments()[i+1], values);
 				}
