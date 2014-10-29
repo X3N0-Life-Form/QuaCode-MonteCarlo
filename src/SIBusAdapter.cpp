@@ -90,13 +90,13 @@ ConstraintArgument* SIBusAdapter::identifyConstraintArgument(string argument) {
       return NULL;
     }
   } else if (argument.find("int") != string::npos) {
-    Value value(stoi(s_value));
+    Value* value = new Value(stoi(s_value));
     return new Constant(value);
   } else if (argument.find("bool") != string::npos) {
     if (s_value == "true") {
-      return new Constant(true);
+      return new Constant(new Value(true));
     } else {
-      return new Constant(false);
+      return new Constant(new Value(false));
     }
   } else if (argument.find("interval") != string::npos) {
     vector<string> bound = tokenize(s_value, ",");

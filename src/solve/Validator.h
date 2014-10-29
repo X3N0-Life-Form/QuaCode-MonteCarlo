@@ -1,12 +1,14 @@
 
 #ifndef VALIDATOR_H
 #define VALIDATOR_H
-#include "../core/Constraint.h"
+#include "../core/Problem.h"
+#include "../core/Constant.h"
 
 #include <string>
 #include <vector>
 
 
+using namespace core;
 
 namespace solve {
 
@@ -18,93 +20,25 @@ namespace solve {
 
 class Validator
 {
+
+private:
+  Problem * prob;
+
 public:
 
   // Constructors/Destructors
-  //  
 
+  Validator (Problem * pb);
 
-  /**
-   * Empty Constructor
-   */
-  Validator ( );
-
-  /**
-   * Empty Destructor
-   */
   virtual ~Validator ( );
 
-  // Static Public attributes
-  //  
-
-  // Public attributes
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-
-  /**
-   * @return bool
-   * @param  constraint
-   */
-  //virtual bool validate (core::Constraint constraint ) = 0;
+  virtual bool validateConstraint(Constraint * cst, std::vector<std::pair<Variable *, Value *> > values) = 0;
 
 protected:
-
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-
-private:
-
-  // Static Private attributes
-  //  
-
-  // Private attributes
-  //  
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
+  static int getArgumentIValue(ConstraintArgument* argument, std::vector<std::pair<Variable *, Value *> > values);
+  static bool getArgumentBValue(ConstraintArgument* argument, std::vector<std::pair<Variable *, Value *> > values);
+  static Value* getVariableValue(Variable* var, std::vector<std::pair<Variable *, Value *> > values);
+  static bool checkComparison(int value, comparison_type CT, int lastValue);
 
 
 };

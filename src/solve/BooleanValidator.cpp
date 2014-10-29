@@ -5,21 +5,13 @@ using namespace solve;
 // Constructors/Destructors
 //  
 
-BooleanValidator::BooleanValidator ( ) {
-}
+BooleanValidator::BooleanValidator(Problem * pb):Validator(pb) {}
 
 BooleanValidator::~BooleanValidator ( ) { }
 
-//  
-// Methods
-//  
+ bool BooleanValidator::validateConstraint(Constraint * cst, std::vector<std::pair<Variable *, Value *> > values) {
+ 	return false;
+ }
 
-
-// Accessor methods
-//  
-
-
-// Other methods
-//  
 
 
