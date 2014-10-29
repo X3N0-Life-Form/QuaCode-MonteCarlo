@@ -5,7 +5,6 @@
 #include "Node.h"
 #include "Node.cpp"
 #include "Variable.h"
-#include "Variable.cpp"
 
 #include <string>
 #include <vector>

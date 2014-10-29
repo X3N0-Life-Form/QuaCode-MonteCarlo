@@ -37,52 +37,12 @@ public:
    */
   virtual ~Explorer ( );
 
-  // Static Public attributes
-  //  
-
-  // Public attributes
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
 
   /**
    */
   virtual void explore ( )
   {
   }
-
-protected:
-
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
 
 private:
 
@@ -93,23 +53,7 @@ private:
   //  
   std::vector<Validator*> validators;
   Problem* problem;
-  ResearchSpace* spaceTree;
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
+  ResearchSpace<Variable*>* spaceTree;
 
 
 };
