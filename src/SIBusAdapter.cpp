@@ -56,7 +56,12 @@ void SIBusAdapter::dealWithInputData(string line) {
     Variable* var = VariableFactory::createVariable(quant, type, name, domain);
     problem->addVariable(var);
   } else if (line == "VAR_AUX") {
-    throw "not implemented";
+    vector<string> tokens = tokenize(line, " ");
+    Quantifier quant = identifyQuantifier(tokens[0]);
+    Type type = identifyType(tokens[1]);
+    string name = tokens[2];
+    Variable* var = VariableFactory::createVariable(quant, type, name);
+    problem->addVariable(var);
   } else if (line == "CONSTRAINT") {
     vector<string> tokens = tokenize(line, " ");
     unsigned int i = 2;

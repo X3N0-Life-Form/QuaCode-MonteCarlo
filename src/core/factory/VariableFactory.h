@@ -13,7 +13,10 @@ namespace core {
     // Public Static Methods
     //
   public:
-    static Variable* createVariable(Quantifier quant, Type type, std::string name, Domain* domain);
+    /**
+     * Note: A variable with no domain (= NULL) is an auxilliary variable.
+     */
+    static Variable* createVariable(Quantifier quant, Type type, std::string name, Domain* domain = NULL);
     
   };
 };

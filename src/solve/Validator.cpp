@@ -42,15 +42,17 @@ bool Validator::checkComparison(int value, comparison_type CT, int lastValue) {
 		case NQ :
 			return (value != lastValue);	
 		case EQ :
-				return (value == lastValue);
-			case LQ :
-				return (value <= lastValue);
-			case LE :
-				return (value < lastValue);
-			case GQ :
-				return (value >= lastValue);
-			case GR :
-				return (value > lastValue);
+		  	return (value == lastValue);
+		case LQ :
+			return (value <= lastValue);
+		case LE :
+			return (value < lastValue);
+		case GQ :
+			return (value >= lastValue);
+		case GR :
+			return (value > lastValue);
+	        default:
+		  return false;
 		}
 }
 

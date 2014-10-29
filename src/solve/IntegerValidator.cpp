@@ -1,5 +1,7 @@
 #include "IntegerValidator.h"
 
+#include <iostream>
+
 using namespace solve;
 
 // Constructors/Destructors
