@@ -92,7 +92,7 @@ ConstraintArgument* SIBusAdapter::identifyConstraintArgument(string argument) {
   } else if (argument.find("int") != string::npos) {
     Value* value = new Value(stoi(s_value));
     return new Constant(value);
-  } else if (argument.find("bool") != string::npos) {
+  } else if (argument.find("1") != string::npos) {
     if (s_value == "true") {
       return new Constant(new Value(true));
     } else {
