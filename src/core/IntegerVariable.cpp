@@ -1,5 +1,6 @@
 #include "IntegerVariable.h"
 
+
 using namespace core;
 
 // Constructors/Destructors

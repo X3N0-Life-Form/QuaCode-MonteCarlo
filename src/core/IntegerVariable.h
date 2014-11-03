@@ -3,6 +3,7 @@
 #define INTEGERVARIABLE_H
 #include "Variable.h"
 
+
 #include <string>
 
 namespace core {

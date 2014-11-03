@@ -3,25 +3,43 @@
 #include <cstdlib>
 #include <iostream>
 #include <cstddef>
-
+#include <map>
 
 #include "ResearchSpace.h"
 #include "ResearchSpace.cpp"
 
 #include "Node.h"
 #include "Variable.h"
+
 #include "IntegerVariable.h"
 #include "IntegerVariable.cpp"
-#include "../Type.h"
-#include "Domain.h"
 #include "Domain.cpp"
 #include "Quantifier.h"
 #include "ConstraintArgument.h"
+
 
 using namespace core;
 using std::string;
 //using boost::
 
+bool satisfy(int x1,int x2,int x3,int x4,int w1,int w2,int w3,int w4,int f){
+    if(x1*w1+x2*w2+x3*w3+x4*w4==f){
+        std::cout<<"f = "<<f<<std::endl;
+        return true;
+    }     
+    else{
+        std::cout<<"failed!"<<std::endl;
+         return false;
+    }
+}
+
+std::map<Variable*, int> recherche(std::vector<Variable*> v){
+    std::map<Variable*, int> solution;
+    //for(int it1=v[0]->)
+    solution[v[0]]=10;
+    std::cout<<"Valeur de "<<v[0]->getName()<<" est "<<solution.find(v[0])->second<<std::endl;
+    return solution;
+}
 
 int main(){
 /*
@@ -96,35 +114,59 @@ int main(){
     	string name;
     };
  */  
-    int but = 40;
-    Domain* myDomain = new Domain(1,40);
+    
+    Domain* myDomain1 = new Domain(1,40);
+    Domain* myDomain2 = new Domain(-1,1);
+    Domain* myDomain3 = new Domain(40,40);
     std::vector<Variable*> v;
-    v.reserve(4);  //fix size of vector v to 4
-    IntegerVariable* var1 = new IntegerVariable(EXISTS, INTEGER, "var1", myDomain);
+    v.reserve(9);  //fix size of vector v to 9
+    IntegerVariable* x1 = new IntegerVariable(EXISTS, INTEGER, "x1", myDomain1);
+    IntegerVariable* x2 = new IntegerVariable(EXISTS, INTEGER, "x2", myDomain1);
+    IntegerVariable* x3 = new IntegerVariable(EXISTS, INTEGER, "x3", myDomain1);
+    IntegerVariable* x4 = new IntegerVariable(EXISTS, INTEGER, "x4", myDomain1);
+
+    IntegerVariable* w1 = new IntegerVariable(EXISTS, INTEGER, "w1", myDomain2);
+    IntegerVariable* w2 = new IntegerVariable(EXISTS, INTEGER, "w2", myDomain2);
+    IntegerVariable* w3 = new IntegerVariable(EXISTS, INTEGER, "w3", myDomain2);
+    IntegerVariable* w4 = new IntegerVariable(EXISTS, INTEGER, "w4", myDomain2);
+
+    IntegerVariable* f = new IntegerVariable(FORALL, INTEGER, "f", myDomain3);
+
     /*
     variable var2(1,40,"x2");
     variable var3(1,40,"x3");
     variable var4(1,40,"x4");
     */
-    v.push_back(var1);
-    /*
-    v.push_back(var2);
-    v.push_back(var3);
-    v.push_back(var4);
-    */
+    v.push_back(x1);
+    v.push_back(x2);
+    v.push_back(x3);
+    v.push_back(x4);
+
+    v.push_back(w1);
+    v.push_back(w2);
+    v.push_back(w3);
+    v.push_back(w4);
+
+    v.push_back(f);
 
     /*
-	Node<variable>* root= new Node<variable>();
+	Node<Variable*>* root= new Node<Variable*>();
 
     std::cout<<"root id is "<<root->getId()<<std::endl;
+    
 	ResearchSpace<variable>* mySpace1 = new ResearchSpace<variable>(root);
 	ResearchSpace<variable>* mySpace2 = new ResearchSpace<variable>(root,v);
-	*/
+	
 	Node<IntegerVariable*>* root= new Node<IntegerVariable*>();
 
     std::cout<<"root id is "<<root->getId()<<std::endl;
 	ResearchSpace<IntegerVariable*>* mySpace1 = new ResearchSpace<IntegerVariable*>(root);
-    root->addChild(0,var1);
+    root->addChild(0,x1);
+    */
+
+    
+
+    recherche(v);
 
 	return 1;
 }
