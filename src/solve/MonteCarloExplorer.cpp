@@ -52,12 +52,29 @@ void MonteCarloExplorer::heuristic() {
 	// NOTE : this is very basic => next step : find how to exclude some values (the ones already tested)
 	// SECOND NOTE : test if it works
 	// must be of type Value (I guess)
-int MonteCarloExplorer::randDom(Domain dom) {
-	while(true) {
-		int value = rand() % (dom.getLastValue() - dom.getFirstValue() + 1) + dom.getFirstValue();
-		if (!dom.alreadyInto(value)){
-			return value;
+Value MonteCarloExplorer::randDom(Variable* var) {
+	Domain* dom = var->getDomain();
+	Type type = var->getType();
+	if(type==INTEGER){
+		while(true) {
+			int valueInt = rand() % (dom->getLastValue() - dom->getFirstValue() + 1) + dom->getFirstValue();
+			if (!dom->alreadyInto(valueInt)){
+				return Value(valueInt);
+			}
 		}
+	}
+	if(type==BOOLEAN){			
+		while(true) {
+			int valueBool = rand() % 1;
+			bool b;
+				if(valueBool==0)
+					b=false;
+				else b=true;
+			if (!dom->alreadyInto(valueBool)){			
+				return Value(b);
+			}
+		}
+		
 	}
 }
 

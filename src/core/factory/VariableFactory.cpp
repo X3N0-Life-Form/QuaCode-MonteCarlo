@@ -7,7 +7,7 @@ Variable* VariableFactory::createVariable(Quantifier quant, Type type, std::stri
   case INTEGER:
     return new IntegerVariable(quant, type, name, domain);
   case BOOLEAN:
-    return new BooleanVariable(quant, type, name, domain);
+    return new BooleanVariable(quant, type, name, new Domain(0,1));
   }
   
   return NULL;
