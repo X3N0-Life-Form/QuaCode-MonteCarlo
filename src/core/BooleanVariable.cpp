@@ -8,9 +8,9 @@ using namespace core;
 BooleanVariable::BooleanVariable ( ) {
 }
 
-BooleanVariable::BooleanVariable(Quantifier quant, Type type, std::string name, Domain* domain)
-  : Variable(quant, type, name, domain) {
-
+BooleanVariable::BooleanVariable(Quantifier quant, Type type, std::string name, Domain* domain) : Variable(quant, type, name, domain)
+   {
+   	bDomain = new Domain(0,1);
 }
 
 BooleanVariable::~BooleanVariable ( ) { }

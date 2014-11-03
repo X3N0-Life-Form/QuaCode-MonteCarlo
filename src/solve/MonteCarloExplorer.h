@@ -2,6 +2,11 @@
 #ifndef MONTECARLOEXPLORER_H
 #define MONTECARLOEXPLORER_H
 #include "Explorer.h"
+#include "../core/Domain.h"
+#include "../core/Value.h"
+#include "../core/Problem.h"
+#include "../core/Variable.h"
+#include "../Type.h"
 
 #include <string>
 #include <vector>
@@ -9,6 +14,7 @@
 #include <time.h>
 #include <cstdlib> // rand()
 #include <iostream>
+
 
 
 
@@ -49,7 +55,7 @@ int getFrequence();
 
   // rand(Di)
 
-  int randDom(Domain dom);
+  Value randDom(Variable* var);
 
   // Metropolis acceptance rule
   bool metropolis(int delta);

@@ -27,6 +27,7 @@ set(CORE_SRCS
   src/core/Value.cpp
   src/core/ResearchSpace.cpp
   src/core/Node.cpp
+  src/core/Solution.cpp
 )
 
 set(SOLVE_SRCS

@@ -2,6 +2,7 @@
 #ifndef BOOLEANVARIABLE_H
 #define BOOLEANVARIABLE_H
 #include "Variable.h"
+#include "Domain.h"
 
 #include <string>
 
@@ -43,7 +44,7 @@ public:
 
 private:
 
-  // Static Private attributes
+  Domain* bDomain;
   //  
 
   // Private attributes

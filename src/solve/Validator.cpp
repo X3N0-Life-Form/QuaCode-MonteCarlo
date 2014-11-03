@@ -1,6 +1,7 @@
 #include "Validator.h"
 
 using namespace solve;
+using namespace core;
 
 // Constructors/Destructors
 //  
@@ -13,6 +14,10 @@ Validator::~Validator ( ) { }
 //  
 // Methods
 //  
+Problem * Validator::getProblem(){
+	return prob;
+}
+
 int Validator::getArgumentIValue(ConstraintArgument* argument, std::vector<std::pair<Variable *, Value *> > values) {
 	Variable* var = dynamic_cast<Variable*>(argument);
 	if (var != NULL) {
