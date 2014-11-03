@@ -14,6 +14,7 @@ class Solution {
 private:
 	std::vector<std::pair<Variable *, Value *> > values;
 	Validator * validator;
+	std::vector<std::pair<Variable *, int> > cfl;
 
 public:	
 
@@ -21,9 +22,22 @@ public:
 
   std::vector<std::pair<Variable *, Value *> > getValues();
 
+  std::vector<std::pair<Variable *, int> >  getCfl();
+
   void addValue(Variable* var, Value* val);
 
   void generateValueVector();
+
+  // set all variables
+  void generateCflVector();
+  // set all values to 0
+  void initCfl();
+
+  // update cfl and return nb of conflicts
+  int updateCfl();
+
+  //used into updateCfl()
+  void incrementCfl(ConstraintArgument * arg);
 
 
 };
