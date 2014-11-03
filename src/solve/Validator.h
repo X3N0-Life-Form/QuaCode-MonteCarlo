@@ -34,12 +34,16 @@ public:
 
   virtual bool validateConstraint(Constraint * cst, std::vector<std::pair<Variable *, Value *> > values) = 0;
 
+  Problem * getProblem();
+
 protected:
   static int getArgumentIValue(ConstraintArgument* argument, std::vector<std::pair<Variable *, Value *> > values);
   static bool getArgumentBValue(ConstraintArgument* argument, std::vector<std::pair<Variable *, Value *> > values);
   static Value* getVariableValue(Variable* var, std::vector<std::pair<Variable *, Value *> > values);
   static bool checkComparison(int value, comparison_type CT, int lastValue);
   static bool checkComparison(bool value, comparison_type CT, bool lastValue);
+
+
 
 
 };

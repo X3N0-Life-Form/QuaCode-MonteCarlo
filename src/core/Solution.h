@@ -1,18 +1,19 @@
 #ifndef SOLUTION_H
 #define SOLUTION_H
 
-#include "Problem.h"
+#include "../solve/Validator.h"
 #include "Variable.h"
 #include "Value.h"
 
 using namespace core;
+using namespace solve;
 
 
 class Solution {
 
 private:
 	std::vector<std::pair<Variable *, Value *> > values;
-	Problem * problem;
+	Validator * validator;
 
 public:	
 

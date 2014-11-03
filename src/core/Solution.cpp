@@ -20,7 +20,7 @@ void Solution::addValue(Variable* var, Value* val) {
 }
 
 void Solution::generateValueVector(){
-  	for (unsigned int i = 0; i < problem->getVariables().size(); i++) {
-  		values.push_back(std::pair<Variable*, Value*>(problem->getVariables()[i], NULL));
+  	for (unsigned int i = 0; i < validator->getProblem()->getVariables().size(); i++) {
+  		values.push_back(std::pair<Variable*, Value*>(validator->getProblem()->getVariables()[i], NULL));
   	}
 }
