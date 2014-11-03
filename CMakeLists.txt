@@ -44,3 +44,10 @@ add_executable(QC-MC
   ${CORE_SRCS}
   ${SOLVE_SRCS}
 )
+
+FIND_PACKAGE(Boost 1.49.0 COMPONENTS system thread)
+
+target_link_libraries(QC-MC
+  ${Boost_SYSTEM_LIBRARY}
+  ${Boost_THREAD_LIBRARY}
+)

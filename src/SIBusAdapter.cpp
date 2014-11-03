@@ -7,8 +7,9 @@ using namespace core;
 // Constructors/Destructors
 //  
 
-SIBusAdapter::SIBusAdapter ( ) : input(cin), output(cout), mode(DATA) {
+SIBusAdapter::SIBusAdapter ( ) : input(cin), output(cout), state(DATA) {
   problem = new Problem();
+  thread = new boost::thread(&SIBusAdapter::run, this);
 }
 
 SIBusAdapter::~SIBusAdapter ( ) { 
@@ -22,13 +23,15 @@ SIBusAdapter::~SIBusAdapter ( ) {
 void SIBusAdapter::dealWithInput() {
   string line;
   input >> line;
-  switch (mode) {
+  switch (state) {
   case DATA:
     dealWithInputData(line);
     break;
   case SEARCH:
     dealWithInputSearch(line);
     break;
+  case EXIT:
+    return;
   }
   
 }
@@ -37,6 +40,7 @@ void SIBusAdapter::dealWithInputData(string line) {
   string word;
   input >> word;
   if (line == "VAR_BINDER") {
+    //TODO: use tokenize() here as well
     // VAR_BINDER = var(quant,type,name,domain)
     int posLeft = word.find("(");
     int posEndQuant = word.find(",", posLeft);
@@ -56,7 +60,12 @@ void SIBusAdapter::dealWithInputData(string line) {
     Variable* var = VariableFactory::createVariable(quant, type, name, domain);
     problem->addVariable(var);
   } else if (line == "VAR_AUX") {
-    throw "not implemented";
+    vector<string> tokens = tokenize(line, " ");
+    Quantifier quant = identifyQuantifier(tokens[0]);
+    Type type = identifyType(tokens[1]);
+    string name = tokens[2];
+    Variable* var = VariableFactory::createVariable(quant, type, name);
+    problem->addVariable(var);
   } else if (line == "CONSTRAINT") {
     vector<string> tokens = tokenize(line, " ");
     unsigned int i = 2;
@@ -90,13 +99,13 @@ ConstraintArgument* SIBusAdapter::identifyConstraintArgument(string argument) {
       return NULL;
     }
   } else if (argument.find("int") != string::npos) {
-    Value value(stoi(s_value));
+    Value* value = new Value(stoi(s_value));
     return new Constant(value);
-  } else if (argument.find("bool") != string::npos) {
+  } else if (argument.find("1") != string::npos) {
     if (s_value == "true") {
-      return new Constant(true);
+      return new Constant(new Value(true));
     } else {
-      return new Constant(false);
+      return new Constant(new Value(false));
     }
   } else if (argument.find("interval") != string::npos) {
     vector<string> bound = tokenize(s_value, ",");
@@ -152,6 +161,21 @@ void SIBusAdapter::dealWithInputSearch(string line) {
 }
 
 //
+// Thread Methods
+//
+
+void SIBusAdapter::run() {
+  while (state != EXIT) {
+    mutex.lock();
+    //manage event
+
+    mutex.unlock();
+    //event.wait
+  }
+  mutex.unlock();
+}
+
+//
 // Other Functions
 //
 
@@ -164,4 +188,23 @@ vector<string> tokenize(string toSplit, string token) {
     toSplit = toSplit.substr(pos + 1);
   }
   return result;
+}
+
+//
+// BoostEvent
+//
+BoostEvent::BoostEvent() : signal_status(false) {}
+
+void BoostEvent::signal() {
+  boost::lock_guard<boost::mutex> lock(mutex);
+  signal_status = true;
+  boost_cond_var.notify_one();
+}
+
+void BoostEvent::wait() {
+  boost::unique_lock<boost::mutex> lock(mutex);
+  while (!signal_status) {
+    boost_cond_var.wait(lock);
+  }
+  signal_status = false;
 }

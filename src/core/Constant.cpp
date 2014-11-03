@@ -3,9 +3,13 @@
 using namespace core;
 using namespace std;
 
-Constant::Constant(Value value) : value(value) {
+Constant::Constant(Value* value) : value(value) {
 }
 
 Type Constant::getType() {
-  return value.getVarType();
+  return value->getVarType();
+}
+
+Value* Constant::getValue() {
+	return value;
 }

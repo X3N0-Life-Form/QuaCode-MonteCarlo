@@ -8,11 +8,12 @@
 namespace core {
   class Constant : public ConstraintArgument {
   private:
-    Value value;
+    Value* value;
 
   public:
-    Constant(Value value);
+    Constant(Value* value);
     Type getType();
+    Value* getValue();
   };
 };
 

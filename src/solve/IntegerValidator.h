@@ -21,82 +21,17 @@ class IntegerValidator : public Validator
 public:
 
   // Constructors/Destructors
-  //  
-
-
-  /**
-   * Empty Constructor
-   */
-  IntegerValidator ( );
+  
+  IntegerValidator (Problem * pb);
 
   /**
    * Empty Destructor
    */
   virtual ~IntegerValidator ( );
 
-  // Static Public attributes
-  //  
+  virtual bool validateConstraint(Constraint * cst, std::vector<std::pair<Variable *, Value *> > values);
 
-  // Public attributes
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-protected:
-
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-
-private:
-
-  // Static Private attributes
-  //  
-
-  // Private attributes
-  //  
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
+  
 
 
 
