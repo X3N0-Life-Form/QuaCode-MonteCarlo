@@ -12,7 +12,13 @@ SIBusAdapter::SIBusAdapter ( ) : input(cin), output(cout), state(DATA) {
   thread = new boost::thread(&SIBusAdapter::run, this);
 }
 
-SIBusAdapter::~SIBusAdapter ( ) { 
+SIBusAdapter::~SIBusAdapter ( ) {
+  mutex.lock();
+  state = EXIT;
+  event.signal();
+  mutex.unlock();
+  thread->join();
+  delete(thread);
   delete(problem);
 }
 
@@ -87,9 +93,7 @@ void SIBusAdapter::dealWithInputData(string line) {
 }
 
 ConstraintArgument* SIBusAdapter::identifyConstraintArgument(string argument) {
-  int leftBracketPos = argument.find("(");
-  int rightBracketPos = argument.find(")");
-  string s_value = argument.substr(leftBracketPos + 1, rightBracketPos - 1);
+  GET_VALUE(argument, s_value) // string s_value
   if (argument.find("var") != string::npos) {
     Variable* variable = problem->getVariable(s_value);
     if (variable != NULL) {
@@ -144,20 +148,86 @@ Type SIBusAdapter::identifyType(string s_type) {
 }
 
 Domain* SIBusAdapter::identifyDomain(string s_domain) {
-  return NULL;
+  GET_VALUE(s_domain, s_value); // string s_value
+  vector<string> bound = tokenize(s_value, ",");
+  int lowerBoundary = stoi(bound[0]);
+  int upperBoundary = stoi(bound[1]);
+  // does that domain exist?
+  for (Domain* currentDomain : domains) {
+    if (currentDomain->getFirstValue() == lowerBoundary
+	&& currentDomain->getLastValue() == upperBoundary)
+      return currentDomain;
+  }
+  // if not, create it
+  Domain* domain = new Domain(lowerBoundary, upperBoundary);
+  domains.push_back(domain);
+  return domain;
+  
 }
 constraint_type SIBusAdapter::identifyConstraintType(std::string type) {
-  return AND;
+  if (type == "AND") {
+    return AND;
+  } else if (type == "OR") {
+    return OR;
+  } else if (type == "XOR") {
+    return XOR;
+  } else if (type == "IMP") {
+    return IMP;
+  } else if (type == "C_EQ") {
+    return C_EQ;
+  } else if (type == "TIMES") {
+    return TIMES;
+  } else if (type == "LINEAR") {
+    return LINEAR;
+  } else if (type == "RE_AND") {
+    return RE_AND;
+  } else if (type == "RE_OR") {
+    return RE_OR;
+  } else if (type == "RE_IMP") {
+    return RE_IMP;
+  } else if (type == "RE_EQ") {
+    return RE_EQ;
+  } else if (type == "RE_TIMES") {
+    return RE_TIMES;
+  } else if (type == "RE_LINEAR") {
+    return RE_LINEAR;
+  } else if (type == "ELEMENT") {
+    return ELEMENT;
+  } else {
+    throw string("Unrecognised constraint type: ").append(type);
+  }
 }
 
 comparison_type SIBusAdapter::identifyComparisonType(std::string type) {
-  return NQ;
+  if (type == "NQ") {
+    return NQ;
+  } else if (type == "EQ") {
+    return EQ;
+  } else if (type == "LQ") {
+    return LQ;
+  } else if (type == "LE") {
+    return LE;
+  } else if (type == "GQ") {
+    return GQ;
+  } else if (type == "GR") {
+    return GR;
+  } else {
+    throw string("Unrecognised comparison type: ").append(type);
+  }
 }
 
-void SIBusAdapter::dealWithInputSearch(string line) {
+void SIBusAdapter::dealWithInputSearch(string line) {//TODO
   string word;
   input >> word;
-  //TODO
+  if (word == "CHOICE") {
+
+  } else if (word == "FAIL") {
+
+  } else if (word == "SUCCESS") {
+
+  } else {
+
+  }
 }
 
 //
@@ -170,9 +240,24 @@ void SIBusAdapter::run() {
     //manage event
 
     mutex.unlock();
-    //event.wait
+    event.wait();
   }
   mutex.unlock();
+}
+
+//
+// Communicate with SIBus
+//
+
+void SIBusAdapter::sendSolution() {
+  // /!\ Note: this is a method stub
+  output << "SOLUTION         = ";
+  // Transmit variables & their associated values
+  for (int i = 0; i < 10; i++) {
+    output << " var(" << "name" << "," << "value" << ")";
+  }
+  // Transmit additional information?
+  
 }
 
 //

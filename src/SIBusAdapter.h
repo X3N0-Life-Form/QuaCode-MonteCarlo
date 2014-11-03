@@ -16,6 +16,15 @@
 
 #include <boost/thread.hpp>
 
+/**
+ * Looks up an argument's value and stores it in a string.
+ * Note: declares a string.
+ * @param argument: something(value or values)
+ * @param value: whatever is between argument's parenthesises
+ */
+#define GET_VALUE(argument, value) int leftBracketPos = argument.find("(");\
+  int rightBracketPos = argument.find(")");\
+  string value = argument.substr(leftBracketPos + 1, rightBracketPos - 1);
 
 enum AdapterState {
   DATA,
@@ -47,11 +56,13 @@ private:
   std::istream& input;
   std::ostream& output;
   core::Problem* problem;
+  std::vector<core::Domain*> domains;
   AdapterState state;
 
   // thread attributes
   boost::thread* thread;
   boost::mutex mutex;
+  BoostEvent event;
 
 public:
   // Constructors/Destructors
@@ -73,7 +84,10 @@ public:
   core::ConstraintArgument* identifyConstraintArgument(std::string argument);
   // Thread handling
   void run();
-
+  // Communicate with SIBus
+  void sendSolution();
+  // Utility methods
+  bool doesDomainExist();
 };
 
 std::vector<std::string> tokenize(std::string toSplit, std::string token);
