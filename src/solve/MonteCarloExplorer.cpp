@@ -2,14 +2,16 @@
 
 using namespace solve;
 using namespace std;
+using namespace core;
 
 // Constructors/Destructors
 //  
 
 
-MonteCarloExplorer::MonteCarloExplorer ( ) {
+MonteCarloExplorer::MonteCarloExplorer (Problem * prob ) {
 	temperature = 4.5;
 	frequence = 1000;
+	problem = prob;
 	// problem is set with SIBus adapter
 }
 
@@ -35,31 +37,70 @@ int MonteCarloExplorer::getFrequence() {
 
 // MONTE-CARLO ALGORITHM //
 
-void MonteCarloExplorer::heuristic() {
+int MonteCarloExplorer::heuristic() {
 	srand(time(NULL));
+
+	// declaration of val 
+	int ok = 0;
+	Validator * val;
+	for (unsigned int i = 0; i < problem->getVariables().size(); i++){
+		if (problem->getVariables()[i]->getType() == BOOLEAN){
+			val = new BooleanValidator(problem);
+			ok = 1;
+			break;
+		}
+		else if (problem->getVariables()[i]->getType() == INTEGER){
+			val = new IntegerValidator(problem);
+			ok = 1;
+			break;
+		}
+	}
+	//if error
+	if (ok == 0){
+		return 0;
+	}
+	//////////////////////////
+	// many declarations /////
+	//////////////////////////
+	Solution currentSol(val);
+	Solution savedSol(val);
+	int count = 0;
+	int nbCfls = 0;
+	int k = -1;
+
+
 	for (unsigned int i = 1; i <= problem->getVariables().size();i++) {
 		cout << " call randDom" << endl;
-		// problem with randDom type
-		//problem->addValue(problem->getVariables()[i], randDom(problem->getVariables()[i].getDomain()) );
-
-		// for(unsigned int k = 1; k <= )
+		if(problem->getVariables()[i]->getQuantifier() == EXISTS){
+			currentSol.addValue(problem->getVariables()[i], randDom(problem->getVariables()[i]) );
+		}
+		// cflVector is already set to 0 for each variables (constructor of Solution calls generateCflVector())
 	}
 
+	nbCfls = currentSol.updateCfl();
+
+	while(true) {
+		count++;
+		k = currentSol.choice();
+
+	}
 	//metropolis(5);
+
+	return 1;
 }
 
 // RANDOM VALUE => random initialisation for each variables
 	// NOTE : this is very basic => next step : find how to exclude some values (the ones already tested)
 	// SECOND NOTE : test if it works
 	// must be of type Value (I guess)
-Value MonteCarloExplorer::randDom(Variable* var) {
+Value * MonteCarloExplorer::randDom(Variable* var) {
 	Domain* dom = var->getDomain();
 	Type type = var->getType();
 	if(type==INTEGER){
 		while(true) {
 			int valueInt = rand() % (dom->getLastValue() - dom->getFirstValue() + 1) + dom->getFirstValue();
 			if (!dom->alreadyInto(valueInt)){
-				return Value(valueInt);
+				return new Value(valueInt);
 			}
 		}
 	}
@@ -71,11 +112,11 @@ Value MonteCarloExplorer::randDom(Variable* var) {
 					b=false;
 				else b=true;
 			if (!dom->alreadyInto(valueBool)){			
-				return Value(b);
+				return new Value(b);
 			}
-		}
-		
+		}		
 	}
+	return NULL;
 }
 
 

@@ -2,8 +2,10 @@
 
 using namespace std;
 
-Solution::Solution(){
-
+Solution::Solution(Validator * val){
+	generateValueVector();
+	generateCflVector();
+	validator = val;
 }
 
 std::vector<std::pair<Variable *, Value *> > Solution::getValues(){

@@ -18,7 +18,9 @@ private:
 
 public:	
 
-  Solution ();
+  Solution (Validator * val);
+
+  // TODO : constructeur par recopie
 
   std::vector<std::pair<Variable *, Value *> > getValues();
 

@@ -7,6 +7,9 @@
 #include "../core/Problem.h"
 #include "../core/Variable.h"
 #include "../Type.h"
+#include "../core/Solution.h"
+#include "IntegerValidator.h"
+#include "BooleanValidator.h"
 
 #include <string>
 #include <vector>
@@ -37,7 +40,7 @@ public:
 
   // Constructors/Destructors
   // 
-  MonteCarloExplorer();
+  MonteCarloExplorer(Problem * prob);
 
   /////////// getters & setters ///////////
   ///////////////////////////////////////
@@ -51,11 +54,11 @@ int getFrequence();
   //////// Methods///////////////////////////
   ///////////////////////////////////////////
   // Monte Carlo
-  void heuristic();
+int heuristic();
 
   // rand(Di)
 
-  Value randDom(Variable* var);
+  Value * randDom(Variable* var);
 
   // Metropolis acceptance rule
   bool metropolis(int delta);
@@ -66,74 +69,6 @@ int getFrequence();
    * Empty Destructor
    */
   virtual ~MonteCarloExplorer ( );
-
-
-
-  // Static Public attributes
-  //  
-
-  // Public attributes
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-  // Public attribute accessor methods
-  //  
-
-
-protected:
-
-  // Static Protected attributes
-  //  
-
-  // Protected attributes
-  //  
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-public:
-
-
-  // Protected attribute accessor methods
-  //  
-
-protected:
-
-
-private:
-
-  // Static Private attributes
-  //  
-
-  // Private attributes
-  //  
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-
 
 };
 }; // end of package namespace
