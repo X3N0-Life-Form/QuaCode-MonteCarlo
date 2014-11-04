@@ -83,7 +83,9 @@ void Solution::generateCflVector(){
  	}
  	for (unsigned int j = 0; j < values.size();j++) {
  		if (cfl[index].first == values[j].first){
- 			return j;
+ 			if (values[j].first != NULL){
+ 				return j;
+ 			}
  		}
  	}
  	return -1;

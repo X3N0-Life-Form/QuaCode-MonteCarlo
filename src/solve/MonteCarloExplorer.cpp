@@ -66,7 +66,10 @@ int MonteCarloExplorer::heuristic() {
 	Solution savedSol(val);
 	int count = 0;
 	int nbCfls = 0;
+	int nNBCfls = 0;
 	int k = -1;
+	int delta = 0;
+	Value * vsauv;
 
 
 	for (unsigned int i = 1; i <= problem->getVariables().size();i++) {
@@ -82,9 +85,31 @@ int MonteCarloExplorer::heuristic() {
 	while(true) {
 		count++;
 		k = currentSol.choice();
+		vsauv = currentSol.getValues()[k].second;
 
+		currentSol.addValue(currentSol.getValues()[k].first, randDom(currentSol.getValues()[k].first));
+
+		nNBCfls = currentSol.updateCfl();
+
+		if (nNBCfls > nbCfls) {
+			nbCfls = nNBCfls;
+		}
+		else {
+			delta = nbCfls - nNBCfls;
+			if(metropolis(delta)) {
+				nbCfls = nNBCfls;
+			}
+			else {
+				currentSol.addValue(currentSol.getValues()[k].first, vsauv);
+			}
+		}
+		if (count == frequence) {
+			//reordonne for each var (not implemented yet)
+			// send to SIBus (not implemented yet)
+
+			count = 0;
+		}
 	}
-	//metropolis(5);
 
 	return 1;
 }
