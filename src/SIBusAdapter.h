@@ -24,7 +24,7 @@
  */
 #define GET_VALUE(argument, value) int leftBracketPos = argument.find("(");\
   int rightBracketPos = argument.find(")");\
-  string value = argument.substr(leftBracketPos + 1, rightBracketPos - 1);
+  string value = argument.substr(leftBracketPos + 1, rightBracketPos - leftBracketPos - 1);
 
 enum AdapterState {
   DATA,
@@ -68,7 +68,8 @@ public:
   // Constructors/Destructors
   SIBusAdapter ( );
   virtual ~SIBusAdapter ( );
-
+  // Getters / Setters
+  core::Problem* getProblem();
   // Public Methods
   //
   void dealWithInput();

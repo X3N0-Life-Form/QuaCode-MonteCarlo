@@ -16,10 +16,20 @@ SIBusAdapter::~SIBusAdapter ( ) {
   mutex.lock();
   state = EXIT;
   event.signal();
-  mutex.unlock();
+  // gotta be careful not to unlock something that has never been locked
+  if (mutex.try_lock()) //fishy
+    mutex.unlock();
   thread->join();
   delete(thread);
   delete(problem);
+}
+
+//
+// Getters / Setters
+//
+
+Problem* SIBusAdapter::getProblem() {
+  return problem;
 }
 
 //  
@@ -115,12 +125,12 @@ ConstraintArgument* SIBusAdapter::identifyConstraintArgument(string argument) {
     vector<string> bound = tokenize(s_value, ",");
     int lowerBoundary = stoi(bound[0]);
     int upperBoundary = stoi(bound[1]);
-    Domain* domain = problem->getDomain(lowerBoundary, upperBoundary);
+    Domain* domain = problem->getDomain(lowerBoundary, upperBoundary);//TODO: get that checked out
     if (domain != NULL) {
       return domain;
     } else {
-      cerr << "Constraint argument error: unknown domain " << s_value << endl;
-      return NULL;
+      cerr << "Constraint argument warning: unknown domain " << s_value << endl;
+      return new Domain(lowerBoundary, upperBoundary);
     }
   } else {
     return NULL; // could not identify argument
@@ -150,6 +160,9 @@ Type SIBusAdapter::identifyType(string s_type) {
 Domain* SIBusAdapter::identifyDomain(string s_domain) {
   GET_VALUE(s_domain, s_value); // string s_value
   vector<string> bound = tokenize(s_value, ",");
+  if (bound.size() != 2) {
+    throw string("Error: malformated domain: ").append(s_domain);
+  }
   int lowerBoundary = stoi(bound[0]);
   int upperBoundary = stoi(bound[1]);
   // does that domain exist?
@@ -164,34 +177,35 @@ Domain* SIBusAdapter::identifyDomain(string s_domain) {
   return domain;
   
 }
+
 constraint_type SIBusAdapter::identifyConstraintType(std::string type) {
-  if (type == "AND") {
+  if (type == string("AND")) {
     return AND;
-  } else if (type == "OR") {
+  } else if (type == string("OR")) {
     return OR;
-  } else if (type == "XOR") {
+  } else if (type == string("XOR")) {
     return XOR;
-  } else if (type == "IMP") {
+  } else if (type == string("IMP")) {
     return IMP;
-  } else if (type == "C_EQ") {
+  } else if (type == string("EQ")) {
     return C_EQ;
-  } else if (type == "TIMES") {
+  } else if (type == string("TIMES")) {
     return TIMES;
-  } else if (type == "LINEAR") {
+  } else if (type == string("LINEAR")) {
     return LINEAR;
-  } else if (type == "RE_AND") {
+  } else if (type == string("RE_AND")) {
     return RE_AND;
-  } else if (type == "RE_OR") {
+  } else if (type == string("RE_OR")) {
     return RE_OR;
-  } else if (type == "RE_IMP") {
+  } else if (type == string("RE_IMP")) {
     return RE_IMP;
-  } else if (type == "RE_EQ") {
+  } else if (type == string("RE_EQ")) {
     return RE_EQ;
-  } else if (type == "RE_TIMES") {
+  } else if (type == string("RE_TIMES")) {
     return RE_TIMES;
-  } else if (type == "RE_LINEAR") {
+  } else if (type == string("RE_LINEAR")) {
     return RE_LINEAR;
-  } else if (type == "ELEMENT") {
+  } else if (type == string("ELEMENT")) {
     return ELEMENT;
   } else {
     throw string("Unrecognised constraint type: ").append(type);
@@ -199,17 +213,17 @@ constraint_type SIBusAdapter::identifyConstraintType(std::string type) {
 }
 
 comparison_type SIBusAdapter::identifyComparisonType(std::string type) {
-  if (type == "NQ") {
+  if (type == string("NQ")) {
     return NQ;
-  } else if (type == "EQ") {
+  } else if (type == string("EQ")) {
     return EQ;
-  } else if (type == "LQ") {
+  } else if (type == string("LQ")) {
     return LQ;
-  } else if (type == "LE") {
+  } else if (type == string("LE")) {
     return LE;
-  } else if (type == "GQ") {
+  } else if (type == string("GQ")) {
     return GQ;
-  } else if (type == "GR") {
+  } else if (type == string("GR")) {
     return GR;
   } else {
     throw string("Unrecognised comparison type: ").append(type);
@@ -268,10 +282,11 @@ vector<string> tokenize(string toSplit, string token) {
   int pos;
   vector<string> result;
   while ((pos = toSplit.find(token)) != string::npos) {
-    string nuString = toSplit.substr(0, pos - 1);
+    string nuString = toSplit.substr(0, pos);
     result.push_back(nuString);
     toSplit = toSplit.substr(pos + 1);
   }
+  result.push_back(toSplit);
   return result;
 }
 

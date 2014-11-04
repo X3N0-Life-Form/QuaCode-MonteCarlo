@@ -42,12 +42,16 @@ set(SOLVE_SRCS
   src/solve/IntegerValidator.cpp
 )
 
-add_executable(QC-MC
-  src/main.cpp
+set(QC-MC_DEPENDENCIES
   src/SIBusAdapter.cpp
   src/Manager.cpp
   ${CORE_SRCS}
   ${SOLVE_SRCS}
+)
+
+add_executable(QC-MC
+  src/main.cpp
+  ${QC-MC_DEPENDENCIES}
 )
 
 #
@@ -67,11 +71,14 @@ target_link_libraries(QC-MC
 
 set(UNIT_TESTS
   tests/misc/testTests.cpp
+  tests/test_SIBusAdapter.cpp
 )
 
 add_executable(run_tests
   tests/test_runner.cpp
   ${UNIT_TESTS}
+  ${QC-MC_DEPENDENCIES}
+
 )
 foreach(test ${UNIT_TESTS})
   add_test(NAME ${test} COMMAND run_tests)
@@ -94,4 +101,6 @@ FIND_LIBRARY(CPPUNIT_LIBRARIES cppunit
 
 target_link_libraries(run_tests
   ${CPPUNIT_LIBRARIES}
+  ${Boost_SYSTEM_LIBRARY}
+  ${Boost_THREAD_LIBRARY}
 )
