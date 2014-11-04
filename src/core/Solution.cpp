@@ -23,6 +23,10 @@ void Solution::addValue(Variable* var, Value* val) {
 	}
 }
 
+void Solution::modifValue(int index, Value* val) {
+	values[index].second = val;
+}
+
 void Solution::generateValueVector(){
   	for (unsigned int i = 0; i < validator->getProblem()->getVariables().size(); i++) {
   		values.push_back(std::pair<Variable*, Value*>(validator->getProblem()->getVariables()[i], NULL));
@@ -65,4 +69,20 @@ void Solution::generateCflVector(){
  			break;
  		}
  	}
+ }
+
+ int Solution::choice(){
+ 	int cflVal = cfl[0].second;
+ 	int index = 0;
+ 	for (unsigned int i = 1; i < cfl.size(); i++){
+ 		if(cfl[i].second < cflVal){
+ 			index = i;
+ 		}
+ 	}
+ 	for (unsigned int j = 0; j < values.size();j++) {
+ 		if (cfl[index].first == values[j].first){
+ 			return j;
+ 		}
+ 	}
+ 	return -1;
  }

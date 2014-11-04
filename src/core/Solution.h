@@ -26,6 +26,8 @@ public:
 
   void addValue(Variable* var, Value* val);
 
+  void modifValue(int index, Value* val);
+
   void generateValueVector();
 
   // set all variables
@@ -38,6 +40,10 @@ public:
 
   //used into updateCfl()
   void incrementCfl(ConstraintArgument * arg);
+
+  // return var index (var with the smallest cfl)
+    // must return the index of values
+  int choice();
 
 
 };
