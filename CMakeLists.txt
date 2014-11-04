@@ -11,6 +11,10 @@ add_definitions(
   -O2
 )
 
+#
+# Main compilation
+#
+
 set(CORE_SRCS
   src/core/Problem.cpp
   src/core/Constraint.cpp
@@ -46,9 +50,48 @@ add_executable(QC-MC
   ${SOLVE_SRCS}
 )
 
+#
+# Main linking
+#
+
 FIND_PACKAGE(Boost 1.49.0 COMPONENTS system thread)
 
 target_link_libraries(QC-MC
   ${Boost_SYSTEM_LIBRARY}
   ${Boost_THREAD_LIBRARY}
+)
+
+#
+# Unit testing
+#
+
+set(UNIT_TESTS
+  tests/misc/testTests.cpp
+)
+
+add_executable(run_tests
+  tests/test_runner.cpp
+  ${UNIT_TESTS}
+)
+foreach(test ${UNIT_TESTS})
+  add_test(NAME ${test} COMMAND run_tests)
+endforeach(test)
+
+#
+# CppUnit linking
+#
+
+FIND_PATH(CPPUNIT_INCLUDE_DIRS cppunit/TestCase.h
+  /usr/local/include
+  /usr/include
+)
+
+FIND_LIBRARY(CPPUNIT_LIBRARIES cppunit
+           ${CPPUNIT_INCLUDE_DIRS}/../lib
+           /usr/local/lib
+           /usr/lib
+)
+
+target_link_libraries(run_tests
+  ${CPPUNIT_LIBRARIES}
 )
