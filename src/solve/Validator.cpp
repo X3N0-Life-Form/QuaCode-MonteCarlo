@@ -48,6 +48,8 @@ Value* Validator::getVariableValue(Variable* var, std::vector<std::pair<Variable
 	return NULL;
 }
 
+
+
 bool Validator::checkComparison(int value, comparison_type CT, int lastValue) {
 	switch(CT) {
 		case NQ :
