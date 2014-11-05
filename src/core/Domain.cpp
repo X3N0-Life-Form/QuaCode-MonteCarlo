@@ -52,16 +52,22 @@ Type Domain::getType() {
   	}
   }
 
-  // used into addValue
-  // check if value already into alreadyChecked => if yes returns true.
-  bool Domain::alreadyInto(int value) {
-  	for (int i = 0; i < sizeAlreadyChecked; i++) {
-  		if (alreadyChecked[i] == value)
-  			return true;
-  	}
-  	return false;
+// used into addValue
+// check if value already into alreadyChecked => if yes returns true.
+bool Domain::alreadyInto(int value) {
+  for (int i = 0; i < sizeAlreadyChecked; i++) {
+    if (alreadyChecked[i] == value)
+      return true;
   }
-// Other methods
-//  
+  return false;
+}
 
 
+// Operators
+//
+
+bool operator==(Domain& left, Domain& right) {
+  return left.getType() == right.getType()
+    && left.getFirstValue() == right.getFirstValue()
+    && left.getLastValue() == right.getLastValue();
+}

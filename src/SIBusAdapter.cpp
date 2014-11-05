@@ -112,25 +112,25 @@ ConstraintArgument* SIBusAdapter::identifyConstraintArgument(string argument) {
       cerr << "Constraint argument error: unknown variable " << s_value << endl;
       return NULL;
     }
-  } else if (argument.find("int") != string::npos) {
-    Value* value = new Value(stoi(s_value));
-    return new Constant(value);
-  } else if (argument.find("1") != string::npos) {
-    if (s_value == "true") {
-      return new Constant(new Value(true));
-    } else {
-      return new Constant(new Value(false));
-    }
   } else if (argument.find("interval") != string::npos) {
     vector<string> bound = tokenize(s_value, ",");
     int lowerBoundary = stoi(bound[0]);
     int upperBoundary = stoi(bound[1]);
-    Domain* domain = problem->getDomain(lowerBoundary, upperBoundary);//TODO: get that checked out
+    Domain* domain = problem->getDomain(lowerBoundary, upperBoundary);
     if (domain != NULL) {
       return domain;
     } else {
-      cerr << "Constraint argument warning: unknown domain " << s_value << endl;
+      //cerr << "Constraint argument warning: unknown domain " << s_value << endl;
       return new Domain(lowerBoundary, upperBoundary);
+    }
+  } else if (argument.find("int") != string::npos) {
+    Value* value = new Value(stoi(s_value));
+    return new Constant(value);
+  } else if (argument.find("1") != string::npos) {
+    if (s_value == string("true")) {
+      return new Constant(new Value(true));
+    } else {
+      return new Constant(new Value(false));
     }
   } else {
     return NULL; // could not identify argument
