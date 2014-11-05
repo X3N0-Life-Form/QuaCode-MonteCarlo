@@ -15,9 +15,12 @@ BooleanConstraint::~BooleanConstraint ( ) { }
 //  
 
 
+
 // Accessor methods
 //  
-
+Type BooleanConstraint::getType() {
+  return BOOLEAN;
+}
 
 // Other methods
 //  
