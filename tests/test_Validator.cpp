@@ -70,9 +70,19 @@ void Test_Validator::test_getVariableValue() {
 }
 
 void Test_Validator::test_checkComparison() {
- 	
+ 	CPPUNIT_ASSERT(validator->checkComparison(10,NQ,20)==true);
+ 	CPPUNIT_ASSERT(validator->checkComparison(10,EQ,20)==false);
+ 	CPPUNIT_ASSERT(validator->checkComparison(20,LQ,20)==true);
+ 	CPPUNIT_ASSERT(validator->checkComparison(10,LE,20)==true);
+ 	CPPUNIT_ASSERT(validator->checkComparison(10,GQ,20)==false);
+ 	CPPUNIT_ASSERT(validator->checkComparison(10,GR,20)==false);
 }
 
 void Test_Validator::test_checkComparison_() {
- 
+ 	CPPUNIT_ASSERT(validator->checkComparison(true,NQ,false)==true);
+ 	CPPUNIT_ASSERT(validator->checkComparison(true,EQ,false)==false);
+ 	CPPUNIT_ASSERT(validator->checkComparison(true,LQ,false)==false);
+ 	CPPUNIT_ASSERT(validator->checkComparison(true,LE,false)==false);
+ 	CPPUNIT_ASSERT(validator->checkComparison(true,GQ,false)==true);
+ 	CPPUNIT_ASSERT(validator->checkComparison(true,GR,false)==true);
 }
