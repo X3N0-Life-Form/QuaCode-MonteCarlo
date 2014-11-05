@@ -74,9 +74,7 @@ int MonteCarloExplorer::heuristic() {
 
 	for (unsigned int i = 1; i <= problem->getVariables().size();i++) {
 		cout << " call randDom" << endl;
-		if(problem->getVariables()[i]->getQuantifier() == EXISTS){
 			currentSol.addValue(problem->getVariables()[i], randDom(problem->getVariables()[i]) );
-		}
 		// cflVector is already set to 0 for each variables (constructor of Solution calls generateCflVector())
 	}
 
