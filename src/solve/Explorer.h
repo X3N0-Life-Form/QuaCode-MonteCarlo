@@ -4,7 +4,6 @@
 
 #include "Validator.h"
 #include "../core/Problem.h"
-#include "../core/ResearchSpace.h"
 
 #include <string>
 #include <vector>

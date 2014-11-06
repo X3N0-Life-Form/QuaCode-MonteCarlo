@@ -29,8 +29,6 @@ set(CORE_SRCS
   src/core/Constant.cpp
   src/core/Domain.cpp
   src/core/Value.cpp
-  src/core/ResearchSpace.cpp
-  src/core/Node.cpp
   src/core/Solution.cpp
 )
 
