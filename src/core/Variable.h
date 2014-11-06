@@ -31,7 +31,7 @@ public:
 
   // Getters
   //
-  virtual Type getType() = 0;
+  //virtual Type getType() = 0;
   string getName();
   Domain* getDomain();
   Quantifier getQuantifier();

@@ -21,21 +21,16 @@ namespace solve {
 
 class Explorer
 {
+
+private:
+  std::vector<Validator*> validators;
+  Problem* problem;
+
 public:
 
   // Constructors/Destructors
-  //  
-
-
-  /**
-   * Empty Constructor
-   */
-  Explorer ( );
-
-  /**
-   * Empty Destructor
-   */
-  virtual ~Explorer ( );
+  Explorer();
+  virtual ~Explorer();
 
 
   /**
@@ -43,17 +38,6 @@ public:
   virtual void explore ( )
   {
   }
-
-private:
-
-  // Static Private attributes
-  //  
-
-  // Private attributes
-  //  
-  std::vector<Validator*> validators;
-  Problem* problem;
-  ResearchSpace<Variable*>* spaceTree;
 
 
 };

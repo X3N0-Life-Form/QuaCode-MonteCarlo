@@ -18,26 +18,20 @@ using namespace core;
 namespace solve {
 
 
-/**
-  * class Validator
-  * 
-  */
-
-  class Validator
-  {
-
+  /**
+   * class Validator
+   * 
+   */
+  class Validator {
   private:
     Problem * prob;
 
   public:
-
     // Constructors/Destructors
-
     Validator (Problem * pb);
-
     virtual ~Validator ( );
 
-    virtual bool validateConstraint(Constraint * cst,std::vector<std::pair<Variable *, Value *> > values) = 0;
+    virtual bool validateConstraint(Constraint * cst, std::vector<std::pair<Variable *, Value *> > values) = 0;
 
     Problem * getProblem();
 
