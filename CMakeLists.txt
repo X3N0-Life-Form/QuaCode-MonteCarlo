@@ -72,6 +72,7 @@ target_link_libraries(QC-MC
 set(UNIT_TESTS
   tests/misc/testTests.cpp
   tests/test_SIBusAdapter.cpp
+  tests/test_Validator.cpp
 )
 
 add_executable(run_tests

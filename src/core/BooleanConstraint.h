@@ -28,6 +28,8 @@ public:
 
   virtual ~BooleanConstraint ( );
 
+  virtual Type getType();
+
 
 };
 }; // end of package namespace
