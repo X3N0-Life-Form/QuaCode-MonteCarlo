@@ -42,11 +42,11 @@ namespace core {
     bool addValue(int value);
     bool alreadyInto(int value);
 
+    // Operators
+    virtual bool operator==(ConstraintArgument& right);
   };
 
 }; // end of package namespace
 
-// Operators
-bool operator==(core::Domain& left, core::Domain& right);
 
 #endif // DOMAIN_H

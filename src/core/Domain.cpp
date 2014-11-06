@@ -66,8 +66,9 @@ bool Domain::alreadyInto(int value) {
 // Operators
 //
 
-bool operator==(Domain& left, Domain& right) {
-  return left.getType() == right.getType()
-    && left.getFirstValue() == right.getFirstValue()
-    && left.getLastValue() == right.getLastValue();
+bool Domain::operator==(ConstraintArgument& right) {
+  Domain& dom = dynamic_cast<Domain&>(right);
+  return getType() == dom.getType()
+    && getFirstValue() == dom.getFirstValue()
+    && getLastValue() == dom.getLastValue();
 }

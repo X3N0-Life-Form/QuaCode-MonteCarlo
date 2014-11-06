@@ -11,5 +11,11 @@ Type Constant::getType() {
 }
 
 Value* Constant::getValue() {
-	return value;
+  return value;
+}
+
+bool Constant::operator==(ConstraintArgument& right) {
+  Constant& constant = dynamic_cast<Constant&>(right);
+  return getType() == constant.getType()
+    && *value == *constant.value;
 }

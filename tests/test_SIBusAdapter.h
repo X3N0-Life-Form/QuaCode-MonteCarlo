@@ -16,6 +16,11 @@ class Test_SIBusAdapter : public CppUnit::TestFixture {
   CPPUNIT_TEST(test_identifyConstraintType);
   CPPUNIT_TEST(test_identifyComparisonType);
   CPPUNIT_TEST(test_identifyConstraintArgument);
+  CPPUNIT_TEST(test_dealWithInputData_var);
+  CPPUNIT_TEST(test_dealWithInputData_var_aux);
+  CPPUNIT_TEST(test_dealWithInputData_constraint_OK);
+  CPPUNIT_TEST(test_dealWithInputData_constraint_missingVar);
+  CPPUNIT_TEST(test_dealWithInputData_badData);
 
   CPPUNIT_TEST_SUITE_END();
  private:
@@ -34,5 +39,11 @@ class Test_SIBusAdapter : public CppUnit::TestFixture {
   void test_identifyConstraintType();
   void test_identifyComparisonType();
   void test_identifyConstraintArgument();
+
+  void test_dealWithInputData_var();
+  void test_dealWithInputData_var_aux();
+  void test_dealWithInputData_constraint_OK();
+  void test_dealWithInputData_constraint_missingVar();
+  void test_dealWithInputData_badData();
 };
 #endif

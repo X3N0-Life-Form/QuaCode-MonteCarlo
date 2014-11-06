@@ -36,6 +36,8 @@ public:
   Domain* getDomain();
   Quantifier getQuantifier();
 
+  virtual bool operator==(ConstraintArgument& right);
+
 private:
  
   Quantifier quantifier;

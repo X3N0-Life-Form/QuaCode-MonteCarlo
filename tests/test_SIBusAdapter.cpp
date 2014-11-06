@@ -30,6 +30,12 @@ void Test_SIBusAdapter::test_tokenize() {
   string test("5,4,6");
   vector<string> boundaries = tokenize(test, ",");
   CPPUNIT_ASSERT(boundaries.size() == 3);
+  string var_binder("VAR_BINDER   = var(E,I,h,interval(1:2))");
+  vector<string> tokens = tokenize(var_binder, " ");
+  CPPUNIT_ASSERT(tokens.size() == 3);
+  CPPUNIT_ASSERT_EQUAL(string("VAR_BINDER"), tokens[0]);
+  CPPUNIT_ASSERT_EQUAL(string("="), tokens[1]);
+  CPPUNIT_ASSERT_EQUAL(string("var(E,I,h,interval(1:2))"), tokens[2]);
 }
 
 void Test_SIBusAdapter::test_identifyQuantifier() {
@@ -47,9 +53,9 @@ void Test_SIBusAdapter::test_identifyType() {
 }
 
 void Test_SIBusAdapter::test_identifyDomain() {
-  string s_d1("interval(1,5)"),
-    s_d2("interval(1,5)"),
-    s_d3("interval(-2,2)"),
+  string s_d1("interval(1:5)"),
+    s_d2("interval(1:5)"),
+    s_d3("interval(-2:2)"),
     nope("nope");
   Domain* d1 = adapter->identifyDomain(s_d1);
   Domain* d2 = adapter->identifyDomain(s_d2);
@@ -84,8 +90,8 @@ void Test_SIBusAdapter::test_identifyConstraintType() {
 }
 
 void Test_SIBusAdapter::test_identifyComparisonType() {
-  string nq("NQ"), eq("EQ"), lq("LQ"), le("LE"),
-    gq("GQ"), gr("GR"), nope("nope");
+  string nq("_NQ_"), eq("_EQ_"), lq("_LQ_"), le("_LE_"),
+    gq("_GQ_"), gr("_GR_"), nope("nope");
   CPPUNIT_ASSERT_EQUAL(NQ, adapter->identifyComparisonType(nq));
   CPPUNIT_ASSERT_EQUAL(EQ, adapter->identifyComparisonType(eq));
   CPPUNIT_ASSERT_EQUAL(LQ, adapter->identifyComparisonType(lq));
@@ -101,7 +107,7 @@ void Test_SIBusAdapter::test_identifyConstraintArgument() {
   Variable* v1 = VariableFactory::createVariable(EXISTS, INTEGER, "v1", di1);
   Variable* v2 = VariableFactory::createVariable(EXISTS, INTEGER, "v2", di1);
   string sv1("var(v1)"), sv2("var(v2)"),
-    cst("int(5)"), i1("interval(1,5)"), i2("interval(1,2)");
+    cst("int(5)"), i1("interval(1:5)"), i2("interval(1:2)");
   adapter->getProblem()->addVariable(v1);
   adapter->getProblem()->addVariable(v2);
 
@@ -123,4 +129,71 @@ void Test_SIBusAdapter::test_identifyConstraintArgument() {
   CPPUNIT_ASSERT(di2 != NULL);
   CPPUNIT_ASSERT(1 == di2->getFirstValue());
   CPPUNIT_ASSERT(2 == di2->getLastValue());
+}
+
+void Test_SIBusAdapter::test_dealWithInputData_var() {
+  adapter->dealWithInputData("VAR_BINDER = var(E,I,test,interval(1:3))");
+  Variable* var = adapter->getProblem()->getVariables()[0];
+  CPPUNIT_ASSERT(var != NULL);
+  CPPUNIT_ASSERT_EQUAL(string("test"), var->getName());
+  CPPUNIT_ASSERT(EXISTS == var->getQuantifier());
+  CPPUNIT_ASSERT(INTEGER == var->getType());
+  Domain* dom = var->getDomain();
+  CPPUNIT_ASSERT(dom != NULL);
+  CPPUNIT_ASSERT(dom->getFirstValue() == 1);
+  CPPUNIT_ASSERT(dom->getLastValue() == 3);
+}
+
+void Test_SIBusAdapter::test_dealWithInputData_var_aux() {
+  adapter->dealWithInputData("VAR_AUX = var(E,I,test)");
+  Variable* var = adapter->getProblem()->getVariables()[0];
+  CPPUNIT_ASSERT(var != NULL);
+  CPPUNIT_ASSERT_EQUAL(string("test"), var->getName());
+  CPPUNIT_ASSERT(EXISTS == var->getQuantifier());
+  CPPUNIT_ASSERT(INTEGER == var->getType());
+}
+
+void Test_SIBusAdapter::test_dealWithInputData_constraint_OK() {
+  Domain* d1 = new Domain(1,5);
+  Variable* v1 = VariableFactory::createVariable(EXISTS, INTEGER, "v1", d1);
+  Variable* v2 = VariableFactory::createVariable(EXISTS, INTEGER, "v2", d1);
+  Constant* res = new Constant(new Value(3));
+  adapter->getProblem()->addVariable(v1);
+  adapter->getProblem()->addVariable(v2);
+  //adapter->getProblem()->addVariable(res);
+
+  try {
+    adapter->dealWithInputData("CONSTRAINT = TIMES _EQ_ var(v1) var(v2) int(3)");
+  } catch (string e) {
+    cout<<endl<<e<<endl;
+  }
+
+  Constraint* constraint = adapter->getProblem()->getConstraints()[0];
+  CPPUNIT_ASSERT(constraint != NULL);
+  Variable* cv1 = dynamic_cast<Variable*>(constraint->getArguments()[0]);
+  Variable* cv2 = dynamic_cast<Variable*>(constraint->getArguments()[1]);
+  Constant* cres = dynamic_cast<Constant*>(constraint->getArguments()[2]);
+  CPPUNIT_ASSERT(cv1 != NULL);
+  CPPUNIT_ASSERT(cv2 != NULL);
+  CPPUNIT_ASSERT(cres != NULL);
+  CPPUNIT_ASSERT(*v1 == *cv1);
+  CPPUNIT_ASSERT(*v2 == *cv2);
+  CPPUNIT_ASSERT(*res == *cres);
+}
+
+void Test_SIBusAdapter::test_dealWithInputData_constraint_missingVar() {
+  Domain* d1 = new Domain(1,5);
+  Variable* v1 = VariableFactory::createVariable(EXISTS, INTEGER, "v1", d1);
+  //Variable* v2 = VariableFactory::createVariable(EXISTS, INTEGER, "v2", d1);
+  adapter->getProblem()->addVariable(v1);
+
+  CPPUNIT_ASSERT_THROW(
+    adapter->dealWithInputData(
+      "CONSTRAINT = TIMES _EQ_ var(v1) var(v2) int(3)"),
+    string
+  );
+}
+
+void Test_SIBusAdapter::test_dealWithInputData_badData() {
+  CPPUNIT_ASSERT_NO_THROW(adapter->dealWithInputData("bad data"));
 }
