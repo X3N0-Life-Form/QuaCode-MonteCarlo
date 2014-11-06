@@ -1,6 +1,7 @@
 #include "Solution.h"
 
 using namespace std;
+using namespace core;
 
 Solution::Solution(Validator * val){
 	generateValueVector();

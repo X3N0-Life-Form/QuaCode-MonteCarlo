@@ -5,10 +5,10 @@
 #include "Variable.h"
 #include "Value.h"
 
-using namespace core;
+
 using namespace solve;
 
-
+namespace core {
 class Solution {
 
 private:
@@ -49,5 +49,6 @@ public:
 
 
 };
+}; // end of namespace core
 
 #endif

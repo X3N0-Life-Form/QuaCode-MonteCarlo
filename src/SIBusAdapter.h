@@ -9,6 +9,7 @@
 #include "core/Constraint.h"
 #include "core/factory/ConstraintFactory.h"
 #include "core/Constant.h"
+#include "core/Solution.h"
 
 #include <string>
 #include <vector>
@@ -86,7 +87,7 @@ public:
   // Thread handling
   void run();
   // Communicate with SIBus
-  void sendSolution();
+  void sendSolution(core::Solution* solution);
   // Utility methods
   bool doesDomainExist();
 };

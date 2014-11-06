@@ -257,15 +257,18 @@ void SIBusAdapter::run() {
 // Communicate with SIBus
 //
 
-void SIBusAdapter::sendSolution() {
+void SIBusAdapter::sendSolution(Solution* solution) {
   // /!\ Note: this is a method stub
   output << "SOLUTION         = ";
   // Transmit variables & their associated values
-  for (int i = 0; i < 10; i++) {
-    output << " var(" << "name" << "," << "value" << ")";
+  for (pair<Variable*, Value*> currentPair : solution->getValues()) {
+    output << " val(" << currentPair.first->getName() << ","
+	   << currentPair.second->getValueAsString() << ")";
   }
   // Transmit additional information?
   
+  // End of transmission
+  output << endl;
 }
 
 //
