@@ -70,12 +70,18 @@ target_link_libraries(QC-MC
 set(UNIT_TESTS
   tests/misc/testTests.cpp
   tests/test_SIBusAdapter.cpp
-  tests/test_Validator.cpp
-  tests/test_Problem.cpp
-  tests/test_MonteCarloExplorer.cpp
-  tests/test_IntegerValidator.cpp
-  tests/test_BooleanValidator.cpp
-  tests/test_Variable.cpp
+
+  tests/solve/test_Validator.cpp
+  tests/solve/test_MonteCarloExplorer.cpp
+  tests/solve/test_IntegerValidator.cpp
+  tests/solve/test_BooleanValidator.cpp
+
+  tests/core/test_Problem.cpp
+  tests/core/test_Variable.cpp
+  tests/core/test_Value.cpp
+  tests/core/test_Constraint.cpp
+  tests/core/test_IntegerConstraint.cpp
+  tests/core/test_BooleanConstraint.cpp
 )
 
 add_executable(run_tests
