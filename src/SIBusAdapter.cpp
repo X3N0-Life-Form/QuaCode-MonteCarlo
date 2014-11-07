@@ -12,6 +12,13 @@ SIBusAdapter::SIBusAdapter ( ) : input(cin), output(cout), state(DATA) {
   thread = new boost::thread(&SIBusAdapter::run, this);
 }
 
+/*SIBusAdapter::SIBusAdapter(streambuf* inputBuffer, streambuf* outputBuffer) 
+  : input(inputBuffer), output(outputBuffer), state(DATA) {
+  problem = new Problem();
+  thread = new boost::thread(&SIBusAdapter::run, this);
+}
+*/
+
 SIBusAdapter::~SIBusAdapter ( ) {
   mutex.lock();
   state = EXIT;
@@ -31,6 +38,15 @@ SIBusAdapter::~SIBusAdapter ( ) {
 Problem* SIBusAdapter::getProblem() {
   return problem;
 }
+
+std::istream& SIBusAdapter::getInput() {
+  return input;
+}
+
+std::ostream& SIBusAdapter::getOutput() {
+  return output;
+}
+
 
 //  
 // Methods
@@ -258,7 +274,6 @@ void SIBusAdapter::run() {
 //
 
 void SIBusAdapter::sendSolution(Solution* solution) {
-  // /!\ Note: this is a method stub
   output << "SOLUTION         = ";
   // Transmit variables & their associated values
   for (pair<Variable*, Value*> currentPair : solution->getValues()) {

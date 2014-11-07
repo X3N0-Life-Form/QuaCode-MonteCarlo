@@ -67,10 +67,13 @@ private:
 
 public:
   // Constructors/Destructors
-  SIBusAdapter ( );
-  virtual ~SIBusAdapter ( );
+  SIBusAdapter();
+  //SIBusAdapter(streambuf* inputBuffer, streambuf* outputBuffer);
+  virtual ~SIBusAdapter();
   // Getters / Setters
   core::Problem* getProblem();
+  std::istream& getInput();
+  std::ostream& getOutput();
   // Public Methods
   //
   void dealWithInput();
