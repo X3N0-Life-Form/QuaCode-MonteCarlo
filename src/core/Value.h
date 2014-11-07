@@ -35,7 +35,7 @@ namespace core {
     bool getBValue();
     int getiValue();
 
-
+    bool operator==(Value& right);
   };
 }; // end of package namespace
 

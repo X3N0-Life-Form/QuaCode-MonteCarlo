@@ -16,16 +16,20 @@ Value::~Value ( ) { }
 // Accessor methods
 //  
 
-    Type Value::getVarType() {
-    	return varType;
-    }
+Type Value::getVarType() {
+  return varType;
+}
 
-    bool Value::getBValue(){
-    	return bValue;
-    }
+bool Value::getBValue(){
+  return bValue;
+}
 
-    int Value::getiValue(){
-    	return iValue;
-    }
+int Value::getiValue(){
+  return iValue;
+}
 
 
+bool Value::operator==(Value& right) {
+  return varType == right.varType
+    && (iValue == right.iValue || bValue == right.bValue);
+}

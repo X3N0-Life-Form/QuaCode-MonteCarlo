@@ -22,20 +22,15 @@ namespace core {
 
 class Problem
 {
-public:
-
-  // Constructors/Destructors
-  //  
-  Problem ( );
-  virtual ~Problem ( );
-
 private:
   std::vector<Variable*> variables;
   std::vector<Constraint*> constraints;
 
-
-
 public:
+
+  // Constructors/Destructors
+  Problem ( );
+  virtual ~Problem ( );
 
 
   void addVariable(Variable* var);
@@ -51,9 +46,6 @@ public:
   Domain* getDomain(int lowerBoundary, int upperBoundary);
 
   
-
-
-
 };
 }; // end of package namespace
 
