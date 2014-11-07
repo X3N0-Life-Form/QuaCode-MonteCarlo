@@ -116,7 +116,7 @@ void Test_SIBusAdapter::test_identifyConstraintArgument() {
   Constant* constant = dynamic_cast<Constant*>(rescst);
   CPPUNIT_ASSERT(constant != NULL);
   CPPUNIT_ASSERT(di1 == resi1);
-  CPPUNIT_ASSERT(resi2 != NULL);
+  CPPUNIT_ASSERT(resi2 == NULL);
   Domain* di2 = dynamic_cast<Domain*>(resi2);
   CPPUNIT_ASSERT(di2 != NULL);
   CPPUNIT_ASSERT(1 == di2->getFirstValue());

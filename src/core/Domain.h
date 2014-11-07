@@ -28,7 +28,7 @@ private:
   // [firstValue; lastValue]
   int firstValue;
   int lastValue;
-
+  int size;
   int* alreadyChecked;
   int sizeAlreadyChecked;
 
@@ -46,7 +46,7 @@ public:
   int getLastValue();
   int * getAlreadyChecked();
   int getSizeAlreadyChecked();
-
+  int getSize();
   // add a value into alreadyChecked
   bool addValue(int value);
 
