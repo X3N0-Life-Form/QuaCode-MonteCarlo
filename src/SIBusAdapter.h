@@ -10,6 +10,7 @@
 #include "core/factory/ConstraintFactory.h"
 #include "core/Constant.h"
 #include "core/Solution.h"
+#include "AdapterException.h"
 
 #include <string>
 #include <vector>

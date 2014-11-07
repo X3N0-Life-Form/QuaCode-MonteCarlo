@@ -42,14 +42,14 @@ void Test_SIBusAdapter::test_identifyQuantifier() {
   string e("E"), f("F"), nope("nope");
   CPPUNIT_ASSERT(EXISTS == adapter->identifyQuantifier(e));
   CPPUNIT_ASSERT(FORALL == adapter->identifyQuantifier(f));
-  CPPUNIT_ASSERT_THROW(adapter->identifyQuantifier(nope), string);
+  CPPUNIT_ASSERT_THROW(adapter->identifyQuantifier(nope), AdapterException);
 }
 
 void Test_SIBusAdapter::test_identifyType() {
   string i("I"), b("B"), nope("nope");
   CPPUNIT_ASSERT(INTEGER == adapter->identifyType(i));
   CPPUNIT_ASSERT(BOOLEAN == adapter->identifyType(b));
-  CPPUNIT_ASSERT_THROW(adapter->identifyType(nope), string);
+  CPPUNIT_ASSERT_THROW(adapter->identifyType(nope), AdapterException);
 }
 
 void Test_SIBusAdapter::test_identifyDomain() {
@@ -61,7 +61,7 @@ void Test_SIBusAdapter::test_identifyDomain() {
   Domain* d2 = adapter->identifyDomain(s_d2);
   Domain* d3 = adapter->identifyDomain(s_d3);
   // basic assertions
-  CPPUNIT_ASSERT_THROW(adapter->identifyDomain(nope), string);
+  CPPUNIT_ASSERT_THROW(adapter->identifyDomain(nope), AdapterException);
   CPPUNIT_ASSERT(d1 != NULL);
   CPPUNIT_ASSERT(d2 != NULL);
   CPPUNIT_ASSERT(d3 != NULL);
@@ -86,7 +86,7 @@ void Test_SIBusAdapter::test_identifyConstraintType() {
   CPPUNIT_ASSERT_EQUAL(TIMES, adapter->identifyConstraintType(times));
   CPPUNIT_ASSERT_EQUAL(LINEAR, adapter->identifyConstraintType(linear));
 
-  CPPUNIT_ASSERT_THROW(adapter->identifyConstraintType(nope), string);
+  CPPUNIT_ASSERT_THROW(adapter->identifyConstraintType(nope), AdapterException);
 }
 
 void Test_SIBusAdapter::test_identifyComparisonType() {
@@ -99,7 +99,7 @@ void Test_SIBusAdapter::test_identifyComparisonType() {
   CPPUNIT_ASSERT_EQUAL(GQ, adapter->identifyComparisonType(gq));
   CPPUNIT_ASSERT_EQUAL(GR, adapter->identifyComparisonType(gr));
 
-  CPPUNIT_ASSERT_THROW(adapter->identifyComparisonType(nope), string);
+  CPPUNIT_ASSERT_THROW(adapter->identifyComparisonType(nope), AdapterException);
 }
 
 void Test_SIBusAdapter::test_identifyConstraintArgument() {
@@ -190,7 +190,7 @@ void Test_SIBusAdapter::test_dealWithInputData_constraint_missingVar() {
   CPPUNIT_ASSERT_THROW(
     adapter->dealWithInputData(
       "CONSTRAINT = TIMES _EQ_ var(v1) var(v2) int(3)"),
-    string
+    AdapterException
   );
 }
 

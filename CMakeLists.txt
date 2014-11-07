@@ -43,6 +43,7 @@ set(SOLVE_SRCS
 set(QC-MC_DEPENDENCIES
   src/SIBusAdapter.cpp
   src/Manager.cpp
+  src/AdapterException.cpp
   ${CORE_SRCS}
   ${SOLVE_SRCS}
 )

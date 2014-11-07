@@ -120,7 +120,7 @@ ConstraintArgument* SIBusAdapter::identifyConstraintArgument(string argument) {
     if (variable != NULL) {
       return variable;
     } else {
-      throw string("Error: unknown variable in constraint argument: ").append(s_value);
+      throw AdapterException("Error: unknown variable in constraint argument: ", s_value);
     }
   } else if (argument.find("interval") != string::npos) {
     vector<string> bound = tokenize(s_value, ":");
@@ -153,7 +153,7 @@ Quantifier SIBusAdapter::identifyQuantifier(string s_quant) {
   } else if (s_quant == "F") {
     return FORALL;
   } else {
-    throw string("Error: Unrecognised quantifier: ").append(s_quant);
+    throw AdapterException("Error: Unrecognised quantifier: ", s_quant);
   }
 }
 
@@ -163,7 +163,7 @@ Type SIBusAdapter::identifyType(string s_type) {
   } else if (s_type == "B") {
     return BOOLEAN;
   } else {
-    throw string("Error: Unrecognized type: ").append(s_type);
+    throw AdapterException("Error: Unrecognized type: ", s_type);
   }
 }
 
@@ -171,7 +171,7 @@ Domain* SIBusAdapter::identifyDomain(string s_domain) {
   GET_VALUE(s_domain, s_value); // string s_value
   vector<string> bound = tokenize(s_value, ":");
   if (bound.size() != 2) {
-    throw string("Error: malformated domain: ").append(s_domain);
+    throw AdapterException("Error: malformated domain: ", s_domain);
   }
   int lowerBoundary = stoi(bound[0]);
   int upperBoundary = stoi(bound[1]);
@@ -218,7 +218,7 @@ constraint_type SIBusAdapter::identifyConstraintType(std::string type) {
   } else if (type == string("ELEMENT")) {
     return ELEMENT;
   } else {
-    throw string("Error: Unrecognised constraint type: ").append(type);
+    throw AdapterException("Error: Unrecognised constraint type: ", type);
   }
 }
 
@@ -236,7 +236,7 @@ comparison_type SIBusAdapter::identifyComparisonType(std::string type) {
   } else if (type == string("_GR_")) {
     return GR;
   } else {
-    throw string("Error: Unrecognised comparison type: ").append(type);
+    throw AdapterException("Error: Unrecognised comparison type: ", type);
   }
 }
 
