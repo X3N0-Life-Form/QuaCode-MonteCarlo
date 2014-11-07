@@ -19,7 +19,7 @@ BooleanValidator::~BooleanValidator ( ) { }
  	switch(cst->getConstraintType() ) {
  		case AND :
  			for(unsigned int i = 0; i < cst->getArguments().size(); i++) {
-				if (!i == cst->getArguments().size() - 1) {
+				if (i < cst->getArguments().size() - 1) {
 					value = Validator::getArgumentBValue(cst->getArguments()[i], values) && value;
 				}
 				else {
@@ -32,7 +32,7 @@ BooleanValidator::~BooleanValidator ( ) { }
  		case OR : 		
  			value = value && Validator::getArgumentBValue(cst->getArguments()[0], values);
  			for(unsigned int i = 1; i < cst->getArguments().size(); i++) {
-				if (!i == cst->getArguments().size() - 1) {
+				if (i < cst->getArguments().size() - 1) {
 					value = Validator::getArgumentBValue(cst->getArguments()[i], values) || value;
 				}
 				else {
@@ -45,8 +45,8 @@ BooleanValidator::~BooleanValidator ( ) { }
  		case XOR : 		
  			value = value && Validator::getArgumentBValue(cst->getArguments()[0], values);
  			for(unsigned int i = 1; i < cst->getArguments().size(); i++) {
-				if (!i == cst->getArguments().size() - 1) {
-					value = Validator::getArgumentBValue(cst->getArguments()[i], values) != value;
+				if (i < cst->getArguments().size() - 1) {
+					value = Validator::getArgumentBValue(cst->getArguments()[i], values) ^ value;				
 				}
 				else {					
 					bool lastValue = Validator::getArgumentBValue(cst->getArguments()[i], values);
@@ -57,7 +57,7 @@ BooleanValidator::~BooleanValidator ( ) { }
  		case IMP : 	
  			value = value && Validator::getArgumentBValue(cst->getArguments()[0], values);	
  			for(unsigned int i = 1; i < cst->getArguments().size(); i++) {
-				if (!i == cst->getArguments().size() - 1) {
+				if (i < cst->getArguments().size() - 1) {
 					if (!value) {
 						value = true;
 					}
