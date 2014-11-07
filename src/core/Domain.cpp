@@ -10,7 +10,7 @@ Domain::Domain (int val1, int val2) : type(INTEGER) {
 	lastValue = val2;
 	sizeAlreadyChecked = 0;
 	alreadyChecked = new int[(val2 - val1 + 1)];
-
+  size = val2 - val1 + 1;
 }
 
 Domain::~Domain ( ) { 
@@ -38,6 +38,10 @@ Type Domain::getType() {
 
   int Domain::getSizeAlreadyChecked() {
   	return sizeAlreadyChecked;
+  }
+
+  int Domain::getSize() {
+    return size;
   }
 
   // return true if value added

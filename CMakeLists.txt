@@ -71,6 +71,11 @@ set(UNIT_TESTS
   tests/misc/testTests.cpp
   tests/test_SIBusAdapter.cpp
   tests/test_Validator.cpp
+  tests/test_Problem.cpp
+  tests/test_MonteCarloExplorer.cpp
+  tests/test_IntegerValidator.cpp
+  tests/test_BooleanValidator.cpp
+  tests/test_Variable.cpp
 )
 
 add_executable(run_tests

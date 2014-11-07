@@ -12,6 +12,7 @@
 namespace core {
 
 
+
   /**
    * class Domain
    * 
@@ -22,7 +23,7 @@ namespace core {
     // [firstValue; lastValue]
     int firstValue;
     int lastValue;
-    
+    int size;
     int* alreadyChecked;
     int sizeAlreadyChecked;
     
@@ -37,7 +38,7 @@ namespace core {
     int getLastValue();
     int * getAlreadyChecked();
     int getSizeAlreadyChecked();
-    
+    int getSize();
     // add a value into alreadyChecked
     bool addValue(int value);
     bool alreadyInto(int value);
