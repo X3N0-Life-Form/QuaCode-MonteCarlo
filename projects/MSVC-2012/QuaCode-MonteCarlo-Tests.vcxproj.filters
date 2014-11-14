@@ -63,6 +63,9 @@
     <ClCompile Include="..\..\tests\core\test_Variable.cpp">
       <Filter>tests\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\tests\test_runner.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\tests\misc\testTests.h">
