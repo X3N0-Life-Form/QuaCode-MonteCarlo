@@ -27,148 +27,148 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\core\factory\ConstraintFactory.cpp">
-      <Filter>src\core\factory</Filter>
+    <ClCompile Include="..\..\src\AdapterException.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\factory\VariableFactory.cpp">
-      <Filter>src\core\factory</Filter>
+    <ClCompile Include="..\..\src\core\BooleanConstraint.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\AdapterException.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\..\src\core\BooleanVariable.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\BooleanVariable.cpp">
-      <Filter>src\core</Filter>
+    <ClCompile Include="..\..\src\core\Constant.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\Constant.cpp">
-      <Filter>src\core</Filter>
+    <ClCompile Include="..\..\src\core\Constraint.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\Constraint.cpp">
-      <Filter>src\core</Filter>
+    <ClCompile Include="..\..\src\core\ConstraintArgument.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\ConstraintArgument.cpp">
-      <Filter>src\core</Filter>
+    <ClCompile Include="..\..\src\core\Domain.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\Domain.cpp">
-      <Filter>src\core</Filter>
+    <ClCompile Include="..\..\src\core\factory\ConstraintFactory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\BooleanConstraint.cpp">
-      <Filter>src\core</Filter>
+    <ClCompile Include="..\..\src\core\factory\VariableFactory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\solve\BooleanValidator.cpp">
-      <Filter>src\solve</Filter>
+    <ClCompile Include="..\..\src\core\IntegerConstraint.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\solve\Explorer.cpp">
-      <Filter>src\solve</Filter>
+    <ClCompile Include="..\..\src\core\IntegerVariable.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\solve\IntegerValidator.cpp">
-      <Filter>src\solve</Filter>
+    <ClCompile Include="..\..\src\core\Problem.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\main.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\..\src\core\Solution.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\Variable.cpp">
-      <Filter>src\core</Filter>
+    <ClCompile Include="..\..\src\core\Value.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\Value.cpp">
-      <Filter>src\core</Filter>
+    <ClCompile Include="..\..\src\core\Variable.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\Solution.cpp">
-      <Filter>src\core</Filter>
+    <ClCompile Include="..\..\src\main.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\Problem.cpp">
-      <Filter>src\core</Filter>
+    <ClCompile Include="..\..\src\SIBusAdapter.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\IntegerVariable.cpp">
-      <Filter>src\core</Filter>
+    <ClCompile Include="..\..\src\solve\BooleanValidator.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\IntegerConstraint.cpp">
-      <Filter>src\core</Filter>
+    <ClCompile Include="..\..\src\solve\Explorer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\solve\MonteCarloExplorer.cpp">
-      <Filter>src\solve</Filter>
+    <ClCompile Include="..\..\src\solve\IntegerValidator.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\SIBusAdapter.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\..\src\solve\MonteCarloExplorer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\solve\Validator.cpp">
-      <Filter>src\solve</Filter>
+    <ClCompile Include="..\..\src\solve\Validator.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\core\factory\ConstraintFactory.h">
-      <Filter>src\core\factory</Filter>
+    <ClInclude Include="..\..\src\AdapterException.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\core\factory\VariableFactory.h">
-      <Filter>src\core\factory</Filter>
+    <ClInclude Include="..\..\src\core\BooleanConstraint.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\solve\BooleanValidator.h">
-      <Filter>src\solve</Filter>
+    <ClInclude Include="..\..\src\core\BooleanVariable.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\solve\Explorer.h">
-      <Filter>src\solve</Filter>
+    <ClInclude Include="..\..\src\core\Constant.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\solve\IntegerValidator.h">
-      <Filter>src\solve</Filter>
+    <ClInclude Include="..\..\src\core\Constraint.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\solve\Validator.h">
-      <Filter>src\solve</Filter>
+    <ClInclude Include="..\..\src\core\ConstraintArgument.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\solve\MonteCarloExplorer.h">
-      <Filter>src\solve</Filter>
+    <ClInclude Include="..\..\src\core\Domain.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\Type.h">
+    <ClInclude Include="..\..\src\core\factory\ConstraintFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\factory\VariableFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\IntegerConstraint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\IntegerVariable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\Problem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\Quantifier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\Solution.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\Value.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\Variable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\solve\BooleanValidator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\solve\Explorer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\solve\IntegerValidator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\solve\MonteCarloExplorer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\solve\Validator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SIBusAdapter.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\SIBusAdapter.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\AdapterException.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\core\Variable.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\core\BooleanConstraint.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\core\BooleanVariable.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\core\Constant.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\core\Constraint.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\core\ConstraintArgument.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\core\Domain.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\core\IntegerConstraint.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\core\IntegerVariable.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\core\Problem.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\core\Quantifier.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\core\Solution.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\core\Value.h">
-      <Filter>src\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\CMakeLists.txt" />
+    <Text Include="..\..\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\README.md" />
+    <None Include="..\..\README.md" />
   </ItemGroup>
 </Project>
