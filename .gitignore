@@ -11,3 +11,9 @@ CMakeFiles/
 
 QC-MC
 run_tests
+
+
+projects/MSVC-2012/Debug/
+projects/MSVC-2012/QuaCode-MonteCarlo.opensdf
+projects/MSVC-2012/QuaCode-MonteCarlo.sdf
+projects/MSVC-2012/QuaCode-MonteCarlo.v11.suo
