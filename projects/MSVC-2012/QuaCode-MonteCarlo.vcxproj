@@ -49,7 +49,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>H:\boost_1_57_0\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>H:\boost_1_57_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -67,59 +67,59 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\AdapterException.cpp" />
-    <ClCompile Include="..\..\..\src\core\BooleanConstraint.cpp" />
-    <ClCompile Include="..\..\..\src\core\BooleanVariable.cpp" />
-    <ClCompile Include="..\..\..\src\core\Constant.cpp" />
-    <ClCompile Include="..\..\..\src\core\Constraint.cpp" />
-    <ClCompile Include="..\..\..\src\core\ConstraintArgument.cpp" />
-    <ClCompile Include="..\..\..\src\core\Domain.cpp" />
-    <ClCompile Include="..\..\..\src\core\factory\ConstraintFactory.cpp" />
-    <ClCompile Include="..\..\..\src\core\factory\VariableFactory.cpp" />
-    <ClCompile Include="..\..\..\src\core\IntegerConstraint.cpp" />
-    <ClCompile Include="..\..\..\src\core\IntegerVariable.cpp" />
-    <ClCompile Include="..\..\..\src\core\Problem.cpp" />
-    <ClCompile Include="..\..\..\src\core\Solution.cpp" />
-    <ClCompile Include="..\..\..\src\core\Value.cpp" />
-    <ClCompile Include="..\..\..\src\core\Variable.cpp" />
-    <ClCompile Include="..\..\..\src\main.cpp" />
-    <ClCompile Include="..\..\..\src\SIBusAdapter.cpp" />
-    <ClCompile Include="..\..\..\src\solve\BooleanValidator.cpp" />
-    <ClCompile Include="..\..\..\src\solve\Explorer.cpp" />
-    <ClCompile Include="..\..\..\src\solve\IntegerValidator.cpp" />
-    <ClCompile Include="..\..\..\src\solve\MonteCarloExplorer.cpp" />
-    <ClCompile Include="..\..\..\src\solve\Validator.cpp" />
+    <ClCompile Include="..\..\src\AdapterException.cpp" />
+    <ClCompile Include="..\..\src\core\BooleanConstraint.cpp" />
+    <ClCompile Include="..\..\src\core\BooleanVariable.cpp" />
+    <ClCompile Include="..\..\src\core\Constant.cpp" />
+    <ClCompile Include="..\..\src\core\Constraint.cpp" />
+    <ClCompile Include="..\..\src\core\ConstraintArgument.cpp" />
+    <ClCompile Include="..\..\src\core\Domain.cpp" />
+    <ClCompile Include="..\..\src\core\factory\ConstraintFactory.cpp" />
+    <ClCompile Include="..\..\src\core\factory\VariableFactory.cpp" />
+    <ClCompile Include="..\..\src\core\IntegerConstraint.cpp" />
+    <ClCompile Include="..\..\src\core\IntegerVariable.cpp" />
+    <ClCompile Include="..\..\src\core\Problem.cpp" />
+    <ClCompile Include="..\..\src\core\Solution.cpp" />
+    <ClCompile Include="..\..\src\core\Value.cpp" />
+    <ClCompile Include="..\..\src\core\Variable.cpp" />
+    <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\SIBusAdapter.cpp" />
+    <ClCompile Include="..\..\src\solve\BooleanValidator.cpp" />
+    <ClCompile Include="..\..\src\solve\Explorer.cpp" />
+    <ClCompile Include="..\..\src\solve\IntegerValidator.cpp" />
+    <ClCompile Include="..\..\src\solve\MonteCarloExplorer.cpp" />
+    <ClCompile Include="..\..\src\solve\Validator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\AdapterException.h" />
-    <ClInclude Include="..\..\..\src\core\BooleanConstraint.h" />
-    <ClInclude Include="..\..\..\src\core\BooleanVariable.h" />
-    <ClInclude Include="..\..\..\src\core\Constant.h" />
-    <ClInclude Include="..\..\..\src\core\Constraint.h" />
-    <ClInclude Include="..\..\..\src\core\ConstraintArgument.h" />
-    <ClInclude Include="..\..\..\src\core\Domain.h" />
-    <ClInclude Include="..\..\..\src\core\factory\ConstraintFactory.h" />
-    <ClInclude Include="..\..\..\src\core\factory\VariableFactory.h" />
-    <ClInclude Include="..\..\..\src\core\IntegerConstraint.h" />
-    <ClInclude Include="..\..\..\src\core\IntegerVariable.h" />
-    <ClInclude Include="..\..\..\src\core\Problem.h" />
-    <ClInclude Include="..\..\..\src\core\Quantifier.h" />
-    <ClInclude Include="..\..\..\src\core\Solution.h" />
-    <ClInclude Include="..\..\..\src\core\Value.h" />
-    <ClInclude Include="..\..\..\src\core\Variable.h" />
-    <ClInclude Include="..\..\..\src\SIBusAdapter.h" />
-    <ClInclude Include="..\..\..\src\solve\BooleanValidator.h" />
-    <ClInclude Include="..\..\..\src\solve\Explorer.h" />
-    <ClInclude Include="..\..\..\src\solve\IntegerValidator.h" />
-    <ClInclude Include="..\..\..\src\solve\MonteCarloExplorer.h" />
-    <ClInclude Include="..\..\..\src\solve\Validator.h" />
-    <ClInclude Include="..\..\..\src\Type.h" />
+    <ClInclude Include="..\..\src\AdapterException.h" />
+    <ClInclude Include="..\..\src\core\BooleanConstraint.h" />
+    <ClInclude Include="..\..\src\core\BooleanVariable.h" />
+    <ClInclude Include="..\..\src\core\Constant.h" />
+    <ClInclude Include="..\..\src\core\Constraint.h" />
+    <ClInclude Include="..\..\src\core\ConstraintArgument.h" />
+    <ClInclude Include="..\..\src\core\Domain.h" />
+    <ClInclude Include="..\..\src\core\factory\ConstraintFactory.h" />
+    <ClInclude Include="..\..\src\core\factory\VariableFactory.h" />
+    <ClInclude Include="..\..\src\core\IntegerConstraint.h" />
+    <ClInclude Include="..\..\src\core\IntegerVariable.h" />
+    <ClInclude Include="..\..\src\core\Problem.h" />
+    <ClInclude Include="..\..\src\core\Quantifier.h" />
+    <ClInclude Include="..\..\src\core\Solution.h" />
+    <ClInclude Include="..\..\src\core\Value.h" />
+    <ClInclude Include="..\..\src\core\Variable.h" />
+    <ClInclude Include="..\..\src\SIBusAdapter.h" />
+    <ClInclude Include="..\..\src\solve\BooleanValidator.h" />
+    <ClInclude Include="..\..\src\solve\Explorer.h" />
+    <ClInclude Include="..\..\src\solve\IntegerValidator.h" />
+    <ClInclude Include="..\..\src\solve\MonteCarloExplorer.h" />
+    <ClInclude Include="..\..\src\solve\Validator.h" />
+    <ClInclude Include="..\..\src\Type.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\CMakeLists.txt" />
+    <Text Include="..\..\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\README.md" />
+    <None Include="..\..\README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

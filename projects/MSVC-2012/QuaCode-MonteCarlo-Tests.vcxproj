@@ -64,32 +64,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\tests\core\test_BooleanConstraint.cpp" />
-    <ClCompile Include="..\..\..\tests\core\test_Constraint.cpp" />
-    <ClCompile Include="..\..\..\tests\core\test_IntegerConstraint.cpp" />
-    <ClCompile Include="..\..\..\tests\core\test_Problem.cpp" />
-    <ClCompile Include="..\..\..\tests\core\test_Value.cpp" />
-    <ClCompile Include="..\..\..\tests\core\test_Variable.cpp" />
-    <ClCompile Include="..\..\..\tests\misc\testTests.cpp" />
-    <ClCompile Include="..\..\..\tests\solve\test_BooleanValidator.cpp" />
-    <ClCompile Include="..\..\..\tests\solve\test_IntegerValidator.cpp" />
-    <ClCompile Include="..\..\..\tests\solve\test_MonteCarloExplorer.cpp" />
-    <ClCompile Include="..\..\..\tests\solve\test_Validator.cpp" />
-    <ClCompile Include="..\..\..\tests\test_SIBusAdapter.cpp" />
+    <ClCompile Include="..\..\tests\core\test_BooleanConstraint.cpp" />
+    <ClCompile Include="..\..\tests\core\test_Constraint.cpp" />
+    <ClCompile Include="..\..\tests\core\test_IntegerConstraint.cpp" />
+    <ClCompile Include="..\..\tests\core\test_Problem.cpp" />
+    <ClCompile Include="..\..\tests\core\test_Value.cpp" />
+    <ClCompile Include="..\..\tests\core\test_Variable.cpp" />
+    <ClCompile Include="..\..\tests\misc\testTests.cpp" />
+    <ClCompile Include="..\..\tests\solve\test_BooleanValidator.cpp" />
+    <ClCompile Include="..\..\tests\solve\test_IntegerValidator.cpp" />
+    <ClCompile Include="..\..\tests\solve\test_MonteCarloExplorer.cpp" />
+    <ClCompile Include="..\..\tests\solve\test_Validator.cpp" />
+    <ClCompile Include="..\..\tests\test_SIBusAdapter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\tests\core\test_BooleanConstraint.h" />
-    <ClInclude Include="..\..\..\tests\core\test_Constraint.h" />
-    <ClInclude Include="..\..\..\tests\core\test_IntegerConstraint.h" />
-    <ClInclude Include="..\..\..\tests\core\test_Problem.h" />
-    <ClInclude Include="..\..\..\tests\core\test_Value.h" />
-    <ClInclude Include="..\..\..\tests\core\test_Variable.h" />
-    <ClInclude Include="..\..\..\tests\misc\testTests.h" />
-    <ClInclude Include="..\..\..\tests\solve\test_BooleanValidator.h" />
-    <ClInclude Include="..\..\..\tests\solve\test_IntegerValidator.h" />
-    <ClInclude Include="..\..\..\tests\solve\test_MonteCarloExplorer.h" />
-    <ClInclude Include="..\..\..\tests\solve\test_Validator.h" />
-    <ClInclude Include="..\..\..\tests\test_SIBusAdapter.h" />
+    <ClInclude Include="..\..\tests\core\test_BooleanConstraint.h" />
+    <ClInclude Include="..\..\tests\core\test_Constraint.h" />
+    <ClInclude Include="..\..\tests\core\test_IntegerConstraint.h" />
+    <ClInclude Include="..\..\tests\core\test_Problem.h" />
+    <ClInclude Include="..\..\tests\core\test_Value.h" />
+    <ClInclude Include="..\..\tests\core\test_Variable.h" />
+    <ClInclude Include="..\..\tests\misc\testTests.h" />
+    <ClInclude Include="..\..\tests\solve\test_BooleanValidator.h" />
+    <ClInclude Include="..\..\tests\solve\test_IntegerValidator.h" />
+    <ClInclude Include="..\..\tests\solve\test_MonteCarloExplorer.h" />
+    <ClInclude Include="..\..\tests\solve\test_Validator.h" />
+    <ClInclude Include="..\..\tests\test_SIBusAdapter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
