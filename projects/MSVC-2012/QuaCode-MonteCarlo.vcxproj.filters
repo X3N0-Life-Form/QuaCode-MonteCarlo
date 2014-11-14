@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{9834a0cd-28a2-4aa3-8b4e-b158cd3f63e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{3420f03d-952a-493e-8035-fcbabe441525}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\solve">
+      <UniqueIdentifier>{e9f79c95-8993-4902-a244-1bfa56182e54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\factory">
+      <UniqueIdentifier>{cf035c65-53d1-42f3-a75f-18f8bed03de5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\core\factory\ConstraintFactory.cpp">
+      <Filter>src\core\factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\factory\VariableFactory.cpp">
+      <Filter>src\core\factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\AdapterException.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\BooleanVariable.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\Constant.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\Constraint.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\ConstraintArgument.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\Domain.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\BooleanConstraint.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solve\BooleanValidator.cpp">
+      <Filter>src\solve</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solve\Explorer.cpp">
+      <Filter>src\solve</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solve\IntegerValidator.cpp">
+      <Filter>src\solve</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\Variable.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\Value.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\Solution.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\Problem.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\IntegerVariable.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\IntegerConstraint.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solve\MonteCarloExplorer.cpp">
+      <Filter>src\solve</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SIBusAdapter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solve\Validator.cpp">
+      <Filter>src\solve</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\core\factory\ConstraintFactory.h">
+      <Filter>src\core\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\factory\VariableFactory.h">
+      <Filter>src\core\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\solve\BooleanValidator.h">
+      <Filter>src\solve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\solve\Explorer.h">
+      <Filter>src\solve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\solve\IntegerValidator.h">
+      <Filter>src\solve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\solve\Validator.h">
+      <Filter>src\solve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\solve\MonteCarloExplorer.h">
+      <Filter>src\solve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Type.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SIBusAdapter.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\AdapterException.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\Variable.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\BooleanConstraint.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\BooleanVariable.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\Constant.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\Constraint.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\ConstraintArgument.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\Domain.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\IntegerConstraint.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\IntegerVariable.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\Problem.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\Quantifier.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\Solution.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\core\Value.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\README.md" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuaCode-MonteCarlo", "QuaCode-MonteCarlo.vcxproj", "{2E3B709B-831C-426C-9FDB-8C187479CB32}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuaCode-MonteCarlo-Tests", "QuaCode-MonteCarlo-Tests.vcxproj", "{024056CC-DA1F-4045-9477-92D5DF19748B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2E3B709B-831C-426C-9FDB-8C187479CB32} = {2E3B709B-831C-426C-9FDB-8C187479CB32}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E3B709B-831C-426C-9FDB-8C187479CB32}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2E3B709B-831C-426C-9FDB-8C187479CB32}.Debug|Win32.Build.0 = Debug|Win32
+		{2E3B709B-831C-426C-9FDB-8C187479CB32}.Release|Win32.ActiveCfg = Release|Win32
+		{2E3B709B-831C-426C-9FDB-8C187479CB32}.Release|Win32.Build.0 = Release|Win32
+		{024056CC-DA1F-4045-9477-92D5DF19748B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{024056CC-DA1F-4045-9477-92D5DF19748B}.Debug|Win32.Build.0 = Debug|Win32
+		{024056CC-DA1F-4045-9477-92D5DF19748B}.Release|Win32.ActiveCfg = Release|Win32
+		{024056CC-DA1F-4045-9477-92D5DF19748B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
