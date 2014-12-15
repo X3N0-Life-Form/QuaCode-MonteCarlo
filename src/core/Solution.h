@@ -14,7 +14,6 @@ class Solution {
 private:
 	std::vector<std::pair<Variable *, Value *> > values;
 	Validator * validator;
-	std::vector<std::pair<Variable *, int> > cfl;
 
 public:	
 
@@ -24,7 +23,7 @@ public:
 
   std::vector<std::pair<Variable *, Value *> > getValues();
 
-  std::vector<std::pair<Variable *, int> >  getCfl();
+  //std::vector<std::pair<Variable *, int> >  getCfl();
 
   void addValue(Variable* var, Value* val);
 
@@ -32,21 +31,21 @@ public:
 
   void generateValueVector();
 
-  // set all variables
-  void generateCflVector();
-  // set all values to 0
-  void initCfl();
 
   // update cfl and return nb of conflicts
   int updateCfl();
 
-  //used into updateCfl()
-  void incrementCfl(ConstraintArgument * arg);
+    //used into updateCfl()
+  void increment(ConstraintArgument * arg);
 
-  // return var index (var with the smallest cfl)
+    // return var index (var with the smallest cfl)
     // must return the index of values
   int choice();
+/*
 
+
+
+*/
 
 };
 }; // end of namespace core

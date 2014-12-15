@@ -78,16 +78,16 @@ int MonteCarloExplorer::heuristic() {
 		// cflVector is already set to 0 for each variables (constructor of Solution calls generateCflVector())
 	}
 
-	nbCfls = currentSol.updateCfl();
+	//nbCfls = currentSol.updateCfl();
 
 	while(true) {
 		count++;
-		k = currentSol.choice();
+	//	k = currentSol.choice();
 		vsauv = currentSol.getValues()[k].second;
 
 		currentSol.addValue(currentSol.getValues()[k].first, randDom(currentSol.getValues()[k].first));
 
-		nNBCfls = currentSol.updateCfl();
+	//	nNBCfls = currentSol.updateCfl();
 
 		if (nNBCfls > nbCfls) {
 			nbCfls = nNBCfls;
