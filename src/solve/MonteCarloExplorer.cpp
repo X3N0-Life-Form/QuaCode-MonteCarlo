@@ -42,7 +42,7 @@ int MonteCarloExplorer::heuristic() {
 
 	// declaration of val 
 	int ok = 0;
-	Validator * val;
+	Validator * val = NULL;
 	for (unsigned int i = 0; i < problem->getVariables().size(); i++){
 		if (problem->getVariables()[i]->getType() == BOOLEAN){
 			val = new BooleanValidator(problem);

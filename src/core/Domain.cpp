@@ -10,7 +10,7 @@ Domain::Domain (int val1, int val2) : type(INTEGER) {
 	lastValue = val2;
 	sizeAlreadyChecked = 0;
 	alreadyChecked = new int[(val2 - val1 + 1)];
-
+  size = val2 - val1 + 1;
 }
 
 Domain::~Domain ( ) { 
@@ -40,6 +40,10 @@ Type Domain::getType() {
   	return sizeAlreadyChecked;
   }
 
+  int Domain::getSize() {
+    return size;
+  }
+
   // return true if value added
   bool Domain::addValue(int value){
   	if (value >= firstValue && value <= lastValue && !alreadyInto(value)){
@@ -52,16 +56,23 @@ Type Domain::getType() {
   	}
   }
 
-  // used into addValue
-  // check if value already into alreadyChecked => if yes returns true.
-  bool Domain::alreadyInto(int value) {
-  	for (int i = 0; i < sizeAlreadyChecked; i++) {
-  		if (alreadyChecked[i] == value)
-  			return true;
-  	}
-  	return false;
+// used into addValue
+// check if value already into alreadyChecked => if yes returns true.
+bool Domain::alreadyInto(int value) {
+  for (int i = 0; i < sizeAlreadyChecked; i++) {
+    if (alreadyChecked[i] == value)
+      return true;
   }
-// Other methods
-//  
+  return false;
+}
 
 
+// Operators
+//
+
+bool Domain::operator==(ConstraintArgument& right) {
+  Domain& dom = dynamic_cast<Domain&>(right);
+  return getType() == dom.getType()
+    && getFirstValue() == dom.getFirstValue()
+    && getLastValue() == dom.getLastValue();
+}

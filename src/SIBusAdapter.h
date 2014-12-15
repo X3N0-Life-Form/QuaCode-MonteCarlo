@@ -9,6 +9,8 @@
 #include "core/Constraint.h"
 #include "core/factory/ConstraintFactory.h"
 #include "core/Constant.h"
+#include "core/Solution.h"
+#include "AdapterException.h"
 
 #include <string>
 #include <vector>
@@ -66,10 +68,13 @@ private:
 
 public:
   // Constructors/Destructors
-  SIBusAdapter ( );
-  virtual ~SIBusAdapter ( );
+  SIBusAdapter();
+  //SIBusAdapter(streambuf* inputBuffer, streambuf* outputBuffer);
+  virtual ~SIBusAdapter();
   // Getters / Setters
   core::Problem* getProblem();
+  std::istream& getInput();
+  std::ostream& getOutput();
   // Public Methods
   //
   void dealWithInput();
@@ -86,7 +91,7 @@ public:
   // Thread handling
   void run();
   // Communicate with SIBus
-  void sendSolution();
+  void sendSolution(core::Solution* solution);
   // Utility methods
   bool doesDomainExist();
 };

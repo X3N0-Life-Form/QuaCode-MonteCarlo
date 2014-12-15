@@ -9,13 +9,11 @@
 
 namespace core {
 
-/**
-  * class Value
-  * 
-  */
-
-  class Value
-  {
+  /**
+   * class Value
+   * 
+   */
+  class Value {
   private:
     bool bValue;
     int iValue;
@@ -24,18 +22,22 @@ namespace core {
   public:
 
     // Constructors/Destructors
-
     Value(int value);
     Value(bool value);
     virtual ~Value ( );
 
     // Public attribute accessor methods
-
     Type getVarType();
     bool getBValue();
     int getiValue();
 
+    /**
+     * Useful to get the value independently of its type.
+     * Note: booleans will be returned as "1" or "0".
+     */
+    std::string getValueAsString();
 
+    bool operator==(Value& right);
   };
 }; // end of package namespace
 

@@ -14,6 +14,8 @@ namespace core {
     Constant(Value* value);
     Type getType();
     Value* getValue();
+
+    virtual bool operator==(ConstraintArgument& right);
   };
 };
 

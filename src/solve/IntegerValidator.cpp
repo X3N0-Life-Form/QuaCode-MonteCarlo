@@ -12,19 +12,22 @@ IntegerValidator::IntegerValidator (Problem * pb) : Validator(pb) {
 
 IntegerValidator::~IntegerValidator ( ) { }
 
+
 bool IntegerValidator::validateConstraint(Constraint * cst, std::vector<std::pair<Variable *, Value *> > values) {
 	comparison_type CT = cst->getComparisonType();
 	int value = 0;
-
+	
 	switch(cst->getConstraintType() ) {
 		case TIMES:
 			value = 1;
 			for(unsigned int i = 0; i < cst->getArguments().size(); i++) {
-				if (!i == cst->getArguments().size() - 1) {
-					value *= Validator::getArgumentIValue(cst->getArguments()[i], values);
+				if (i < cst->getArguments().size() - 1) {
+					value *= Validator::getArgumentIValue(cst->getArguments()[i], values);								
 				}
 				else {
 					int lastValue = Validator::getArgumentIValue(cst->getArguments()[i], values);
+					//cout<<value<<endl;
+					//cout<<lastValue<<endl;
 					return Validator::checkComparison(value, CT, lastValue);
 				}
 			}

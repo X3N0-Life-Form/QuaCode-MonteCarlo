@@ -27,9 +27,7 @@ namespace solve {
   * class MonteCarloExplorer
   * 
   */
-
-class MonteCarloExplorer : public Explorer
-{
+class MonteCarloExplorer : public Explorer {
 
 private:
   double temperature;
@@ -37,24 +35,24 @@ private:
   Problem * problem; // contains nbVar, variables, domains, constraints
 
 public:
-
+  
   // Constructors/Destructors
   // 
   MonteCarloExplorer(Problem * prob);
-
-  /////////// getters & setters ///////////
+  virtual ~MonteCarloExplorer ( );
+  ///////////////////////////////////////
+  /////////// getters & setters /////////
   ///////////////////////////////////////
 
-double getTemperature();
-
-int getFrequence();
+  double getTemperature();
+  int getFrequence();
 
 
   ///////////////////////////////////////////
   //////// Methods///////////////////////////
   ///////////////////////////////////////////
   // Monte Carlo
-int heuristic();
+  int heuristic();
 
   // rand(Di)
 
@@ -64,11 +62,6 @@ int heuristic();
   bool metropolis(int delta);
 
   void decreaseTemperature();
-
-  /**
-   * Empty Destructor
-   */
-  virtual ~MonteCarloExplorer ( );
 
 };
 }; // end of package namespace

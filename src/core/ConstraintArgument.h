@@ -7,6 +7,7 @@ namespace core {
   class ConstraintArgument {
   public:
     virtual Type getType() = 0;
+    virtual bool operator==(ConstraintArgument& right) = 0;
   };
 };
 

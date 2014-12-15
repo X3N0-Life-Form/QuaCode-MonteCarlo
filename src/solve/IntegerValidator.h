@@ -15,24 +15,15 @@ namespace solve {
   * class IntegerValidator
   * 
   */
-
 class IntegerValidator : public Validator
 {
 public:
 
   // Constructors/Destructors
-  
   IntegerValidator (Problem * pb);
-
-  /**
-   * Empty Destructor
-   */
   virtual ~IntegerValidator ( );
 
   virtual bool validateConstraint(Constraint * cst, std::vector<std::pair<Variable *, Value *> > values);
-
-  
-
 
 
 };

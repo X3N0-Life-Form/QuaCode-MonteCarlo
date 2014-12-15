@@ -22,11 +22,12 @@ void Problem::addConstraint(Constraint* cst) {
 
 
 std::vector<Variable *> Problem::getVariables() {
-  		return variables;
-  }
-  std::vector<Constraint *> Problem::getConstraints() {
-  		return constraints;
-  }
+  return variables;
+}
+
+std::vector<Constraint *> Problem::getConstraints() {
+  return constraints;
+}
   
 
 Variable* Problem::getVariable(std::string varName) {
@@ -42,7 +43,8 @@ Domain* Problem::getDomain(int lowerBoundary, int upperBoundary) {
   // it would be cool if we had a domain vector ...
   for (Variable* var : variables) {
     Domain* dom = var->getDomain();
-    if (dom->getFirstValue() == lowerBoundary && dom->getLastValue() == upperBoundary) {
+    if (dom->getFirstValue() == lowerBoundary
+	&& dom->getLastValue() == upperBoundary) {
       return dom;
     }
   }

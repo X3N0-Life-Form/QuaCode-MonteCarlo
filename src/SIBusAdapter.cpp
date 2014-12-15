@@ -12,6 +12,13 @@ SIBusAdapter::SIBusAdapter ( ) : input(cin), output(cout), state(DATA) {
   thread = new boost::thread(&SIBusAdapter::run, this);
 }
 
+/*SIBusAdapter::SIBusAdapter(streambuf* inputBuffer, streambuf* outputBuffer) 
+  : input(inputBuffer), output(outputBuffer), state(DATA) {
+  problem = new Problem();
+  thread = new boost::thread(&SIBusAdapter::run, this);
+}
+*/
+
 SIBusAdapter::~SIBusAdapter ( ) {
   mutex.lock();
   state = EXIT;
@@ -31,6 +38,15 @@ SIBusAdapter::~SIBusAdapter ( ) {
 Problem* SIBusAdapter::getProblem() {
   return problem;
 }
+
+std::istream& SIBusAdapter::getInput() {
+  return input;
+}
+
+std::ostream& SIBusAdapter::getOutput() {
+  return output;
+}
+
 
 //  
 // Methods
@@ -53,21 +69,16 @@ void SIBusAdapter::dealWithInput() {
 }
 
 void SIBusAdapter::dealWithInputData(string line) {
-  string word;
-  input >> word;
-  if (line == "VAR_BINDER") {
-    //TODO: use tokenize() here as well
+  vector<string> tokens = tokenize(line, " ");
+  if (line.find("VAR_BINDER") != string::npos) {
     // VAR_BINDER = var(quant,type,name,domain)
-    int posLeft = word.find("(");
-    int posEndQuant = word.find(",", posLeft);
-    int posEndType = word.find(",", posEndQuant + 1);
-    int posEndName = word.find(",", posEndType + 1);
-    int posRight = word.find(")");
     // extract values
-    string s_quant = word.substr(posLeft + 1, posEndQuant - posLeft);
-    string s_type = word.substr(posEndQuant + 1, posEndType - posEndQuant);
-    string name = word.substr(posEndType + 1, posEndName - posEndType);
-    string s_domain = word.substr(posEndName + 1, posRight - posEndName);
+    GET_VALUE(tokens[2], s_var_params);
+    vector<string> var_params = tokenize(s_var_params, ",");
+    string s_quant = var_params[0];
+    string s_type = var_params[1];
+    string name = var_params[2];
+    string s_domain = var_params[3];
     // convert values
     Quantifier quant = identifyQuantifier(s_quant);
     Type type = identifyType(s_type);
@@ -75,30 +86,30 @@ void SIBusAdapter::dealWithInputData(string line) {
     // create & store
     Variable* var = VariableFactory::createVariable(quant, type, name, domain);
     problem->addVariable(var);
-  } else if (line == "VAR_AUX") {
-    vector<string> tokens = tokenize(line, " ");
-    Quantifier quant = identifyQuantifier(tokens[0]);
-    Type type = identifyType(tokens[1]);
-    string name = tokens[2];
+  } else if (line.find("VAR_AUX") != string::npos) {
+    GET_VALUE(tokens[2], s_var_params);
+    vector<string> var_params = tokenize(s_var_params, ",");
+    Quantifier quant = identifyQuantifier(var_params[0]);
+    Type type = identifyType(var_params[1]);
+    string name = var_params[2];
     Variable* var = VariableFactory::createVariable(quant, type, name);
     problem->addVariable(var);
-  } else if (line == "CONSTRAINT") {
-    vector<string> tokens = tokenize(line, " ");
-    unsigned int i = 2;
-    constraint_type constraintType = identifyConstraintType(tokens[0]);
-    comparison_type comparisonType = identifyComparisonType(tokens[1]);
+  } else if (line.find("CONSTRAINT") != string::npos) {
+    unsigned int i = 4;
+    constraint_type constraintType = identifyConstraintType(tokens[2]);
+    comparison_type comparisonType = identifyComparisonType(tokens[3]);
     Constraint* constraint = ConstraintFactory::createConstraint(constraintType, comparisonType);
     for ( ;i < tokens.size(); i++) {
       ConstraintArgument* argument = identifyConstraintArgument(tokens[i]);
       constraint->addArgument(argument);
     }
     problem->addConstraint(constraint);
-  } else if (line == "VAR_ARRAY_BINDER") {
+  } else if (line.find("VAR_ARRAY_BINDER") != string::npos) {
     throw "not implemented";
-  } else if (line == "VAR_ARRAY_AUX") {
+  } else if (line.find("VAR_ARRAY_AUX") != string::npos) {
     throw "not implemented";
   } else {
-    cerr << "Unrecognized data input: " << line << endl;
+    cerr << "Warning: Unrecognized data input: " << line << endl;
   }
 }
 
@@ -109,28 +120,27 @@ ConstraintArgument* SIBusAdapter::identifyConstraintArgument(string argument) {
     if (variable != NULL) {
       return variable;
     } else {
-      cerr << "Constraint argument error: unknown variable " << s_value << endl;
-      return NULL;
+      throw AdapterException("Error: unknown variable in constraint argument: ", s_value);
+    }
+  } else if (argument.find("interval") != string::npos) {
+    vector<string> bound = tokenize(s_value, ":");
+    int lowerBoundary = stoi(bound[0]);
+    int upperBoundary = stoi(bound[1]);
+    Domain* domain = problem->getDomain(lowerBoundary, upperBoundary);
+    if (domain != NULL) {
+      return domain;
+    } else {
+      //cerr << "Constraint argument warning: unknown domain " << s_value << endl;
+      return new Domain(lowerBoundary, upperBoundary);
     }
   } else if (argument.find("int") != string::npos) {
     Value* value = new Value(stoi(s_value));
     return new Constant(value);
   } else if (argument.find("1") != string::npos) {
-    if (s_value == "true") {
+    if (s_value == string("true")) {
       return new Constant(new Value(true));
     } else {
       return new Constant(new Value(false));
-    }
-  } else if (argument.find("interval") != string::npos) {
-    vector<string> bound = tokenize(s_value, ",");
-    int lowerBoundary = stoi(bound[0]);
-    int upperBoundary = stoi(bound[1]);
-    Domain* domain = problem->getDomain(lowerBoundary, upperBoundary);//TODO: get that checked out
-    if (domain != NULL) {
-      return domain;
-    } else {
-      cerr << "Constraint argument warning: unknown domain " << s_value << endl;
-      return new Domain(lowerBoundary, upperBoundary);
     }
   } else {
     return NULL; // could not identify argument
@@ -143,7 +153,7 @@ Quantifier SIBusAdapter::identifyQuantifier(string s_quant) {
   } else if (s_quant == "F") {
     return FORALL;
   } else {
-    throw string("Unrecognised quantifier: ").append(s_quant);
+    throw AdapterException("Error: Unrecognised quantifier: ", s_quant);
   }
 }
 
@@ -153,15 +163,15 @@ Type SIBusAdapter::identifyType(string s_type) {
   } else if (s_type == "B") {
     return BOOLEAN;
   } else {
-    throw string("Unrecognized type: ").append(s_type);
+    throw AdapterException("Error: Unrecognized type: ", s_type);
   }
 }
 
 Domain* SIBusAdapter::identifyDomain(string s_domain) {
   GET_VALUE(s_domain, s_value); // string s_value
-  vector<string> bound = tokenize(s_value, ",");
+  vector<string> bound = tokenize(s_value, ":");
   if (bound.size() != 2) {
-    throw string("Error: malformated domain: ").append(s_domain);
+    throw AdapterException("Error: malformated domain: ", s_domain);
   }
   int lowerBoundary = stoi(bound[0]);
   int upperBoundary = stoi(bound[1]);
@@ -208,25 +218,25 @@ constraint_type SIBusAdapter::identifyConstraintType(std::string type) {
   } else if (type == string("ELEMENT")) {
     return ELEMENT;
   } else {
-    throw string("Unrecognised constraint type: ").append(type);
+    throw AdapterException("Error: Unrecognised constraint type: ", type);
   }
 }
 
 comparison_type SIBusAdapter::identifyComparisonType(std::string type) {
-  if (type == string("NQ")) {
+  if (type == string("_NQ_")) {
     return NQ;
-  } else if (type == string("EQ")) {
+  } else if (type == string("_EQ_")) {
     return EQ;
-  } else if (type == string("LQ")) {
+  } else if (type == string("_LQ_")) {
     return LQ;
-  } else if (type == string("LE")) {
+  } else if (type == string("_LE_")) {
     return LE;
-  } else if (type == string("GQ")) {
+  } else if (type == string("_GQ_")) {
     return GQ;
-  } else if (type == string("GR")) {
+  } else if (type == string("_GR_")) {
     return GR;
   } else {
-    throw string("Unrecognised comparison type: ").append(type);
+    throw AdapterException("Error: Unrecognised comparison type: ", type);
   }
 }
 
@@ -263,15 +273,17 @@ void SIBusAdapter::run() {
 // Communicate with SIBus
 //
 
-void SIBusAdapter::sendSolution() {
-  // /!\ Note: this is a method stub
+void SIBusAdapter::sendSolution(Solution* solution) {
   output << "SOLUTION         = ";
   // Transmit variables & their associated values
-  for (int i = 0; i < 10; i++) {
-    output << " var(" << "name" << "," << "value" << ")";
+  for (pair<Variable*, Value*> currentPair : solution->getValues()) {
+    output << " val(" << currentPair.first->getName() << ","
+	   << currentPair.second->getValueAsString() << ")";
   }
   // Transmit additional information?
   
+  // End of transmission
+  output << endl;
 }
 
 //
@@ -283,7 +295,9 @@ vector<string> tokenize(string toSplit, string token) {
   vector<string> result;
   while ((pos = toSplit.find(token)) != string::npos) {
     string nuString = toSplit.substr(0, pos);
-    result.push_back(nuString);
+    if (!nuString.empty()) {
+      result.push_back(nuString);
+    }
     toSplit = toSplit.substr(pos + 1);
   }
   result.push_back(toSplit);
