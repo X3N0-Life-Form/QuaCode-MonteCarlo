@@ -26,6 +26,9 @@ namespace core {
     int size;
     int* alreadyChecked;
     int sizeAlreadyChecked;
+
+
+  std::vector<std::pair<int, int> > cfl;
     
   public:
     // Constructors/Destructors
@@ -42,6 +45,18 @@ namespace core {
     // add a value into alreadyChecked
     bool addValue(int value);
     bool alreadyInto(int value);
+
+    std::vector<std::pair<int, int> > getCfl();
+
+    void generateCflVector();
+
+    void initCfl();
+
+    void incrementCfl(int value);
+
+    void setCflForValue(int value, int c);
+
+    int totalCfl();
 
     // Operators
     virtual bool operator==(ConstraintArgument& right);

@@ -5,17 +5,17 @@ using namespace core;
 
 Solution::Solution(Validator * val){
 	generateValueVector();
-	generateCflVector();
+	//generateCflVector();
 	validator = val;
 }
 
 std::vector<std::pair<Variable *, Value *> > Solution::getValues(){
   	return values;
 }
-
+/*
 std::vector<std::pair<Variable *, int> >  Solution::getCfl(){
 	return cfl;
-}
+}*/
 
 void Solution::addValue(Variable* var, Value* val) {
 	for (std::pair<Variable*, Value*> currentPair : values) {
@@ -37,17 +37,8 @@ void Solution::generateValueVector(){
 }
 
 
-void Solution::generateCflVector(){
-	for (unsigned int i = 0; i < validator->getProblem()->getVariables().size(); i++) {
-		cfl.push_back(std::pair<Variable *, int>(validator->getProblem()->getVariables()[i], 0));
-	}
-}
 
- void Solution::initCfl() {
- 	for (unsigned int i = 0; i < values.size();i++){
- 		cfl[i].second = 0;
- 	}
- }
+
 
  int Solution::updateCfl() {
  	int cmp = 0;
@@ -55,39 +46,43 @@ void Solution::generateCflVector(){
  	for (unsigned int i = 0; i < validator->getProblem()->getConstraints().size(); i++) {
  		if (!validator->validateConstraint(validator->getProblem()->getConstraints()[i], values)) {
  			cmp++;
- 			//TODO : update each cfl for each variables
- 			for (unsigned int j = 0; j < validator->getProblem()->getConstraints()[i]->getArguments().size(); j++) {
- 				incrementCfl(validator->getProblem()->getConstraints()[i]->getArguments()[j]);
+ 			for (unsigned int j = 0; j < validator->getProblem()->getConstraints()[i]->getArguments().size(); j++){
+ 				increment(validator->getProblem()->getConstraints()[i]->getArguments()[j]);
  				break;
- 			}		
+ 			}
  		}
  	} 	
 	return cmp;
  }
 
- void Solution::incrementCfl(ConstraintArgument * arg) {
- 	for (unsigned int i = 0; i < cfl.size();i++) {
- 		if (cfl[i].first == arg) {
- 			cfl[i].second++;
- 			break;
- 		}
+ 
+
+ void Solution::increment(ConstraintArgument * arg) {
+ 	// check if is variable
+ 	// if yes => update
+ 	Variable * test = dynamic_cast<Variable *>(arg);
+ 	if(test != NULL) {
+	 	for (unsigned int i = 0; i < values.size();i++) {
+	 		if (values[i].first == arg) {
+	 			values[i].first->getDomain()->incrementCfl(values[i].second->getiValue());
+	 			break;
+	 		}
+	 	}
  	}
  }
 
+ 
+
  int Solution::choice(){
- 	int cflVal = cfl[0].second;
+ 	int cflVal = values[0].first->getDomain()->totalCfl();
  	int index = 0;
- 	for (unsigned int i = 1; i < cfl.size(); i++){
- 		if(cfl[i].second < cflVal){
+ 	int temp = 0;
+ 	for (unsigned int i = 1; i < values.size(); i++) {
+ 		temp = values[i].first->getDomain()->totalCfl();
+ 		if(temp < cflVal) {
  			index = i;
+ 			cflVal = temp;
  		}
  	}
- 	for (unsigned int j = 0; j < values.size();j++) {
- 		if (cfl[index].first == values[j].first){
- 			if (values[j].first != NULL){
- 				return j;
- 			}
- 		}
- 	}
- 	return -1;
+ 	return index;
  }

@@ -79,7 +79,10 @@ set(UNIT_TESTS
 
   tests/core/test_Problem.cpp
   tests/core/test_Variable.cpp
+  tests/core/test_IntegerVariable.cpp
+  tests/core/test_BooleanVariable.cpp
   tests/core/test_Value.cpp
+  tests/core/test_Domain.cpp
   tests/core/test_Constraint.cpp
   tests/core/test_IntegerConstraint.cpp
   tests/core/test_BooleanConstraint.cpp
