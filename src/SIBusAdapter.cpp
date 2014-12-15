@@ -4,10 +4,25 @@ using namespace std;
 using namespace core;
 //using namespace solve;
 
+//const char* SIBusAdapter::SEGMENT_NAME = "SIBusSharedSegment";
+//const int SIBusAdapter::SEGMENT_SIZE = 65535;
+const char* SIBusAdapter::IPC_NAME = "SIBusShared";
+const int SIBusAdapter::MAX_MESSAGES = 100;
+const int SIBusAdapter::MESSAGE_SIZE = 50;
+
 // Constructors/Destructors
 //  
 
-SIBusAdapter::SIBusAdapter ( ) : input(cin), output(cout), state(DATA) {
+SIBusAdapter::SIBusAdapter ( ) : //input(cin), output(cout),
+				 input(boost::interprocess::open_or_create,
+				       IPC_NAME,
+				       MAX_MESSAGES,
+				       MESSAGE_SIZE),
+				 output(boost::interprocess::open_or_create,
+				       IPC_NAME,
+				       MAX_MESSAGES,
+				       MESSAGE_SIZE),
+				 state(DATA) {
   problem = new Problem();
   thread = new boost::thread(&SIBusAdapter::run, this);
 }
@@ -19,6 +34,7 @@ SIBusAdapter::SIBusAdapter ( ) : input(cin), output(cout), state(DATA) {
 }
 */
 
+
 SIBusAdapter::~SIBusAdapter ( ) {
   mutex.lock();
   state = EXIT;
@@ -27,6 +43,7 @@ SIBusAdapter::~SIBusAdapter ( ) {
   if (mutex.try_lock()) //fishy
     mutex.unlock();
   thread->join();
+  boost::interprocess::message_queue::remove(IPC_NAME);
   delete(thread);
   delete(problem);
 }
@@ -39,6 +56,7 @@ Problem* SIBusAdapter::getProblem() {
   return problem;
 }
 
+/*
 std::istream& SIBusAdapter::getInput() {
   return input;
 }
@@ -46,7 +64,15 @@ std::istream& SIBusAdapter::getInput() {
 std::ostream& SIBusAdapter::getOutput() {
   return output;
 }
+*/
 
+boost::interprocess::message_queue& SIBusAdapter::getInput() {
+  return input;
+}
+
+boost::interprocess::message_queue& SIBusAdapter::getOutput() {
+  return output;
+}
 
 //  
 // Methods
@@ -54,7 +80,9 @@ std::ostream& SIBusAdapter::getOutput() {
 
 void SIBusAdapter::dealWithInput() {
   string line;
-  input >> line;
+  unsigned int receivedSize;
+  unsigned int priority;
+  input.receive(&line, MESSAGE_SIZE, receivedSize, priority);
   switch (state) {
   case DATA:
     dealWithInputData(line);
@@ -241,13 +269,11 @@ comparison_type SIBusAdapter::identifyComparisonType(std::string type) {
 }
 
 void SIBusAdapter::dealWithInputSearch(string line) {//TODO
-  string word;
-  input >> word;
-  if (word == "CHOICE") {
+  if (line == "CHOICE") {
 
-  } else if (word == "FAIL") {
+  } else if (line == "FAIL") {
 
-  } else if (word == "SUCCESS") {
+  } else if (line == "SUCCESS") {
 
   } else {
 
@@ -274,16 +300,26 @@ void SIBusAdapter::run() {
 //
 
 void SIBusAdapter::sendSolution(Solution* solution) {
-  output << "SOLUTION         = ";
+  std::string outputString("SOLUTION         = ");
   // Transmit variables & their associated values
   for (pair<Variable*, Value*> currentPair : solution->getValues()) {
-    output << " val(" << currentPair.first->getName() << ","
-	   << currentPair.second->getValueAsString() << ")";
+    outputString.append(" val(").append(currentPair.first->getName()).append(",");
+    outputString.append(currentPair.second->getValueAsString()).append(")");
   }
   // Transmit additional information?
   
   // End of transmission
-  output << endl;
+  //output << endl;
+  output.send(&outputString, sizeof(outputString), 0);
+}
+
+void SIBusAdapter::sendSwapAsk(Variable* var, const core::Value& val1, const core::Value& val2) {
+  std::string outputString("SWAP_ASK         = ");
+  outputString.append(" idVar(").append(var->getName()).append(")");
+  outputString.append(" idVal(").append(val1.getValueAsString()).append(")");
+  outputString.append(" idVal(").append(val2.getValueAsString()).append(")");
+  //output << endl;
+  output.send(&outputString, sizeof(outputString), 0);
 }
 
 //

@@ -17,6 +17,7 @@
 #include <iostream>
 
 #include <boost/thread.hpp>
+#include <boost/interprocess/ipc/message_queue.hpp>
 
 /**
  * Looks up an argument's value and stores it in a string.
@@ -49,14 +50,22 @@ class BoostEvent {
   void wait();
 };
 
+//#define VectorStream boost::interprocess::basic_vectorstream<boost::interprocess::string> 
+
 /**
  * class SIBusAdapter
  * 
  */
 class SIBusAdapter {
 private:
-  std::istream& input;
-  std::ostream& output;
+  // communication attributes
+  //std::istream& input;
+  //std::ostream& output;
+  //VectorStream vectorStream;
+  boost::interprocess::message_queue input;
+  boost::interprocess::message_queue output;
+
+  // problem building attributes
   core::Problem* problem;
   std::vector<core::Domain*> domains;
   AdapterState state;
@@ -67,14 +76,22 @@ private:
   BoostEvent event;
 
 public:
+  // static const attributes
+  //static const char* SEGMENT_NAME;
+  //static const int SEGMENT_SIZE;
+  static const char* IPC_NAME;
+  static const int MAX_MESSAGES;
+  static const int MESSAGE_SIZE;
   // Constructors/Destructors
   SIBusAdapter();
   //SIBusAdapter(streambuf* inputBuffer, streambuf* outputBuffer);
   virtual ~SIBusAdapter();
   // Getters / Setters
   core::Problem* getProblem();
-  std::istream& getInput();
-  std::ostream& getOutput();
+  //std::istream& getInput();
+  //std::ostream& getOutput();
+  boost::interprocess::message_queue& getInput();
+  boost::interprocess::message_queue& getOutput();
   // Public Methods
   //
   void dealWithInput();
@@ -92,6 +109,7 @@ public:
   void run();
   // Communicate with SIBus
   void sendSolution(core::Solution* solution);
+  void sendSwapAsk(core::Variable* var, const core::Value& val1, const core::Value& val2);
   // Utility methods
   bool doesDomainExist();
 };
