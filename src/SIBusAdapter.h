@@ -77,6 +77,8 @@ private:
 
   // options
   bool displayWarnings;
+  bool displayReceivedLines;
+  bool disableThreadReceptionSubroutine;
 
 public:
   // static const attributes
@@ -100,10 +102,12 @@ public:
   boost::interprocess::message_queue& getInput();
   boost::interprocess::message_queue& getOutput();
   void setDisplayWarnings(bool displayWarnings);
+  void setDisplayReceivedLines(bool displayLines);
+  void setDisableThreadReceptionSubroutine(bool disable);
   AdapterState getState();
   // dealWithInput methods
   //
-  void dealWithInput();
+  void dealWithInput(std::string line = string(""));
   void dealWithInputData(std::string line);
   void dealWithInputSearch(std::string line);
   // Variable construction
@@ -121,6 +125,7 @@ public:
   void run();
   // Communicate with SIBus
   //
+  std::string receptionSubroutine();
   void sendSolution(core::Solution* solution);
   void sendSwapAsk(core::Variable* var, const core::Value& val1, const core::Value& val2);
   // Utility methods

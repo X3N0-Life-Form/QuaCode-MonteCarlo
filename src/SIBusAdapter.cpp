@@ -24,17 +24,12 @@ SIBusAdapter::SIBusAdapter ( ) : //input(cin), output(cout),
 				       MAX_MESSAGES,
 				       MESSAGE_SIZE),
 				 state(DATA),
-				 displayWarnings(true) {
+				 displayWarnings(true),
+				 displayReceivedLines(true),
+				 disableThreadReceptionSubroutine(false) {
   problem = new Problem();
   thread = new boost::thread(&SIBusAdapter::run, this);
 }
-
-/*SIBusAdapter::SIBusAdapter(streambuf* inputBuffer, streambuf* outputBuffer) 
-  : input(inputBuffer), output(outputBuffer), state(DATA) {
-  problem = new Problem();
-  thread = new boost::thread(&SIBusAdapter::run, this);
-}
-*/
 
 
 SIBusAdapter::~SIBusAdapter ( ) {
@@ -81,6 +76,14 @@ void SIBusAdapter::setDisplayWarnings(bool displayWarnings) {
   this->displayWarnings = displayWarnings;
 }
 
+void SIBusAdapter::setDisplayReceivedLines(bool displayLines) {
+  this->displayReceivedLines = displayLines;
+}
+
+void SIBusAdapter::setDisableThreadReceptionSubroutine(bool disable) {
+  this->disableThreadReceptionSubroutine = disable;
+}
+
 AdapterState SIBusAdapter::getState() {
   return state;
 }
@@ -89,12 +92,13 @@ AdapterState SIBusAdapter::getState() {
 // dealWithInput methods
 //  
 
-void SIBusAdapter::dealWithInput() {
-  string line;
-  line.resize(MESSAGE_SIZE);
-  unsigned int receivedSize;
-  unsigned int priority;
-  input.receive(&line[0], MESSAGE_SIZE, receivedSize, priority);
+void SIBusAdapter::dealWithInput(string line) {
+  if (line.empty())
+    line = receptionSubroutine();
+ 
+  if (displayReceivedLines)
+    cout << "Received line: "  << line << endl;
+
   switch (state) {
   case DATA:
     dealWithInputData(line);
@@ -109,7 +113,6 @@ void SIBusAdapter::dealWithInput() {
 }
 
 void SIBusAdapter::dealWithInputData(string line) {
-  //cout << line << endl;
   vector<string> tokens = tokenize(line, " ");
   if (line.find("VAR_BINDER") != string::npos) {
     // VAR_BINDER = var(quant,type,name,domain)
@@ -314,8 +317,14 @@ ConstraintArgument* SIBusAdapter::identifyConstraintArgument(string argument) {
 
 void SIBusAdapter::run() {
   while (state != EXIT) {
+    string line;
+    // reception subroutines should be disable in unit tests
+    if (!disableThreadReceptionSubroutine)
+      line = receptionSubroutine();
     mutex.lock();
     //manage event
+    if (!disableThreadReceptionSubroutine)
+      dealWithInput(line);
 
     mutex.unlock();
     event.wait();
@@ -326,6 +335,15 @@ void SIBusAdapter::run() {
 //
 // Communicate with SIBus
 //
+
+std::string SIBusAdapter::receptionSubroutine() {
+  string line;
+  line.resize(MESSAGE_SIZE);
+  unsigned int receivedSize;
+  unsigned int priority;
+  input.receive(&line[0], MESSAGE_SIZE, receivedSize, priority);
+  return line;
+}
 
 void SIBusAdapter::sendSolution(Solution* solution) {
   std::string outputString("SOLUTION         = ");

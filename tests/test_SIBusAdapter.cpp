@@ -10,6 +10,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION(Test_SIBusAdapter);
 void Test_SIBusAdapter::setUp() {
   adapter = new SIBusAdapter();
   adapter->setDisplayWarnings(false);
+  adapter->setDisplayReceivedLines(false);
+  adapter->setDisableThreadReceptionSubroutine(true);
   toAdapter = new boost::interprocess::message_queue(
     boost::interprocess::open_or_create,
     SIBusAdapter::IPC_NAME_TO_ADAPTER,
