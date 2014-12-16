@@ -21,6 +21,7 @@ class Test_SIBusAdapter : public CppUnit::TestFixture {
   CPPUNIT_TEST(test_dealWithInputData_constraint_OK);
   CPPUNIT_TEST(test_dealWithInputData_constraint_missingVar);
   CPPUNIT_TEST(test_dealWithInputData_badData);
+  //TO test: swap ask + send solution & other message_queue-related shit
 
   CPPUNIT_TEST_SUITE_END();
  private:

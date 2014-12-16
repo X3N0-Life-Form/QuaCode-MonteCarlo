@@ -110,8 +110,57 @@ void Domain::generateCflVector(){
   return sum;
 }
 
+void Domain::replace(std::vector<std::pair<int, int> > vect) {
+  for(int i = 0; i < vect.size(); i++) {
+    cfl[i].first = vect[i].first;
+    cfl[i].second = vect[i].second;
+  }
+}
+
+/*
+procédure tri_insertion(tableau T, entier n)
+      pour i de 1 à n-1
+          x ← T[i]
+          j ← i
+          tant que j > 0 et T[j - 1] > x
+              T[j] ← T[j - 1]
+              j ← j - 1
+          fin tant que
+          T[j] ← x
+     fin pour
+  fin procédure 
+
+*/
+
+
+
+std::vector<std::pair<int, int> > Domain::sortedCfl() {
+  std::vector<std::pair<int, int> > toReturn;
+
+  //copy values of cfl into toReturn
+  for (unsigned int i = 0; i < cfl.size(); i++) {
+    toReturn[i].first = cfl[i].first;
+    toReturn[i].second = cfl[i].second;
+  }
+
+  // sort toReturn => min cfl value first
+  //test if associated values are the same (for example (5,3)) and if it is sorted from min cfl value (the second one) to max cfl value
+  for (unsigned int i = 0; i < cfl.size(); i++) {
+      int xfirst = toReturn[i].first;
+      int xsecond = toReturn[i].second;
+      int j = i;
+      while(j > 0 && toReturn[j - 1].second > xsecond) {
+        toReturn[j].first = toReturn[j - 1].first;
+        toReturn[j].second = toReturn[j-1].second;
+      }
+      toReturn[j].second = xsecond;
+      toReturn[j].first = xfirst;
+  }
+
+  return toReturn;
+}
+
 // Operators
-//
 
 bool Domain::operator==(ConstraintArgument& right) {
   Domain& dom = dynamic_cast<Domain&>(right);

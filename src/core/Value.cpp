@@ -29,7 +29,7 @@ int Value::getiValue(){
   return iValue;
 }
 
-string Value::getValueAsString() {
+string Value::getValueAsString() const {
   switch (varType) {
   case INTEGER:
     return std::to_string(iValue);

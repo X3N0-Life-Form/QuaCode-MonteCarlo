@@ -35,7 +35,7 @@ namespace core {
      * Useful to get the value independently of its type.
      * Note: booleans will be returned as "1" or "0".
      */
-    std::string getValueAsString();
+    std::string getValueAsString() const;
 
     bool operator==(Value& right);
   };
