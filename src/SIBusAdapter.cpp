@@ -6,20 +6,21 @@ using namespace core;
 
 //const char* SIBusAdapter::SEGMENT_NAME = "SIBusSharedSegment";
 //const int SIBusAdapter::SEGMENT_SIZE = 65535;
-const char* SIBusAdapter::IPC_NAME = "SIBusShared";
+const char* SIBusAdapter::IPC_NAME_TO_ADAPTER = "SIBusShared_toAdapter";
+const char* SIBusAdapter::IPC_NAME_FROM_ADAPTER = "SIBusShared_fromAdapter";
 const int SIBusAdapter::MAX_MESSAGES = 100;
-const int SIBusAdapter::MESSAGE_SIZE = 50;
+const int SIBusAdapter::MESSAGE_SIZE = 200;
 
 // Constructors/Destructors
 //  
 
 SIBusAdapter::SIBusAdapter ( ) : //input(cin), output(cout),
 				 input(boost::interprocess::open_or_create,
-				       IPC_NAME,
+				       IPC_NAME_TO_ADAPTER,
 				       MAX_MESSAGES,
 				       MESSAGE_SIZE),
 				 output(boost::interprocess::open_or_create,
-				       IPC_NAME,
+				       IPC_NAME_FROM_ADAPTER,
 				       MAX_MESSAGES,
 				       MESSAGE_SIZE),
 				 state(DATA),
@@ -44,7 +45,8 @@ SIBusAdapter::~SIBusAdapter ( ) {
   if (mutex.try_lock()) //fishy
     mutex.unlock();
   thread->join();
-  boost::interprocess::message_queue::remove(IPC_NAME);
+  boost::interprocess::message_queue::remove(IPC_NAME_TO_ADAPTER);
+  boost::interprocess::message_queue::remove(IPC_NAME_FROM_ADAPTER);
   delete(thread);
   delete(problem);
 }
@@ -79,15 +81,20 @@ void SIBusAdapter::setDisplayWarnings(bool displayWarnings) {
   this->displayWarnings = displayWarnings;
 }
 
+AdapterState SIBusAdapter::getState() {
+  return state;
+}
+
 //  
 // dealWithInput methods
 //  
 
 void SIBusAdapter::dealWithInput() {
   string line;
+  line.resize(MESSAGE_SIZE);
   unsigned int receivedSize;
   unsigned int priority;
-  input.receive(&line, MESSAGE_SIZE, receivedSize, priority);
+  input.receive(&line[0], MESSAGE_SIZE, receivedSize, priority);
   switch (state) {
   case DATA:
     dealWithInputData(line);
@@ -102,23 +109,29 @@ void SIBusAdapter::dealWithInput() {
 }
 
 void SIBusAdapter::dealWithInputData(string line) {
+  //cout << line << endl;
   vector<string> tokens = tokenize(line, " ");
   if (line.find("VAR_BINDER") != string::npos) {
     // VAR_BINDER = var(quant,type,name,domain)
-    // extract values
-    GET_VALUE(tokens[2], s_var_params);
-    vector<string> var_params = tokenize(s_var_params, ",");
-    string s_quant = var_params[0];
-    string s_type = var_params[1];
-    string name = var_params[2];
-    string s_domain = var_params[3];
-    // convert values
-    Quantifier quant = identifyQuantifier(s_quant);
-    Type type = identifyType(s_type);
-    Domain* domain = identifyDomain(s_domain);
-    // create & store
-    Variable* var = VariableFactory::createVariable(quant, type, name, domain);
-    problem->addVariable(var);
+    // verify that we have the right number of tokens
+    if (tokens.size() == 3) {
+      // extract values
+      GET_VALUE(tokens[2], s_var_params);
+      vector<string> var_params = tokenize(s_var_params, ",");
+      string s_quant = var_params[0];
+      string s_type = var_params[1];
+      string name = var_params[2];
+      string s_domain = var_params[3];
+      // convert values
+      Quantifier quant = identifyQuantifier(s_quant);
+      Type type = identifyType(s_type);
+      Domain* domain = identifyDomain(s_domain);
+      // create & store
+      Variable* var = VariableFactory::createVariable(quant, type, name, domain);
+      problem->addVariable(var);
+    } else {
+      printWarning("Warning: malformated input: ", line);
+    }
   } else if (line.find("VAR_AUX") != string::npos) {
     GET_VALUE(tokens[2], s_var_params);
     vector<string> var_params = tokenize(s_var_params, ",");
@@ -141,6 +154,8 @@ void SIBusAdapter::dealWithInputData(string line) {
     throw "not implemented";
   } else if (line.find("VAR_ARRAY_AUX") != string::npos) {
     throw "not implemented";
+  } else if (line.find("CLOSE_MODELING") != string::npos) {
+    state = SEARCH;
   } else {
     printWarning("Warning: Unrecognized data input: ", line);
   }
@@ -323,16 +338,16 @@ void SIBusAdapter::sendSolution(Solution* solution) {
   
   // End of transmission
   //output << endl;
-  output.send(&outputString, sizeof(outputString), 0);
+  output.send(outputString.data(), outputString.size(), 0);
 }
 
 void SIBusAdapter::sendSwapAsk(Variable* var, const core::Value& val1, const core::Value& val2) {
-  std::string outputString("SWAP_ASK         = ");
+  std::string outputString("SWAP_ASK         =");
   outputString.append(" idVar(").append(var->getName()).append(")");
   outputString.append(" idVal(").append(val1.getValueAsString()).append(")");
   outputString.append(" idVal(").append(val2.getValueAsString()).append(")");
   //output << endl;
-  output.send(&outputString, sizeof(outputString), 0);
+  output.send(outputString.data(), outputString.size(), 0);
 }
 
 //

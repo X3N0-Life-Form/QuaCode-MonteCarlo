@@ -83,7 +83,8 @@ public:
   //
   //static const char* SEGMENT_NAME;
   //static const int SEGMENT_SIZE;
-  static const char* IPC_NAME;
+  static const char* IPC_NAME_TO_ADAPTER;
+  static const char* IPC_NAME_FROM_ADAPTER;
   static const int MAX_MESSAGES;
   static const int MESSAGE_SIZE;
   // Constructors/Destructors
@@ -99,6 +100,7 @@ public:
   boost::interprocess::message_queue& getInput();
   boost::interprocess::message_queue& getOutput();
   void setDisplayWarnings(bool displayWarnings);
+  AdapterState getState();
   // dealWithInput methods
   //
   void dealWithInput();

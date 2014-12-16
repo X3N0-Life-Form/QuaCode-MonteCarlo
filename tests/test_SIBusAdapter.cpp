@@ -10,12 +10,26 @@ CPPUNIT_TEST_SUITE_REGISTRATION(Test_SIBusAdapter);
 void Test_SIBusAdapter::setUp() {
   adapter = new SIBusAdapter();
   adapter->setDisplayWarnings(false);
+  toAdapter = new boost::interprocess::message_queue(
+    boost::interprocess::open_or_create,
+    SIBusAdapter::IPC_NAME_TO_ADAPTER,
+    SIBusAdapter::MAX_MESSAGES,
+    SIBusAdapter::MESSAGE_SIZE);
+  fromAdapter =  new boost::interprocess::message_queue(
+    boost::interprocess::open_or_create,
+    SIBusAdapter::IPC_NAME_FROM_ADAPTER,
+    SIBusAdapter::MAX_MESSAGES,
+    SIBusAdapter::MESSAGE_SIZE);
 }
 
 void Test_SIBusAdapter::tearDown() {
   if (adapter != NULL) {
     delete(adapter);
   }
+  if (toAdapter != NULL)
+    delete(toAdapter);
+  if (fromAdapter != NULL)
+    delete(fromAdapter);
 }
 
 void Test_SIBusAdapter::test_GET_VALUE() {
@@ -197,4 +211,60 @@ void Test_SIBusAdapter::test_dealWithInputData_constraint_missingVar() {
 
 void Test_SIBusAdapter::test_dealWithInputData_badData() {
   CPPUNIT_ASSERT_NO_THROW(adapter->dealWithInputData("bad data"));
+}
+
+void Test_SIBusAdapter::test_sendSwapAsk() {
+  Domain* d1 = new Domain(1,5);
+  Variable* v1 = VariableFactory::createVariable(EXISTS, INTEGER, "v1", d1);
+  adapter->getProblem()->addVariable(v1);
+  Value* val1 = new Value(1);
+  Value* val2 = new Value(3);
+
+  adapter->sendSwapAsk(v1, *val1, *val2);
+  std::string message;
+  message.resize(SIBusAdapter::MESSAGE_SIZE);
+  unsigned int receivedSize, priority;
+  fromAdapter->receive(&message[0], SIBusAdapter::MESSAGE_SIZE, receivedSize, priority);
+
+  string expected("SWAP_ASK         = idVar(v1) idVal(1) idVal(3)");
+  message.resize(expected.size());
+  CPPUNIT_ASSERT_EQUAL(expected, message);
+}
+
+void Test_SIBusAdapter::test_dealWithInput_messageReception() {
+  Domain* d1 = new Domain(1,5);
+  std::string s_var1("VAR_BINDER = var(E,I,var1,interval(1:5))");
+  Variable* var1 = VariableFactory::createVariable(EXISTS, INTEGER, "var1", d1);
+
+  toAdapter->send(s_var1.data(), s_var1.size(), 0);
+  adapter->dealWithInput();
+
+  Variable* v = NULL;
+  for (Variable* currentVar : adapter->getProblem()->getVariables()) {
+    if (currentVar->getName() == var1->getName()) {
+      v = currentVar;
+      break;
+    }
+  }
+  CPPUNIT_ASSERT(v != NULL);
+  CPPUNIT_ASSERT_EQUAL(EXISTS, v->getQuantifier());
+  CPPUNIT_ASSERT_EQUAL(INTEGER, v->getType());
+  CPPUNIT_ASSERT_EQUAL(d1->getFirstValue(), v->getDomain()->getFirstValue());
+  CPPUNIT_ASSERT_EQUAL(d1->getLastValue(), v->getDomain()->getLastValue());
+}
+
+void Test_SIBusAdapter::test_dealWithInput_stateChange() {
+  CPPUNIT_ASSERT(DATA == adapter->getState());
+  std::string line("CLOSE_MODELING");
+  adapter->dealWithInputData(line);
+  CPPUNIT_ASSERT(SEARCH == adapter->getState());
+}
+
+void Test_SIBusAdapter::test_dealWithInputData_space() {
+  //Domain* d1 = new Domain(1,5);
+  std::string s_var1("VAR_BINDER = var(E, I, var1, interval(1:5))");
+  //Variable* var1 = VariableFactory::createVariable(EXISTS, INTEGER, "var1", d1);
+
+  adapter->dealWithInputData(s_var1);
+  // if things go beyond this point, it's working.
 }
