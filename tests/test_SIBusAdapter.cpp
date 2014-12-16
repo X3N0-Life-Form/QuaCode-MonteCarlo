@@ -9,6 +9,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(Test_SIBusAdapter);
 
 void Test_SIBusAdapter::setUp() {
   adapter = new SIBusAdapter();
+  adapter->setDisplayWarnings(false);
 }
 
 void Test_SIBusAdapter::tearDown() {

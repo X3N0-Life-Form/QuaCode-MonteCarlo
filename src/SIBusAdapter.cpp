@@ -22,7 +22,8 @@ SIBusAdapter::SIBusAdapter ( ) : //input(cin), output(cout),
 				       IPC_NAME,
 				       MAX_MESSAGES,
 				       MESSAGE_SIZE),
-				 state(DATA) {
+				 state(DATA),
+				 displayWarnings(true) {
   problem = new Problem();
   thread = new boost::thread(&SIBusAdapter::run, this);
 }
@@ -72,6 +73,10 @@ boost::interprocess::message_queue& SIBusAdapter::getInput() {
 
 boost::interprocess::message_queue& SIBusAdapter::getOutput() {
   return output;
+}
+
+void SIBusAdapter::setDisplayWarnings(bool displayWarnings) {
+  this->displayWarnings = displayWarnings;
 }
 
 //  
@@ -137,7 +142,7 @@ void SIBusAdapter::dealWithInputData(string line) {
   } else if (line.find("VAR_ARRAY_AUX") != string::npos) {
     throw "not implemented";
   } else {
-    cerr << "Warning: Unrecognized data input: " << line << endl;
+    printWarning("Warning: Unrecognized data input: ", line);
   }
 }
 
@@ -320,6 +325,20 @@ void SIBusAdapter::sendSwapAsk(Variable* var, const core::Value& val1, const cor
   outputString.append(" idVal(").append(val2.getValueAsString()).append(")");
   //output << endl;
   output.send(&outputString, sizeof(outputString), 0);
+}
+
+//
+// Utility methods
+//
+
+void SIBusAdapter::printWarning(std::string message) {
+  if (displayWarnings)
+    cerr << message << endl;
+}
+
+void SIBusAdapter::printWarning(std::string message, std::string line) {
+  if (displayWarnings)
+    cerr << message << line << endl;
 }
 
 //

@@ -75,6 +75,9 @@ private:
   boost::mutex mutex;
   BoostEvent event;
 
+  // options
+  bool displayWarnings;
+
 public:
   // static const attributes
   //static const char* SEGMENT_NAME;
@@ -92,6 +95,7 @@ public:
   //std::ostream& getOutput();
   boost::interprocess::message_queue& getInput();
   boost::interprocess::message_queue& getOutput();
+  void setDisplayWarnings(bool displayWarnings);
   // Public Methods
   //
   void dealWithInput();
@@ -112,6 +116,8 @@ public:
   void sendSwapAsk(core::Variable* var, const core::Value& val1, const core::Value& val2);
   // Utility methods
   bool doesDomainExist();
+  void printWarning(std::string message);
+  void printWarning(std::string message, std::string line);
 };
 
 std::vector<std::string> tokenize(std::string toSplit, std::string token);
