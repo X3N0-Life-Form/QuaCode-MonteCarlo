@@ -58,6 +58,12 @@ namespace core {
 
     int totalCfl();
 
+    std::vector<std::pair<int, int> > sortedCfl();
+
+
+    // replace current cfl vector with the new one
+    void replace(std::vector<std::pair<int, int> > vect);
+
     // Operators
     virtual bool operator==(ConstraintArgument& right);
   };
