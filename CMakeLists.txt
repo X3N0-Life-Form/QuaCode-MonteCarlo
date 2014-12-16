@@ -82,9 +82,11 @@ set(UNIT_TESTS
   tests/core/test_BooleanVariable.cpp
   tests/core/test_Value.cpp
   tests/core/test_Domain.cpp
+  tests/core/test_Solution.cpp
   tests/core/test_Constraint.cpp
   tests/core/test_IntegerConstraint.cpp
   tests/core/test_BooleanConstraint.cpp
+
 )
 
 add_executable(run_tests
