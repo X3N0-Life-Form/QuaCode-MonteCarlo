@@ -109,7 +109,6 @@ void SIBusAdapter::dealWithInput(string line) {
   case EXIT:
     return;
   }
-  
 }
 
 void SIBusAdapter::dealWithInputData(string line) {
@@ -323,11 +322,12 @@ void SIBusAdapter::run() {
       line = receptionSubroutine();
     mutex.lock();
     //manage event
-    if (!disableThreadReceptionSubroutine)
+    if (!disableThreadReceptionSubroutine) // same as above
       dealWithInput(line);
 
     mutex.unlock();
-    event.wait();
+    if (disableThreadReceptionSubroutine) // ditto
+      event.wait();
   }
   mutex.unlock();
 }
@@ -359,6 +359,7 @@ void SIBusAdapter::sendSolution(Solution* solution) {
   output.send(outputString.data(), outputString.size(), 0);
 }
 
+//review that!!!
 void SIBusAdapter::sendSwapAsk(Variable* var, const core::Value& val1, const core::Value& val2) {
   std::string outputString("SWAP_ASK         =");
   outputString.append(" idVar(").append(var->getName()).append(")");
