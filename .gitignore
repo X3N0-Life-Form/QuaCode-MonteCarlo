@@ -2,6 +2,7 @@
 *.tar.gz
 *.7z
 *~
+*.pdf
 
 CMakeCache.txt
 *.cmake
@@ -11,3 +12,5 @@ CMakeFiles/
 
 QC-MC
 run_tests
+
+TODO.txt

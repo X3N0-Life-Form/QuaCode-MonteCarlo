@@ -21,11 +21,16 @@ class Test_SIBusAdapter : public CppUnit::TestFixture {
   CPPUNIT_TEST(test_dealWithInputData_constraint_OK);
   CPPUNIT_TEST(test_dealWithInputData_constraint_missingVar);
   CPPUNIT_TEST(test_dealWithInputData_badData);
-  //TO test: swap ask + send solution & other message_queue-related shit
+  CPPUNIT_TEST(test_sendSwapAsk);
+  CPPUNIT_TEST(test_dealWithInput_messageReception);
+  CPPUNIT_TEST(test_dealWithInput_stateChange);
+  CPPUNIT_TEST(test_dealWithInputData_space);
 
   CPPUNIT_TEST_SUITE_END();
  private:
   SIBusAdapter* adapter;
+  boost::interprocess::message_queue* toAdapter;
+  boost::interprocess::message_queue* fromAdapter;
  public:
   void tearDown();
   void setUp();
@@ -46,5 +51,10 @@ class Test_SIBusAdapter : public CppUnit::TestFixture {
   void test_dealWithInputData_constraint_OK();
   void test_dealWithInputData_constraint_missingVar();
   void test_dealWithInputData_badData();
+
+  void test_sendSwapAsk();
+  void test_dealWithInput_messageReception();
+  void test_dealWithInput_stateChange();
+  void test_dealWithInputData_space();
 };
 #endif

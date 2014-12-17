@@ -75,43 +75,63 @@ private:
   boost::mutex mutex;
   BoostEvent event;
 
+  // options
+  bool displayWarnings;
+  bool displayReceivedLines;
+  bool disableThreadReceptionSubroutine;
+
 public:
   // static const attributes
+  //
   //static const char* SEGMENT_NAME;
   //static const int SEGMENT_SIZE;
-  static const char* IPC_NAME;
+  static const char* IPC_NAME_TO_ADAPTER;
+  static const char* IPC_NAME_FROM_ADAPTER;
   static const int MAX_MESSAGES;
   static const int MESSAGE_SIZE;
   // Constructors/Destructors
+  //
   SIBusAdapter();
   //SIBusAdapter(streambuf* inputBuffer, streambuf* outputBuffer);
   virtual ~SIBusAdapter();
   // Getters / Setters
+  //
   core::Problem* getProblem();
   //std::istream& getInput();
   //std::ostream& getOutput();
   boost::interprocess::message_queue& getInput();
   boost::interprocess::message_queue& getOutput();
-  // Public Methods
+  void setDisplayWarnings(bool displayWarnings);
+  void setDisplayReceivedLines(bool displayLines);
+  void setDisableThreadReceptionSubroutine(bool disable);
+  AdapterState getState();
+  // dealWithInput methods
   //
-  void dealWithInput();
+  void dealWithInput(std::string line = string(""));
   void dealWithInputData(std::string line);
   void dealWithInputSearch(std::string line);
   // Variable construction
+  //
   Quantifier identifyQuantifier(std::string s_quant);
   Type identifyType(std::string s_type);
   core::Domain* identifyDomain(std::string s_domain);
   // Constraint construction
+  //
   core::constraint_type identifyConstraintType(std::string type);
   core::comparison_type identifyComparisonType(std::string type);
   core::ConstraintArgument* identifyConstraintArgument(std::string argument);
   // Thread handling
+  //
   void run();
   // Communicate with SIBus
+  //
+  std::string receptionSubroutine();
   void sendSolution(core::Solution* solution);
   void sendSwapAsk(core::Variable* var, const core::Value& val1, const core::Value& val2);
   // Utility methods
-  bool doesDomainExist();
+  //
+  void printWarning(std::string message);
+  void printWarning(std::string message, std::string line);
 };
 
 std::vector<std::string> tokenize(std::string toSplit, std::string token);

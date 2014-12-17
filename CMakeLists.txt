@@ -35,6 +35,7 @@ set(CORE_SRCS
 set(SOLVE_SRCS
   src/solve/Explorer.cpp
   src/solve/MonteCarloExplorer.cpp
+  src/solve/factory/ExplorerFactory.cpp
   src/solve/Validator.cpp
   src/solve/BooleanValidator.cpp
   src/solve/IntegerValidator.cpp

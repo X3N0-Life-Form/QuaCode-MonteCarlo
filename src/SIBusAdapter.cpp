@@ -6,33 +6,30 @@ using namespace core;
 
 //const char* SIBusAdapter::SEGMENT_NAME = "SIBusSharedSegment";
 //const int SIBusAdapter::SEGMENT_SIZE = 65535;
-const char* SIBusAdapter::IPC_NAME = "SIBusShared";
+const char* SIBusAdapter::IPC_NAME_TO_ADAPTER = "SIBusShared_toAdapter";
+const char* SIBusAdapter::IPC_NAME_FROM_ADAPTER = "SIBusShared_fromAdapter";
 const int SIBusAdapter::MAX_MESSAGES = 100;
-const int SIBusAdapter::MESSAGE_SIZE = 50;
+const int SIBusAdapter::MESSAGE_SIZE = 200;
 
 // Constructors/Destructors
 //  
 
 SIBusAdapter::SIBusAdapter ( ) : //input(cin), output(cout),
 				 input(boost::interprocess::open_or_create,
-				       IPC_NAME,
+				       IPC_NAME_TO_ADAPTER,
 				       MAX_MESSAGES,
 				       MESSAGE_SIZE),
 				 output(boost::interprocess::open_or_create,
-				       IPC_NAME,
+				       IPC_NAME_FROM_ADAPTER,
 				       MAX_MESSAGES,
 				       MESSAGE_SIZE),
-				 state(DATA) {
+				 state(DATA),
+				 displayWarnings(true),
+				 displayReceivedLines(true),
+				 disableThreadReceptionSubroutine(false) {
   problem = new Problem();
   thread = new boost::thread(&SIBusAdapter::run, this);
 }
-
-/*SIBusAdapter::SIBusAdapter(streambuf* inputBuffer, streambuf* outputBuffer) 
-  : input(inputBuffer), output(outputBuffer), state(DATA) {
-  problem = new Problem();
-  thread = new boost::thread(&SIBusAdapter::run, this);
-}
-*/
 
 
 SIBusAdapter::~SIBusAdapter ( ) {
@@ -43,7 +40,8 @@ SIBusAdapter::~SIBusAdapter ( ) {
   if (mutex.try_lock()) //fishy
     mutex.unlock();
   thread->join();
-  boost::interprocess::message_queue::remove(IPC_NAME);
+  boost::interprocess::message_queue::remove(IPC_NAME_TO_ADAPTER);
+  boost::interprocess::message_queue::remove(IPC_NAME_FROM_ADAPTER);
   delete(thread);
   delete(problem);
 }
@@ -74,15 +72,33 @@ boost::interprocess::message_queue& SIBusAdapter::getOutput() {
   return output;
 }
 
+void SIBusAdapter::setDisplayWarnings(bool displayWarnings) {
+  this->displayWarnings = displayWarnings;
+}
+
+void SIBusAdapter::setDisplayReceivedLines(bool displayLines) {
+  this->displayReceivedLines = displayLines;
+}
+
+void SIBusAdapter::setDisableThreadReceptionSubroutine(bool disable) {
+  this->disableThreadReceptionSubroutine = disable;
+}
+
+AdapterState SIBusAdapter::getState() {
+  return state;
+}
+
 //  
-// Methods
+// dealWithInput methods
 //  
 
-void SIBusAdapter::dealWithInput() {
-  string line;
-  unsigned int receivedSize;
-  unsigned int priority;
-  input.receive(&line, MESSAGE_SIZE, receivedSize, priority);
+void SIBusAdapter::dealWithInput(string line) {
+  if (line.empty())
+    line = receptionSubroutine();
+ 
+  if (displayReceivedLines)
+    cout << "Received line: "  << line << endl;
+
   switch (state) {
   case DATA:
     dealWithInputData(line);
@@ -93,27 +109,31 @@ void SIBusAdapter::dealWithInput() {
   case EXIT:
     return;
   }
-  
 }
 
 void SIBusAdapter::dealWithInputData(string line) {
   vector<string> tokens = tokenize(line, " ");
   if (line.find("VAR_BINDER") != string::npos) {
     // VAR_BINDER = var(quant,type,name,domain)
-    // extract values
-    GET_VALUE(tokens[2], s_var_params);
-    vector<string> var_params = tokenize(s_var_params, ",");
-    string s_quant = var_params[0];
-    string s_type = var_params[1];
-    string name = var_params[2];
-    string s_domain = var_params[3];
-    // convert values
-    Quantifier quant = identifyQuantifier(s_quant);
-    Type type = identifyType(s_type);
-    Domain* domain = identifyDomain(s_domain);
-    // create & store
-    Variable* var = VariableFactory::createVariable(quant, type, name, domain);
-    problem->addVariable(var);
+    // verify that we have the right number of tokens
+    if (tokens.size() == 3) {
+      // extract values
+      GET_VALUE(tokens[2], s_var_params);
+      vector<string> var_params = tokenize(s_var_params, ",");
+      string s_quant = var_params[0];
+      string s_type = var_params[1];
+      string name = var_params[2];
+      string s_domain = var_params[3];
+      // convert values
+      Quantifier quant = identifyQuantifier(s_quant);
+      Type type = identifyType(s_type);
+      Domain* domain = identifyDomain(s_domain);
+      // create & store
+      Variable* var = VariableFactory::createVariable(quant, type, name, domain);
+      problem->addVariable(var);
+    } else {
+      printWarning("Warning: malformated input: ", line);
+    }
   } else if (line.find("VAR_AUX") != string::npos) {
     GET_VALUE(tokens[2], s_var_params);
     vector<string> var_params = tokenize(s_var_params, ",");
@@ -136,44 +156,28 @@ void SIBusAdapter::dealWithInputData(string line) {
     throw "not implemented";
   } else if (line.find("VAR_ARRAY_AUX") != string::npos) {
     throw "not implemented";
+  } else if (line.find("CLOSE_MODELING") != string::npos) {
+    state = SEARCH;
   } else {
-    cerr << "Warning: Unrecognized data input: " << line << endl;
+    printWarning("Warning: Unrecognized data input: ", line);
   }
 }
 
-ConstraintArgument* SIBusAdapter::identifyConstraintArgument(string argument) {
-  GET_VALUE(argument, s_value) // string s_value
-  if (argument.find("var") != string::npos) {
-    Variable* variable = problem->getVariable(s_value);
-    if (variable != NULL) {
-      return variable;
-    } else {
-      throw AdapterException("Error: unknown variable in constraint argument: ", s_value);
-    }
-  } else if (argument.find("interval") != string::npos) {
-    vector<string> bound = tokenize(s_value, ":");
-    int lowerBoundary = stoi(bound[0]);
-    int upperBoundary = stoi(bound[1]);
-    Domain* domain = problem->getDomain(lowerBoundary, upperBoundary);
-    if (domain != NULL) {
-      return domain;
-    } else {
-      //cerr << "Constraint argument warning: unknown domain " << s_value << endl;
-      return new Domain(lowerBoundary, upperBoundary);
-    }
-  } else if (argument.find("int") != string::npos) {
-    Value* value = new Value(stoi(s_value));
-    return new Constant(value);
-  } else if (argument.find("1") != string::npos) {
-    if (s_value == string("true")) {
-      return new Constant(new Value(true));
-    } else {
-      return new Constant(new Value(false));
-    }
+void SIBusAdapter::dealWithInputSearch(string line) {//TODO
+  if (line == "CHOICE") {
+
+  } else if (line == "FAIL") {
+
+  } else if (line == "SUCCESS") {
+
   } else {
-    return NULL; // could not identify argument
+
   }
 }
+
+//
+// Variable construction
+//
 
 Quantifier SIBusAdapter::identifyQuantifier(string s_quant) {
   if (s_quant == "E") {
@@ -213,8 +217,11 @@ Domain* SIBusAdapter::identifyDomain(string s_domain) {
   Domain* domain = new Domain(lowerBoundary, upperBoundary);
   domains.push_back(domain);
   return domain;
-  
 }
+
+//
+// Constraint construction
+//
 
 constraint_type SIBusAdapter::identifyConstraintType(std::string type) {
   if (type == string("AND")) {
@@ -268,29 +275,59 @@ comparison_type SIBusAdapter::identifyComparisonType(std::string type) {
   }
 }
 
-void SIBusAdapter::dealWithInputSearch(string line) {//TODO
-  if (line == "CHOICE") {
-
-  } else if (line == "FAIL") {
-
-  } else if (line == "SUCCESS") {
-
+ConstraintArgument* SIBusAdapter::identifyConstraintArgument(string argument) {
+  GET_VALUE(argument, s_value) // string s_value
+  if (argument.find("var") != string::npos) {
+    Variable* variable = problem->getVariable(s_value);
+    if (variable != NULL) {
+      return variable;
+    } else {
+      throw AdapterException("Error: unknown variable in constraint argument: ", s_value);
+    }
+  } else if (argument.find("interval") != string::npos) {
+    vector<string> bound = tokenize(s_value, ":");
+    int lowerBoundary = stoi(bound[0]);
+    int upperBoundary = stoi(bound[1]);
+    Domain* domain = problem->getDomain(lowerBoundary, upperBoundary);
+    if (domain != NULL) {
+      return domain;
+    } else {
+      //cerr << "Constraint argument warning: unknown domain " << s_value << endl;
+      return new Domain(lowerBoundary, upperBoundary);
+    }
+  } else if (argument.find("int") != string::npos) {
+    Value* value = new Value(stoi(s_value));
+    return new Constant(value);
+  } else if (argument.find("1") != string::npos) {
+    if (s_value == string("true")) {
+      return new Constant(new Value(true));
+    } else {
+      return new Constant(new Value(false));
+    }
   } else {
-
+    return NULL; // could not identify argument
   }
 }
 
+
 //
-// Thread Methods
+// Thread handling
 //
 
 void SIBusAdapter::run() {
   while (state != EXIT) {
+    string line;
+    // reception subroutines should be disable in unit tests
+    if (!disableThreadReceptionSubroutine)
+      line = receptionSubroutine();
     mutex.lock();
     //manage event
+    if (!disableThreadReceptionSubroutine) // same as above
+      dealWithInput(line);
 
     mutex.unlock();
-    event.wait();
+    if (disableThreadReceptionSubroutine) // ditto
+      event.wait();
   }
   mutex.unlock();
 }
@@ -298,6 +335,15 @@ void SIBusAdapter::run() {
 //
 // Communicate with SIBus
 //
+
+std::string SIBusAdapter::receptionSubroutine() {
+  string line;
+  line.resize(MESSAGE_SIZE);
+  unsigned int receivedSize;
+  unsigned int priority;
+  input.receive(&line[0], MESSAGE_SIZE, receivedSize, priority);
+  return line;
+}
 
 void SIBusAdapter::sendSolution(Solution* solution) {
   std::string outputString("SOLUTION         = ");
@@ -310,16 +356,31 @@ void SIBusAdapter::sendSolution(Solution* solution) {
   
   // End of transmission
   //output << endl;
-  output.send(&outputString, sizeof(outputString), 0);
+  output.send(outputString.data(), outputString.size(), 0);
 }
 
+//review that!!!
 void SIBusAdapter::sendSwapAsk(Variable* var, const core::Value& val1, const core::Value& val2) {
-  std::string outputString("SWAP_ASK         = ");
+  std::string outputString("SWAP_ASK         =");
   outputString.append(" idVar(").append(var->getName()).append(")");
   outputString.append(" idVal(").append(val1.getValueAsString()).append(")");
   outputString.append(" idVal(").append(val2.getValueAsString()).append(")");
   //output << endl;
-  output.send(&outputString, sizeof(outputString), 0);
+  output.send(outputString.data(), outputString.size(), 0);
+}
+
+//
+// Utility methods
+//
+
+void SIBusAdapter::printWarning(std::string message) {
+  if (displayWarnings)
+    cerr << message << endl;
+}
+
+void SIBusAdapter::printWarning(std::string message, std::string line) {
+  if (displayWarnings)
+    cerr << message << line << endl;
 }
 
 //
