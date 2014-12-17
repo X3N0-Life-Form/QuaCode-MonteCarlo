@@ -1,5 +1,4 @@
 #include "Domain.h"
-
 using namespace core;
 
 // Constructors/Destructors
@@ -91,7 +90,7 @@ void Domain::generateCflVector(){
       }
     }
  }
-
+// attention : si value = 9,alors cfl[9-1].second = c !!!
  void Domain::setCflForValue(int value, int c){
     for (int i = 0; i < cfl.size(); i++) {
       if (cfl[i].first == value) {
