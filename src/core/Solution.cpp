@@ -4,9 +4,10 @@ using namespace std;
 using namespace core;
 
 Solution::Solution(Validator * val){
+	
+	validator = val;
 	generateValueVector();
 	//generateCflVector();
-	validator = val;
 }
 
 std::vector<std::pair<Variable *, Value *> > Solution::getValues(){
@@ -19,8 +20,8 @@ std::vector<std::pair<Variable *, int> >  Solution::getCfl(){
 
 void Solution::addValue(Variable* var, Value* val) {
 	for (std::pair<Variable*, Value*> currentPair : values) {
-		if (var->getName() == currentPair.first->getName()) {
-			currentPair.second = val;
+		if (var->getName() == currentPair.first->getName()) {			
+			*currentPair.second = *val;			
 			break;
 		}
 	}
@@ -31,8 +32,10 @@ void Solution::modifValue(int index, Value* val) {
 }
 
 void Solution::generateValueVector(){
+	Value* v = new Value(0);	
   	for (unsigned int i = 0; i < validator->getProblem()->getVariables().size(); i++) {
-  		values.push_back(std::pair<Variable*, Value*>(validator->getProblem()->getVariables()[i], NULL));
+  		values.push_back(std::pair<Variable*, Value*>(validator->getProblem()->getVariables()[i], v));
+		  
   	}
 }
 

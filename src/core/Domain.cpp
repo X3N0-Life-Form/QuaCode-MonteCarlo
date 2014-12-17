@@ -1,6 +1,8 @@
 #include "Domain.h"
-using namespace core;
+#include <iostream>
 
+using namespace core;
+using namespace std;
 // Constructors/Destructors
 //  
 
@@ -93,7 +95,7 @@ void Domain::generateCflVector(){
 // attention : si value = 9,alors cfl[9-1].second = c !!!
  void Domain::setCflForValue(int value, int c){
     for (int i = 0; i < cfl.size(); i++) {
-      if (cfl[i].first == value) {
+      if (cfl[i].first == value) {     
         cfl[i].second = c;
         break;
       }
@@ -136,6 +138,10 @@ procédure tri_insertion(tableau T, entier n)
 
 std::vector<std::pair<int, int> > Domain::sortedCfl() {
   std::vector<std::pair<int, int> > toReturn;
+  
+  for (unsigned int i = firstValue; i <= lastValue; i++) {
+    toReturn.push_back(std::pair<int, int>(i, 0));
+  }
 
   //copy values of cfl into toReturn
   for (unsigned int i = 0; i < cfl.size(); i++) {
@@ -152,6 +158,7 @@ std::vector<std::pair<int, int> > Domain::sortedCfl() {
       while(j > 0 && toReturn[j - 1].second > xsecond) {
         toReturn[j].first = toReturn[j - 1].first;
         toReturn[j].second = toReturn[j-1].second;
+        j--;
       }
       toReturn[j].second = xsecond;
       toReturn[j].first = xfirst;

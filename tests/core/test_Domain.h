@@ -20,6 +20,15 @@ class Test_Domain : public CppUnit::TestFixture {
   CPPUNIT_TEST(test_addValue);
   CPPUNIT_TEST(test_alreadyInto);
 
+  CPPUNIT_TEST(test_getCfl);
+  CPPUNIT_TEST(test_generateCflVector);
+  CPPUNIT_TEST(test_initCfl);
+  CPPUNIT_TEST(test_incrementCfl);
+  CPPUNIT_TEST(test_setCflForValue);
+  CPPUNIT_TEST(test_totalCfl);
+  CPPUNIT_TEST(test_replace);
+  CPPUNIT_TEST(test_sortedCfl);
+
   CPPUNIT_TEST_SUITE_END();
  private:
     Type type;
@@ -30,7 +39,8 @@ class Test_Domain : public CppUnit::TestFixture {
     int* alreadyChecked;
     int sizeAlreadyChecked;
     Domain* domain;
-
+    std::vector<std::pair<int, int> > cfl;
+    
  public:
   void tearDown();
   void setUp();
@@ -44,6 +54,15 @@ class Test_Domain : public CppUnit::TestFixture {
   void test_getSize();
   void test_addValue();
   void test_alreadyInto();
+
+  void test_getCfl();
+  void test_generateCflVector();
+  void test_initCfl();
+  void test_incrementCfl();
+  void test_setCflForValue();
+  void test_totalCfl();
+  void test_replace();
+  void test_sortedCfl();
 
 };
 #endif
