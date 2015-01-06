@@ -2,13 +2,20 @@
 
 using namespace core;
 
+unsigned int VariableFactory::numberOfVars = 0;
+
 Variable* VariableFactory::createVariable(Quantifier quant, Type type, std::string name, Domain* domain) {
+  Variable* var = NULL;
   switch (type) {
   case INTEGER:
-    return new IntegerVariable(quant, type, name, domain);
+    var = new IntegerVariable(quant, type, name, domain);
+    break;
   case BOOLEAN:
-    return new BooleanVariable(quant, type, name, new Domain(0,1));
+    var = new BooleanVariable(quant, type, name, new Domain(0,1));
+    break;
   }
   
-  return NULL;
+  var->setId(numberOfVars);
+  numberOfVars++;
+  return var;
 }

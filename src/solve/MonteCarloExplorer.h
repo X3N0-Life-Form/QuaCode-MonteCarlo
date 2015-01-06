@@ -65,7 +65,7 @@ public:
   void calculateAuxValue(Variable* var, Solution& sol);
   void hasConstraintWithAuxVar(Variable* var, Solution& sol);
 
-  void calculateDifferencesAndSendSwapAsk(std::vector<std::pair<int, int> > oldCfl, std::vector<std::pair<int, int> > newCfl);//TODO: put that in Explorer?
+  void calculateDifferencesAndSendSwapAsk(Variable* var, std::vector<std::pair<int, int> > oldCfl, std::vector<std::pair<int, int> > newCfl);//TODO: put that in Explorer?
 
 };
 }; // end of package namespace

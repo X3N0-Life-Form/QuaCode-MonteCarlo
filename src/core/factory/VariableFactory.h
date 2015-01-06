@@ -10,8 +10,9 @@
 namespace core {
   class VariableFactory {
 
-    // Public Static Methods
-    //
+  private:
+    static unsigned int numberOfVars;
+
   public:
     /**
      * Note: A variable with no domain (= NULL) is an auxilliary variable.

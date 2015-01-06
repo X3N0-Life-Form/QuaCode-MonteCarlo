@@ -1,5 +1,7 @@
 #include "MonteCarloExplorer.h"
 
+#include <set>
+
 using namespace solve;
 using namespace std;
 using namespace core;
@@ -112,7 +114,7 @@ int MonteCarloExplorer::heuristic() {
 			for (std::pair<Variable*, Value*> currentPair : currentSol.getValues()) {
 				if (currentPair.first->getDomain() != NULL) {
 					vector<pair<int, int> > sortedCfl = currentPair.first->getDomain()->sortedCfl();
-					calculateDifferencesAndSendSwapAsk(currentPair.first->getDomain()->getCfl(), sortedCfl);
+					calculateDifferencesAndSendSwapAsk(currentPair.first, currentPair.first->getDomain()->getCfl(), sortedCfl);
 					//adapter->sendDomain(currentPair.first, sortedCfl);
 				}
 			}
@@ -234,10 +236,17 @@ void MonteCarloExplorer::hasConstraintWithAuxVar(Variable* var, Solution& sol) {
 	}
 }
 
-void MonteCarloExplorer::calculateDifferencesAndSendSwapAsk(std::vector<std::pair<int, int> > oldCfl, std::vector<std::pair<int, int> > newCfl) {
-	for (int i = 0; i < oldCfl.size(); i++) {
-		if (oldCfl[i].first != newCfl[i].first) {
-			//for
+void MonteCarloExplorer::calculateDifferencesAndSendSwapAsk(Variable* var, std::vector<std::pair<int, int> > oldCfl, std::vector<std::pair<int, int> > newCfl) {
+	set<int> visited;
+	for (unsigned int i = 0; i < oldCfl.size(); i++) {
+		if (oldCfl[i].first != newCfl[i].first && visited.find(i) == visited.end()) {
+			for (unsigned int j = i; j < oldCfl.size(); j++) {
+				if (oldCfl[i].first == newCfl[j].first) {
+					adapter->sendSwapAsk(var, i, j);
+					visited.insert(j);
+					break;
+				}
+			}
 		}
 	}
 }

@@ -34,4 +34,11 @@ bool Variable::operator==(ConstraintArgument& right) {
     && *domain == *var.domain;
 }
 
+void Variable::setId(unsigned int id) {
+	this->id;
+}
+
+unsigned int Variable::getId() {
+	return id;
+}
 

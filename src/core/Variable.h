@@ -21,6 +21,14 @@ namespace core {
   */
 class Variable : public ConstraintArgument
 {
+private:
+ 
+  Quantifier quantifier;
+  Type type;
+  std::string name;
+  Domain* domain;
+  unsigned int id;
+
 public:
 
   // Constructors/Destructors
@@ -35,15 +43,12 @@ public:
   string getName();
   Domain* getDomain();
   Quantifier getQuantifier();
+  void setId(unsigned int id);
+  unsigned int getId();
 
   virtual bool operator==(ConstraintArgument& right);
 
-private:
- 
-  Quantifier quantifier;
-  Type type;
-  std::string name;
-  Domain* domain;
+
 
 };
 }; // end of package namespace
