@@ -166,6 +166,35 @@ std::vector<std::pair<int, int> > Domain::sortedCfl() {
   return toReturn;
 }
 
+std::vector<std::pair<int, int> > Domain::sortedCflReverse() {
+  std::vector<std::pair<int, int> > toReturn;
+  
+  for (int i = firstValue; i <= lastValue; i++) {
+    toReturn.push_back(std::pair<int, int>(i, 0));
+  }
+
+  //copy values of cfl into toReturn
+  for (unsigned int i = 0; i < cfl.size(); i++) {
+    toReturn[i].first = cfl[i].first;
+    toReturn[i].second = cfl[i].second;
+  }
+
+  for (unsigned int i = 0; i < cfl.size(); i++) {
+      int xfirst = toReturn[i].first;
+      int xsecond = toReturn[i].second;
+      int j = i;
+      while(j > 0 && toReturn[j - 1].second < xsecond) {
+        toReturn[j].first = toReturn[j - 1].first;
+        toReturn[j].second = toReturn[j-1].second;
+        j--;
+      }
+      toReturn[j].second = xsecond;
+      toReturn[j].first = xfirst;
+  }
+  return toReturn;
+
+}
+
 // Operators
 
 bool Domain::operator==(ConstraintArgument& right) {
