@@ -7,7 +7,6 @@
 #include "../core/Problem.h"
 #include "../core/Variable.h"
 #include "../Type.h"
-#include "../core/Solution.h"
 #include "IntegerValidator.h"
 #include "BooleanValidator.h"
 
@@ -52,16 +51,19 @@ public:
   //////// Methods///////////////////////////
   ///////////////////////////////////////////
   // Monte Carlo
-  int heuristic();
+  virtual int heuristic();
 
   // rand(Di)
-
   Value * randDom(Variable* var);
 
   // Metropolis acceptance rule
   bool metropolis(int delta);
 
   void decreaseTemperature();
+
+  void initAuxValues(Solution& sol);
+  void calculateAuxValue(Variable* var, Solution& sol);
+  void hasConstraintWithAuxVar(Variable* var);
 
 };
 }; // end of package namespace

@@ -43,7 +43,16 @@ string Value::getValueAsString() const {
   }
 }
 
+void Value::copy(Value* val) {
+  this->iValue = val->iValue;
+  this->bValue = val->bValue;
+  this->varType = val->varType;
+}
+
 bool Value::operator==(Value& right) {
   return varType == right.varType
     && (iValue == right.iValue || bValue == right.bValue);
 }
+
+
+

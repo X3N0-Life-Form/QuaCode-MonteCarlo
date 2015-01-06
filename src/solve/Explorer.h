@@ -4,6 +4,8 @@
 
 #include "Validator.h"
 #include "../core/Problem.h"
+#include "../SIBusAdapter.h"
+#include "../core/Solution.h"
 
 #include <string>
 #include <vector>
@@ -25,20 +27,20 @@ private:
   std::vector<Validator*> validators;
   Problem* problem;
 
+protected:
+  SIBusAdapter* adapter;
+
 public:
 
   // Constructors/Destructors
   Explorer();
   virtual ~Explorer();
 
+  void setAdapter(SIBusAdapter* adapter);
 
-  /**
-   */
-  virtual void explore ( )
-  {
-  }
+  virtual int heuristic() = 0;
 
-
+  int getArgumentValue(ConstraintArgument* arg, Solution& sol);
 };
 }; // end of package namespace
 

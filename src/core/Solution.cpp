@@ -20,8 +20,8 @@ std::vector<std::pair<Variable *, int> >  Solution::getCfl(){
 
 void Solution::addValue(Variable* var, Value* val) {
 	for (std::pair<Variable*, Value*> currentPair : values) {
-		if (var->getName() == currentPair.first->getName()) {			
-			*currentPair.second = *val;			
+		if (var->getName() == currentPair.first->getName()) {
+			currentPair.second->copy(val);
 			break;
 		}
 	}
@@ -32,8 +32,8 @@ void Solution::modifValue(int index, Value* val) {
 }
 
 void Solution::generateValueVector(){
-	Value* v = new Value(0);	
   	for (unsigned int i = 0; i < validator->getProblem()->getVariables().size(); i++) {
+		Value* v = new Value(0);
   		values.push_back(std::pair<Variable*, Value*>(validator->getProblem()->getVariables()[i], v));
 		  
   	}

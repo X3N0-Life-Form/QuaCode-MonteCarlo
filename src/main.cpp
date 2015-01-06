@@ -27,8 +27,11 @@ int main(int argc, char** argv) {
   }
   // all of problem's data should have been retrieved
   Explorer* explorer = ExplorerFactory::createExplorer(MONTECARLO, adapter.getProblem());
+  explorer->setAdapter(&adapter);
 
   // begin search
+  cout << "Starting Monte Carlo exploration" << endl;
+  explorer->heuristic();
 
   return 0;
 }

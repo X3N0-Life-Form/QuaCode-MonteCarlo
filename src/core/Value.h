@@ -37,6 +37,8 @@ namespace core {
      */
     std::string getValueAsString() const;
 
+    void copy(Value* val);
+
     bool operator==(Value& right);
   };
 }; // end of package namespace

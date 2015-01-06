@@ -72,21 +72,29 @@ int MonteCarloExplorer::heuristic() {
 	Value * vsauv;
 
 
-	for (unsigned int i = 1; i <= problem->getVariables().size();i++) {
-		cout << " call randDom" << endl;
-			currentSol.addValue(problem->getVariables()[i], randDom(problem->getVariables()[i]) );
+	for (unsigned int i = 0; i < problem->getVariables().size(); i++) {
+		Variable* var = problem->getVariables()[i];
+		if (var->getDomain() != NULL) {
+			Value* randomValue = randDom(var);
+			currentSol.addValue(var, randomValue);
+			delete(randomValue);
+		}
 		// cflVector is already set to 0 for each variables (constructor of Solution calls generateCflVector())
 	}
+	initAuxValues(currentSol);
 
+	cout << "update cfl" << endl;
 	nbCfls = currentSol.updateCfl();
 
+	cout << "while true" << endl;
 	while(true) {
 		count++;
 		k = currentSol.choice();
+		cout << "MADE YOUR CHOICE" << endl;
 		vsauv = currentSol.getValues()[k].second;
 
 		currentSol.addValue(currentSol.getValues()[k].first, randDom(currentSol.getValues()[k].first));
-
+		cout << " here we are" << endl;
 		nNBCfls = currentSol.updateCfl();
 
 		if (nNBCfls > nbCfls) {
@@ -102,8 +110,12 @@ int MonteCarloExplorer::heuristic() {
 			}
 		}
 		if (count == frequence) {
-			//reordonne for each var (not implemented yet)
-			// send to SIBus (not implemented yet)
+			cout << "Sending data back to SIBus" << endl;
+			for (std::pair<Variable*, Value*> currentPair : currentSol.getValues()) {
+				vector<pair<int, int> > sortedCfl = currentPair.first->getDomain()->sortedCfl();
+				adapter->sendDomain(currentPair.first, sortedCfl);
+			}
+		
 
 			count = 0;
 		}
@@ -122,6 +134,7 @@ Value * MonteCarloExplorer::randDom(Variable* var) {
 	if(type==INTEGER){
 		while(true) {
 			int valueInt = rand() % (dom->getLastValue() - dom->getFirstValue() + 1) + dom->getFirstValue();
+			cout << "olol² " << var->getName() << " = " << valueInt << endl;
 			if (!dom->alreadyInto(valueInt)){
 				return new Value(valueInt);
 			}
@@ -139,6 +152,7 @@ Value * MonteCarloExplorer::randDom(Variable* var) {
 			}
 		}		
 	}
+	cout << "WE SHOULD NOT BE HERE (randDom)" << endl;
 	return NULL;
 }
 
@@ -164,5 +178,52 @@ bool MonteCarloExplorer::metropolis(int delta){
 void MonteCarloExplorer::decreaseTemperature() {
 	temperature = temperature * 0.98;
 }
+
+
+void MonteCarloExplorer::initAuxValues(Solution& sol) {
+	for (Variable* var : problem->getVariables()) {
+		if (var->getDomain() == NULL) {
+			calculateAuxValue(var, sol);
+		}
+	}
+}
+
+void MonteCarloExplorer::calculateAuxValue(Variable* var, Solution& sol) {
+	for (Constraint* constraint : problem->getConstraints()) {
+		Variable* lastArg = dynamic_cast<Variable*>(constraint->getArguments().back());
+		if (constraint->getComparisonType() == EQ
+			&& lastArg != NULL && lastArg->getName() == var->getName())
+		{
+			int res = 0;
+			switch (constraint->getConstraintType()) {
+				case LINEAR:
+					res = 0;
+					for (unsigned int i = 0; i < constraint->getArguments().size() - 1; i = i + 2) {
+						Constant* cst = dynamic_cast<Constant*>(constraint->getArguments()[i]);
+						Variable* arg = dynamic_cast<Variable*>(constraint->getArguments()[i + 1]);
+						res += getArgumentValue(arg, sol) * cst->getValue()->getiValue();
+					}
+					break;
+				case TIMES:
+					res = 1;
+					for (unsigned int i = 0; i < constraint->getArguments().size() - 1; i++) {
+						ConstraintArgument* arg = constraint->getArguments()[i];
+						res *= getArgumentValue(arg, sol);
+					}
+					break;
+				default:
+					cout << "WARNING: not implemented (MonteCarloExplorer::calculateAuxValue)" << endl;
+					break;
+			}
+			sol.addValue(var, new Value(res));
+			break;
+		}
+	}
+}
+
+void MonteCarloExplorer::hasConstraintWithAuxVar(Variable* var) {
+
+}
+
 
 
