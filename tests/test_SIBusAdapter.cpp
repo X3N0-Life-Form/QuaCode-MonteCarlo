@@ -107,8 +107,8 @@ void Test_SIBusAdapter::test_identifyConstraintType() {
 }
 
 void Test_SIBusAdapter::test_identifyComparisonType() {
-  string nq("_NQ_"), eq("_EQ_"), lq("_LQ_"), le("_LE_"),
-    gq("_GQ_"), gr("_GR_"), nope("nope");
+  string nq("NQ"), eq("EQ"), lq("LQ"), le("LE"),
+    gq("GQ"), gr("GR"), nope("nope");
   CPPUNIT_ASSERT_EQUAL(NQ, adapter->identifyComparisonType(nq));
   CPPUNIT_ASSERT_EQUAL(EQ, adapter->identifyComparisonType(eq));
   CPPUNIT_ASSERT_EQUAL(LQ, adapter->identifyComparisonType(lq));
@@ -180,7 +180,7 @@ void Test_SIBusAdapter::test_dealWithInputData_constraint_OK() {
   //adapter->getProblem()->addVariable(res);
 
   try {
-    adapter->dealWithInputData("CONSTRAINT = TIMES _EQ_ var(v1) var(v2) int(3)");
+    adapter->dealWithInputData("CONSTRAINT = TIMES EQ var(v1) var(v2) int(3)");
   } catch (string e) {
     cout<<endl<<e<<endl;
   }

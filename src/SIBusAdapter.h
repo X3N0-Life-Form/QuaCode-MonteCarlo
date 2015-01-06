@@ -62,8 +62,8 @@ private:
   //std::istream& input;
   //std::ostream& output;
   //VectorStream vectorStream;
-  boost::interprocess::message_queue input;
-  boost::interprocess::message_queue output;
+  boost::interprocess::message_queue* input;
+  boost::interprocess::message_queue* output;
 
   // problem building attributes
   core::Problem* problem;
@@ -99,8 +99,8 @@ public:
   core::Problem* getProblem();
   //std::istream& getInput();
   //std::ostream& getOutput();
-  boost::interprocess::message_queue& getInput();
-  boost::interprocess::message_queue& getOutput();
+  boost::interprocess::message_queue* getInput();
+  boost::interprocess::message_queue* getOutput();
   void setDisplayWarnings(bool displayWarnings);
   void setDisplayReceivedLines(bool displayLines);
   void setDisableThreadReceptionSubroutine(bool disable);
@@ -128,6 +128,10 @@ public:
   std::string receptionSubroutine();
   void sendSolution(core::Solution* solution);
   void sendSwapAsk(core::Variable* var, const core::Value& val1, const core::Value& val2);
+  /**
+   * Note: values = values + associated cfl
+   */
+  void sendDomain(core::Variable* var, std::vector<std::pair<int, int> >& values);
   // Utility methods
   //
   void printWarning(std::string message);

@@ -7,4 +7,5 @@ Explorer* ExplorerFactory::createExplorer(ExplorerType type, Problem* problem) {
     case MONTECARLO:
       return new MonteCarloExplorer(problem);
   }
+  return NULL;
 }

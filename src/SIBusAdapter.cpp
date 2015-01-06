@@ -8,25 +8,31 @@ using namespace core;
 //const int SIBusAdapter::SEGMENT_SIZE = 65535;
 const char* SIBusAdapter::IPC_NAME_TO_ADAPTER = "SIBusShared_toAdapter";
 const char* SIBusAdapter::IPC_NAME_FROM_ADAPTER = "SIBusShared_fromAdapter";
-const int SIBusAdapter::MAX_MESSAGES = 100;
+const int SIBusAdapter::MAX_MESSAGES = 40000;
 const int SIBusAdapter::MESSAGE_SIZE = 200;
 
 // Constructors/Destructors
 //  
 
-SIBusAdapter::SIBusAdapter ( ) : //input(cin), output(cout),
-				 input(boost::interprocess::open_or_create,
-				       IPC_NAME_TO_ADAPTER,
-				       MAX_MESSAGES,
-				       MESSAGE_SIZE),
-				 output(boost::interprocess::open_or_create,
-				       IPC_NAME_FROM_ADAPTER,
-				       MAX_MESSAGES,
-				       MESSAGE_SIZE),
+SIBusAdapter::SIBusAdapter ( ) : input(NULL),
+				 output(NULL),
 				 state(DATA),
 				 displayWarnings(true),
 				 displayReceivedLines(true),
 				 disableThreadReceptionSubroutine(false) {
+  boost::interprocess::message_queue::remove(IPC_NAME_TO_ADAPTER);
+  boost::interprocess::message_queue::remove(IPC_NAME_FROM_ADAPTER);
+  input = new boost::interprocess::message_queue(
+	        boost::interprocess::open_or_create,
+		IPC_NAME_TO_ADAPTER,
+		MAX_MESSAGES,
+		MESSAGE_SIZE);
+  output = new boost::interprocess::message_queue(
+	        boost::interprocess::open_or_create,
+		IPC_NAME_FROM_ADAPTER,
+		MAX_MESSAGES,
+		MESSAGE_SIZE);
+
   problem = new Problem();
   thread = new boost::thread(&SIBusAdapter::run, this);
 }
@@ -40,8 +46,7 @@ SIBusAdapter::~SIBusAdapter ( ) {
   if (mutex.try_lock()) //fishy
     mutex.unlock();
   thread->join();
-  boost::interprocess::message_queue::remove(IPC_NAME_TO_ADAPTER);
-  boost::interprocess::message_queue::remove(IPC_NAME_FROM_ADAPTER);
+
   delete(thread);
   delete(problem);
 }
@@ -64,11 +69,11 @@ std::ostream& SIBusAdapter::getOutput() {
 }
 */
 
-boost::interprocess::message_queue& SIBusAdapter::getInput() {
+boost::interprocess::message_queue* SIBusAdapter::getInput() {
   return input;
 }
 
-boost::interprocess::message_queue& SIBusAdapter::getOutput() {
+boost::interprocess::message_queue* SIBusAdapter::getOutput() {
   return output;
 }
 
@@ -97,17 +102,21 @@ void SIBusAdapter::dealWithInput(string line) {
     line = receptionSubroutine();
  
   if (displayReceivedLines)
-    cout << "Received line: "  << line << endl;
+    //cout << "Received line: "  << line;
 
-  switch (state) {
-  case DATA:
-    dealWithInputData(line);
-    break;
-  case SEARCH:
-    dealWithInputSearch(line);
-    break;
-  case EXIT:
-    return;
+  try {
+    switch (state) {
+    case DATA:
+      dealWithInputData(line);
+      break;
+    case SEARCH:
+      dealWithInputSearch(line);
+      break;
+    case EXIT:
+      return;
+    }
+  } catch (AdapterException& e) {
+    cout << "AdapterException:" << e.what() << endl;
   }
 }
 
@@ -158,6 +167,7 @@ void SIBusAdapter::dealWithInputData(string line) {
     throw "not implemented";
   } else if (line.find("CLOSE_MODELING") != string::npos) {
     state = SEARCH;
+    cout << "Setting state to SEARCH" << endl;
   } else {
     printWarning("Warning: Unrecognized data input: ", line);
   }
@@ -258,17 +268,17 @@ constraint_type SIBusAdapter::identifyConstraintType(std::string type) {
 }
 
 comparison_type SIBusAdapter::identifyComparisonType(std::string type) {
-  if (type == string("_NQ_")) {
+  if (type == string("NQ")) {
     return NQ;
-  } else if (type == string("_EQ_")) {
+  } else if (type == string("EQ")) {
     return EQ;
-  } else if (type == string("_LQ_")) {
+  } else if (type == string("LQ")) {
     return LQ;
-  } else if (type == string("_LE_")) {
+  } else if (type == string("LE")) {
     return LE;
-  } else if (type == string("_GQ_")) {
+  } else if (type == string("GQ")) {
     return GQ;
-  } else if (type == string("_GR_")) {
+  } else if (type == string("GR")) {
     return GR;
   } else {
     throw AdapterException("Error: Unrecognised comparison type: ", type);
@@ -341,7 +351,7 @@ std::string SIBusAdapter::receptionSubroutine() {
   line.resize(MESSAGE_SIZE);
   unsigned int receivedSize;
   unsigned int priority;
-  input.receive(&line[0], MESSAGE_SIZE, receivedSize, priority);
+  input->receive(&line[0], MESSAGE_SIZE, receivedSize, priority);
   return line;
 }
 
@@ -356,17 +366,27 @@ void SIBusAdapter::sendSolution(Solution* solution) {
   
   // End of transmission
   //output << endl;
-  output.send(outputString.data(), outputString.size(), 0);
+  output->send(outputString.data(), outputString.size(), 0);
 }
 
 //review that!!!
 void SIBusAdapter::sendSwapAsk(Variable* var, const core::Value& val1, const core::Value& val2) {
   std::string outputString("SWAP_ASK         =");
   outputString.append(" idVar(").append(var->getName()).append(")");
-  outputString.append(" idVal(").append(val1.getValueAsString()).append(")");
-  outputString.append(" idVal(").append(val2.getValueAsString()).append(")");
+  //outputString.append(" idVal(").append(val1.getValueAsString()).append(")");
+  //outputString.append(" idVal(").append(val2.getValueAsString()).append(")");
   //output << endl;
-  output.send(outputString.data(), outputString.size(), 0);
+  output->send(outputString.data(), outputString.size(), 0);
+}
+
+void SIBusAdapter::sendDomain(Variable* var, std::vector<std::pair<int, int> >& values) {
+  std::string outputString("DOMAIN           =");
+  outputString.append(" idVar(").append(var->getName()).append(")");
+  for (std::pair<int, int> value : values) {
+    outputString.append(" ").append(to_string(value.first));
+  }
+  cout << "Sending line: " << outputString << endl;;
+  output->send(outputString.data(), outputString.size(), 0);
 }
 
 //
