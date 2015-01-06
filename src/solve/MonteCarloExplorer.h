@@ -63,7 +63,9 @@ public:
 
   void initAuxValues(Solution& sol);
   void calculateAuxValue(Variable* var, Solution& sol);
-  void hasConstraintWithAuxVar(Variable* var);
+  void hasConstraintWithAuxVar(Variable* var, Solution& sol);
+
+  void calculateDifferencesAndSendSwapAsk(std::vector<std::pair<int, int> > oldCfl, std::vector<std::pair<int, int> > newCfl);//TODO: put that in Explorer?
 
 };
 }; // end of package namespace

@@ -42,11 +42,10 @@ namespace core {
     int * getAlreadyChecked();
     int getSizeAlreadyChecked();
     int getSize();
+    std::vector<std::pair<int, int> > getCfl();
     // add a value into alreadyChecked
     bool addValue(int value);
     bool alreadyInto(int value);
-
-    std::vector<std::pair<int, int> > getCfl();
 
     void generateCflVector();
 

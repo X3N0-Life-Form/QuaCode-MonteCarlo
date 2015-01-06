@@ -178,8 +178,9 @@ void SIBusAdapter::dealWithInputSearch(string line) {//TODO
 
   } else if (line == "FAIL") {
 
-  } else if (line == "SUCCESS") {
-
+  } else if (line.find("SUCCESS") != string::npos) {
+    cout << "Received SUCCESS, entering EXIT state" << endl;
+    state = EXIT;
   } else {
 
   }
@@ -369,12 +370,20 @@ void SIBusAdapter::sendSolution(Solution* solution) {
   output->send(outputString.data(), outputString.size(), 0);
 }
 
-//review that!!!
+void SIBusAdapter::sendSwapAsk(core::Variable* var, int val1, int val2) {
+  std::string outputString("SWAP_ASK         =");
+  outputString.append(" idVar(").append(var->getName()).append(")");
+  outputString.append(" idVal(").append(to_string(val1)).append(")");
+  outputString.append(" idVal(").append(to_string(val2)).append(")");
+  //output << endl;
+  output->send(outputString.data(), outputString.size(), 0);
+}
+
 void SIBusAdapter::sendSwapAsk(Variable* var, const core::Value& val1, const core::Value& val2) {
   std::string outputString("SWAP_ASK         =");
   outputString.append(" idVar(").append(var->getName()).append(")");
-  //outputString.append(" idVal(").append(val1.getValueAsString()).append(")");
-  //outputString.append(" idVal(").append(val2.getValueAsString()).append(")");
+  outputString.append(" idVal(").append(val1.getValueAsString()).append(")");
+  outputString.append(" idVal(").append(val2.getValueAsString()).append(")");
   //output << endl;
   output->send(outputString.data(), outputString.size(), 0);
 }

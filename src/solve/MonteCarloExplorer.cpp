@@ -83,27 +83,16 @@ int MonteCarloExplorer::heuristic() {
 	}
 	initAuxValues(currentSol);
 
-	cout << "update cfl" << endl;
 	nbCfls = currentSol.updateCfl(problem);
-	cout << "nbCfls = " << nbCfls << endl;
-	for (std::pair<Variable*, Value*> vlix : currentSol.getValues()) {
-		if (vlix.first->getDomain() != NULL) {
-			cout << vlix.first->getName() << "(" << vlix.first->getDomain()->getCfl().size() << " | " << vlix.first->getDomain()->getSize() << "):" << endl;
-			for (std::pair<int, int> current : vlix.first->getDomain()->getCfl()) {
-				cout << "\t" << current.first << " : " << current.second << endl;
-			}
-		}
-	}
 
-	cout << "while true" << endl;
-	while(true) {
+	while(adapter->getState() != EXIT) {
 		count++;
 		k = currentSol.choice();
-		cout << "MADE YOUR CHOICE" << endl;
 		vsauv = currentSol.getValues()[k].second;
 
-		currentSol.addValue(currentSol.getValues()[k].first, randDom(currentSol.getValues()[k].first));
-		cout << " here we are" << endl;
+		Variable* var = currentSol.getValues()[k].first;
+		currentSol.addValue(var, randDom(var));
+		hasConstraintWithAuxVar(var, currentSol);
 		nNBCfls = currentSol.updateCfl(problem);
 
 		if (nNBCfls > nbCfls) {
@@ -115,16 +104,18 @@ int MonteCarloExplorer::heuristic() {
 				nbCfls = nNBCfls;
 			}
 			else {
-				currentSol.addValue(currentSol.getValues()[k].first, vsauv);
+				currentSol.addValue(var, vsauv);
+				hasConstraintWithAuxVar(var, currentSol);
 			}
 		}
 		if (count == frequence) {
-			cout << "Sending data back to SIBus" << endl;
 			for (std::pair<Variable*, Value*> currentPair : currentSol.getValues()) {
-				vector<pair<int, int> > sortedCfl = currentPair.first->getDomain()->sortedCfl();
-				adapter->sendDomain(currentPair.first, sortedCfl);
+				if (currentPair.first->getDomain() != NULL) {
+					vector<pair<int, int> > sortedCfl = currentPair.first->getDomain()->sortedCfl();
+					calculateDifferencesAndSendSwapAsk(currentPair.first->getDomain()->getCfl(), sortedCfl);
+					//adapter->sendDomain(currentPair.first, sortedCfl);
+				}
 			}
-		
 
 			count = 0;
 		}
@@ -143,7 +134,6 @@ Value * MonteCarloExplorer::randDom(Variable* var) {
 	if(type==INTEGER){
 		while(true) {
 			int valueInt = rand() % (dom->getLastValue() - dom->getFirstValue() + 1) + dom->getFirstValue();
-			cout << "olol² " << var->getName() << " = " << valueInt << endl;
 			if (!dom->alreadyInto(valueInt)){
 				return new Value(valueInt);
 			}
@@ -230,9 +220,25 @@ void MonteCarloExplorer::calculateAuxValue(Variable* var, Solution& sol) {
 	}
 }
 
-void MonteCarloExplorer::hasConstraintWithAuxVar(Variable* var) {
-
+void MonteCarloExplorer::hasConstraintWithAuxVar(Variable* var, Solution& sol) {
+	for (Constraint* constraint : problem->getConstraints()) {
+		for (ConstraintArgument* arg : constraint->getArguments()) {
+			Variable* currentVar = dynamic_cast<Variable*>(arg);
+			if (currentVar != NULL && currentVar->getName() == var->getName()) {
+				Variable* lastArg = dynamic_cast<Variable*>(constraint->getArguments().back());
+				if (lastArg != NULL && lastArg->getDomain() == NULL) {//TODO: change that kind of test into Variable.isVarAux()
+					calculateAuxValue(lastArg, sol);
+				}
+			}
+		}
+	}
 }
 
-
+void MonteCarloExplorer::calculateDifferencesAndSendSwapAsk(std::vector<std::pair<int, int> > oldCfl, std::vector<std::pair<int, int> > newCfl) {
+	for (int i = 0; i < oldCfl.size(); i++) {
+		if (oldCfl[i].first != newCfl[i].first) {
+			//for
+		}
+	}
+}
 

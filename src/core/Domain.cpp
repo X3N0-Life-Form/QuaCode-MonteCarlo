@@ -139,7 +139,7 @@ procédure tri_insertion(tableau T, entier n)
 std::vector<std::pair<int, int> > Domain::sortedCfl() {
   std::vector<std::pair<int, int> > toReturn;
   
-  for (unsigned int i = firstValue; i <= lastValue; i++) {
+  for (int i = firstValue; i <= lastValue; i++) {
     toReturn.push_back(std::pair<int, int>(i, 0));
   }
 
@@ -163,7 +163,6 @@ std::vector<std::pair<int, int> > Domain::sortedCfl() {
       toReturn[j].second = xsecond;
       toReturn[j].first = xfirst;
   }
-
   return toReturn;
 }
 

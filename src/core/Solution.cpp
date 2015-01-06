@@ -101,16 +101,31 @@ void Solution::increment(ConstraintArgument * arg, Problem* problem) {
 
  
 
- int Solution::choice(){
- 	int cflVal = values[0].first->getDomain()->totalCfl();
+int Solution::choice() {
+ 	int cflVal = 0;
  	int index = 0;
  	int temp = 0;
+	for (unsigned int i = 0; i < values.size(); i++) {
+		if (values[i].first->getDomain() != NULL) {
+			cflVal = values[i].first->getDomain()->totalCfl();
+			index = i;
+			break;
+		}
+	}
+
  	for (unsigned int i = 1; i < values.size(); i++) {
- 		temp = values[i].first->getDomain()->totalCfl();
- 		if(temp < cflVal) {
- 			index = i;
- 			cflVal = temp;
- 		}
- 	}
- 	return index;
- }
+		if (values[i].first->getDomain() != NULL) {
+	 		temp = values[i].first->getDomain()->totalCfl();
+	 		if(temp < cflVal) {
+	 			index = i;
+	 			cflVal = temp;
+	 		} else if (temp == cflVal) {
+				double randValue = rand() % 10;
+				if (randValue > 5) {
+					index = i;
+				}
+			}
+		}
+	}
+	return index;
+}

@@ -127,6 +127,7 @@ public:
   //
   std::string receptionSubroutine();
   void sendSolution(core::Solution* solution);
+  void sendSwapAsk(core::Variable* var, int val1, int val2);
   void sendSwapAsk(core::Variable* var, const core::Value& val1, const core::Value& val2);
   /**
    * Note: values = values + associated cfl
