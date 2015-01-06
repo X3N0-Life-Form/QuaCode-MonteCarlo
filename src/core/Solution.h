@@ -4,6 +4,7 @@
 #include "../solve/Validator.h"
 #include "Variable.h"
 #include "Value.h"
+#include "Problem.h"
 
 
 using namespace solve;
@@ -33,10 +34,10 @@ public:
 
 
   // update cfl and return nb of conflicts
-  int updateCfl();
+  int updateCfl(Problem* problem);
 
     //used into updateCfl()
-  void increment(ConstraintArgument * arg);
+  void increment(ConstraintArgument * arg, Problem* problem);
 
     // return var index (var with the smallest cfl)
     // must return the index of values

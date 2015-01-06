@@ -73,7 +73,7 @@ bool Domain::alreadyInto(int value) {
 }
 
 void Domain::generateCflVector(){
-  for (unsigned int i = firstValue; i <= lastValue; i++) {
+  for (int i = firstValue; i <= lastValue; i++) {
     cfl.push_back(std::pair<int, int>(i, 0));
   }
 }

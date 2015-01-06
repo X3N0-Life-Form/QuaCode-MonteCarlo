@@ -84,7 +84,16 @@ int MonteCarloExplorer::heuristic() {
 	initAuxValues(currentSol);
 
 	cout << "update cfl" << endl;
-	nbCfls = currentSol.updateCfl();
+	nbCfls = currentSol.updateCfl(problem);
+	cout << "nbCfls = " << nbCfls << endl;
+	for (std::pair<Variable*, Value*> vlix : currentSol.getValues()) {
+		if (vlix.first->getDomain() != NULL) {
+			cout << vlix.first->getName() << "(" << vlix.first->getDomain()->getCfl().size() << " | " << vlix.first->getDomain()->getSize() << "):" << endl;
+			for (std::pair<int, int> current : vlix.first->getDomain()->getCfl()) {
+				cout << "\t" << current.first << " : " << current.second << endl;
+			}
+		}
+	}
 
 	cout << "while true" << endl;
 	while(true) {
@@ -95,7 +104,7 @@ int MonteCarloExplorer::heuristic() {
 
 		currentSol.addValue(currentSol.getValues()[k].first, randDom(currentSol.getValues()[k].first));
 		cout << " here we are" << endl;
-		nNBCfls = currentSol.updateCfl();
+		nNBCfls = currentSol.updateCfl(problem);
 
 		if (nNBCfls > nbCfls) {
 			nbCfls = nNBCfls;

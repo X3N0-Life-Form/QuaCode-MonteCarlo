@@ -218,11 +218,11 @@ Domain* SIBusAdapter::identifyDomain(string s_domain) {
   int lowerBoundary = stoi(bound[0]);
   int upperBoundary = stoi(bound[1]);
   // does that domain exist?
-  for (Domain* currentDomain : domains) {
+  /*for (Domain* currentDomain : domains) {
     if (currentDomain->getFirstValue() == lowerBoundary
 	&& currentDomain->getLastValue() == upperBoundary)
       return currentDomain;
-  }
+  }*/
   // if not, create it
   Domain* domain = new Domain(lowerBoundary, upperBoundary);
   domains.push_back(domain);
