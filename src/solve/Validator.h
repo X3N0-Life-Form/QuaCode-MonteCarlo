@@ -22,7 +22,7 @@ namespace solve {
    * class Validator
    * 
    */
-  class Validator {
+  class Validator { // TODO either make these classes singletons or fully static classes
   private:
     Problem * prob;
 
@@ -35,15 +35,12 @@ namespace solve {
 
     Problem * getProblem();
 
-  public:
+    // Static Methods
     static int getArgumentIValue(ConstraintArgument* argument, std::vector<std::pair<Variable *, Value *> > values);
     static bool getArgumentBValue(ConstraintArgument* argument, std::vector<std::pair<Variable *, Value *> > values);
     static Value* getVariableValue(Variable* var, std::vector<std::pair<Variable *, Value *> > values);
     static bool checkComparison(int value, comparison_type CT, int lastValue);
     static bool checkComparison(bool value, comparison_type CT, bool lastValue);
-
-
-
 
   };
 }; // end of package namespace

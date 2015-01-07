@@ -7,7 +7,6 @@
 #include <vector>
 
 
-
 namespace solve {
 
 
@@ -24,8 +23,6 @@ public:
   virtual ~IntegerValidator ( );
 
   virtual bool validateConstraint(Constraint * cst, std::vector<std::pair<Variable *, Value *> > values);
-
-
 };
 }; // end of package namespace
 

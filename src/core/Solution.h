@@ -12,41 +12,35 @@ using namespace solve;
 namespace core {
 class Solution {
 
-private:
-	std::vector<std::pair<Variable *, Value *> > values;
-	Validator * validator;
+ private:
+  std::vector<std::pair<Variable *, Value *> > values;
+  Validator * validator;
 
-public:	
+ public:
 
   Solution (Validator * val);
 
-  // TODO : constructeur par recopie
-
   std::vector<std::pair<Variable *, Value *> > getValues();
-
   //std::vector<std::pair<Variable *, int> >  getCfl();
-
   void addValue(Variable* var, Value* val);
-
   void modifValue(int index, Value* val);
-
   void generateValueVector();
 
-
-  // update cfl and return nb of conflicts
+  /**
+   * Update cfl and return nb of conflicts.
+   */
   int updateCfl(Problem* problem);
 
-    //used into updateCfl()
+  /**
+   * Used in updateCfl()
+   */
   void increment(ConstraintArgument * arg, Problem* problem);
 
-    // return var index (var with the smallest cfl)
-    // must return the index of values
+  /**
+   * @return var index (var with the smallest cfl)
+   * must return the index of values
+   */
   int choice();
-/*
-
-
-
-*/
 
 };
 }; // end of namespace core

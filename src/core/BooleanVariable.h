@@ -20,53 +20,16 @@ public:
 
   // Constructors/Destructors
   //  
-
-
-  /**
-   * Empty Constructor
-   */
-  BooleanVariable ( );
-
-  /**
-   * Regular Constructor
-   */
+  BooleanVariable();
   BooleanVariable(Quantifier quant, Type type, std::string name, Domain* domain);
-
-  /**
-   * Empty Destructor
-   */
   virtual ~BooleanVariable ( );
 
   // Public Methods
   //
-
   virtual Type getType();
 
 private:
-
   Domain* bDomain;
-  //  
-
-  // Private attributes
-  //  
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-public:
-
-
-  // Private attribute accessor methods
-  //  
-
-private:
-
-
 
 };
 }; // end of package namespace

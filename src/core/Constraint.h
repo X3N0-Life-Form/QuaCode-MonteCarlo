@@ -43,7 +43,6 @@ enum constraint_type {
   * class Constraint
   * 
   */
-
 class Constraint
 {
 
@@ -55,20 +54,14 @@ private:
 public:
 
   // Constructors/Destructors
-  //  
-
   Constraint (constraint_type cstT, comparison_type cmpT);
-
   virtual ~Constraint ( );
 
-  //getters
-
+  // Getters/Adders
   constraint_type getConstraintType ();
   comparison_type getComparisonType();
   std::vector<ConstraintArgument * > getArguments();
-
   void addArgument(ConstraintArgument * var);
-
 
   /**
    * @return Type

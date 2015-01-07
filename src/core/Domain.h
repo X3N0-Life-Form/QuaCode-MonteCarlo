@@ -11,8 +11,6 @@
 
 namespace core {
 
-
-
   /**
    * class Domain
    * 
@@ -27,16 +25,15 @@ namespace core {
     int* alreadyChecked;
     int sizeAlreadyChecked;
 
-
-  std::vector<std::pair<int, int> > cfl;
+    std::vector<std::pair<int, int> > cfl;
     
   public:
     // Constructors/Destructors
     Domain(int val1, int val2);
-    virtual ~Domain ( );
+    virtual ~Domain();
 
     // getters and setters
-    Type getType ( );
+    Type getType();
     int getFirstValue();
     int getLastValue();
     int * getAlreadyChecked();
@@ -48,19 +45,13 @@ namespace core {
     bool alreadyInto(int value);
 
     void generateCflVector();
-
     void initCfl();
-
     void incrementCfl(int value);
-
     void setCflForValue(int value, int c);
-
     int totalCfl();
 
     std::vector<std::pair<int, int> > sortedCfl();
-
     std::vector<std::pair<int, int> > sortedCflReverse();
-
 
     // replace current cfl vector with the new one
     void replace(std::vector<std::pair<int, int> > vect);

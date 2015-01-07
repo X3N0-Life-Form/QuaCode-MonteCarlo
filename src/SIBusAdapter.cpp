@@ -376,7 +376,7 @@ void SIBusAdapter::sendSwapAsk(core::Variable* var, int val1, int val2) {
   outputString.append(" idVal(").append(to_string(val1)).append(")");
   outputString.append(" idVal(").append(to_string(val2)).append(")");
   //output << endl;
-  //cout << "Sending line: " << outputString << endl;;
+  cout << "Sending line: " << outputString << endl;;
   output->send(outputString.data(), outputString.size(), 0);
 }
 

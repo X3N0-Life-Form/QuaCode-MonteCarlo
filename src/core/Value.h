@@ -36,9 +36,7 @@ namespace core {
      * Note: booleans will be returned as "1" or "0".
      */
     std::string getValueAsString() const;
-
     void copy(Value* val);
-
     bool operator==(Value& right);
   };
 }; // end of package namespace

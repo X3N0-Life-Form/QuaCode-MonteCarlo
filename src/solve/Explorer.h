@@ -1,4 +1,3 @@
-
 #ifndef EXPLORER_H
 #define EXPLORER_H
 
@@ -37,9 +36,7 @@ public:
   virtual ~Explorer();
 
   void setAdapter(SIBusAdapter* adapter);
-
   virtual int heuristic() = 0;
-
   int getArgumentValue(ConstraintArgument* arg, Solution& sol);
 };
 }; // end of package namespace

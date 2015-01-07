@@ -11,7 +11,6 @@
 #include <vector>
 
 
-
 namespace core {
 
 
@@ -19,7 +18,6 @@ namespace core {
   * class Problem
   * 
   */
-
 class Problem
 {
 private:
@@ -32,7 +30,6 @@ public:
   Problem ( );
   virtual ~Problem ( );
 
-
   void addVariable(Variable* var);
   void addConstraint(Constraint* cst);
 
@@ -43,9 +40,7 @@ public:
    * @return NULL if the variable could not be found.
    */
   Variable* getVariable(std::string varName);
-  Domain* getDomain(int lowerBoundary, int upperBoundary);
-
-  
+  Domain* getDomain(int lowerBoundary, int upperBoundary); 
 };
 }; // end of package namespace
 
