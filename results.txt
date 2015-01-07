@@ -1,0 +1,243 @@
+baker:
+	runtime:      2.485 (2485.600 ms)
+	solutions:    1
+	propagations: 183394
+	nodes:        19130
+	failures:     4584
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      2.456 (2456.119 ms)
+	solutions:    1
+	propagations: 183394
+	nodes:        19130
+	failures:     4584
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      2.415 (2415.505 ms)
+	solutions:    1
+	propagations: 183394
+	nodes:        19130
+	failures:     4584
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      2.426 (2426.781 ms)
+	solutions:    1
+	propagations: 183394
+	nodes:        19130
+	failures:     4584
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      2.458 (2458.775 ms)
+	solutions:    1
+	propagations: 183394
+	nodes:        19130
+	failures:     4584
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      2.405 (2405.036 ms)
+	solutions:    1
+	propagations: 183394
+	nodes:        19130
+	failures:     4584
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      2.480 (2480.849 ms)
+	solutions:    1
+	propagations: 183394
+	nodes:        19130
+	failures:     4584
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      2.463 (2463.594 ms)
+	solutions:    1
+	propagations: 183394
+	nodes:        19130
+	failures:     4584
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      2.470 (2470.032 ms)
+	solutions:    1
+	propagations: 183394
+	nodes:        19130
+	failures:     4584
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      2.259 (2259.349 ms)
+	solutions:    1
+	propagations: 183394
+	nodes:        19130
+	failures:     4584
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+
+baker-queues2:
+
+	runtime:      1:54.890 (114089.326 ms)
+	solutions:    1
+	propagations: 8949111
+	nodes:        1171084
+	failures:     608490
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      1:55.268 (115268.989 ms)
+	solutions:    1
+	propagations: 8949111
+	nodes:        1171084
+	failures:     608490
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      1:56.102 (116102.431 ms)
+	solutions:    1
+	propagations: 8949111
+	nodes:        1171084
+	failures:     608490
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+
+baker-dbh-queues:
+
+	runtime:      1.397 (1397.201 ms)
+	solutions:    1
+	propagations: 84912
+	nodes:        10318
+	failures:     4087
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      1.140 (1140.309 ms)
+	solutions:    1
+	propagations: 75480
+	nodes:        9570
+	failures:     4086
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      1.393 (1393.558 ms)
+	solutions:    1
+	propagations: 95801
+	nodes:        11136
+	failures:     4466
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      1.341 (1341.833 ms)
+	solutions:    1
+	propagations: 88390
+	nodes:        10915
+	failures:     4620
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      1.282 (1282.555 ms)
+	solutions:    1
+	propagations: 83288
+	nodes:        10279
+	failures:     4302
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      1.600 (1060.068 ms)
+	solutions:    1
+	propagations: 59524
+	nodes:        7915
+	failures:     3350
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      1.202 (1202.233 ms)
+	solutions:    1
+	propagations: 69898
+	nodes:        8793
+	failures:     3744
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      1.404 (1404.319 ms)
+	solutions:    1
+	propagations: 88372
+	nodes:        10763
+	failures:     4132
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      1.403 (1403.212 ms)
+	solutions:    1
+	propagations: 95096
+	nodes:        11181
+	failures:     4320
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      1.111 (1111.923 ms)
+	solutions:    1
+	propagations: 65469
+	nodes:        8656
+	failures:     3748
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+
+baker-dbh-queues2:
+
+	runtime:      1:27.127 (87127.412 ms)
+	solutions:    1
+	propagations: 5656178
+	nodes:        745866
+	failures:     376265
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      1:28.817 (88817.544 ms)
+	solutions:    1
+	propagations: 5747192
+	nodes:        752952
+	failures:     383323
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
+
+	runtime:      1:38.971 (98971.692 ms)
+	solutions:    1
+	propagations: 6650747
+	nodes:        871618
+	failures:     443245
+	restarts:     0
+	no-goods:     0
+	peak depth:   8
