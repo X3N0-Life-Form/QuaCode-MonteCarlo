@@ -48,8 +48,6 @@ public:
 
   virtual bool operator==(ConstraintArgument& right);
 
-
-
 };
 }; // end of package namespace
 

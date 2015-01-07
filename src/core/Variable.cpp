@@ -35,7 +35,7 @@ bool Variable::operator==(ConstraintArgument& right) {
 }
 
 void Variable::setId(unsigned int id) {
-	this->id;
+	this->id = id;
 }
 
 unsigned int Variable::getId() {
