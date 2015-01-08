@@ -177,7 +177,7 @@ bool MonteCarloExplorer::metropolis(int delta){
 
 // used to decrease temperature into metropolis
 void MonteCarloExplorer::decreaseTemperature() {
-	temperature = temperature * 0.98;
+	temperature = temperature * TEMPERATURE_DECREASE_RATE;
 }
 
 

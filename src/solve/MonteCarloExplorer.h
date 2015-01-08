@@ -18,7 +18,7 @@
 #include <iostream>
 
 
-
+#define TEMPERATURE_DECREASE_RATE 0.98
 
 namespace solve {
 
