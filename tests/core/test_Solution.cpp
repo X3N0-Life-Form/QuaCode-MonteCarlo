@@ -59,14 +59,14 @@ void Test_Solution::test_generateValueVector() {
 void Test_Solution::test_updateCfl() {
 	Value* v = new Value(3);
 	solution->modifValue(0,v);	
-	CPPUNIT_ASSERT_EQUAL(1,solution->updateCfl());
+	CPPUNIT_ASSERT_EQUAL(1,solution->updateCfl(prob));
 }
 
 void Test_Solution::test_increment() {
 	ConstraintArgument * constArg = intVar1;
 	Value* v = new Value(3);
 	solution->modifValue(0,v);
-	solution->increment(constArg);
+	solution->increment(constArg, prob);
 	CPPUNIT_ASSERT_EQUAL(1,solution->getValues()[0].first->getDomain()->getCfl()[3-1].second);
 }
 
